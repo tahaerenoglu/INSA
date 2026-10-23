@@ -1,4 +1,6 @@
-# INSA Platform: 3. aşama (uygulama içi yapay zekâ asistanı)
+# INSA Platform
+
+Phase 5 (kısmi): asistan süre/tekrar/bağlam korumaları, kaynaklı çoklu tablo gereksinimleri, açık işlem sınırları, koşullu archetype bilgisi ve yeni projede ilk sohbet taslağı eklendi. Gerçek sağlayıcı yapılandırılmadığı için LLM kabulü yapılmadı. Uygulama ve test sınırları: [Phase 5 raporu](docs/PHASE5_AUTONOMOUS_WORKFLOW_2026-10-23_TR.md).
 
 Phase 4: workflow bağımlılık planı, SI normalize family/type çözümleme, kalıcı assembly type revizyonları, kaynak atıflı tablo modelleme ve 5.000 eleman için indeks/sanal ağaç geliştirmeleri eklendi. Durumlar, gerçek kabul sonuçları ve açık kalan kapsam: [Phase 4 raporu](docs/PHASE4_AUTONOMOUS_MODELING_2026-10-23_TR.md).
 

@@ -290,12 +290,12 @@ export function buildApp(opts: AppOptions): FastifyInstance {
     const u = auth(req);
     const project = projectOf(req);
     if (!model) throw new HttpError(503, "Asistan yapılandırılmamış: sunucuda ANTHROPIC_API_KEY tanımlı değil.");
-    const body = z.object({ message: z.string().min(1).max(20000), history: z.array(z.any()).max(400).default([]) }).parse(req.body);
+    const body = z.object({ message: z.string().min(1).max(20000), history: z.array(z.object({role:z.enum(['user','assistant']),content:z.union([z.string().max(200000),z.array(z.object({type:z.string()}).passthrough()).max(100)])}).strict()).max(400).default([]) }).parse(req.body);
     // the assistant acts with the signed-in user's roles, under its own identity, and never bypasses approval
     const actor: Actor = { id: `ai:${u.id}`, name: `Asistan (${u.name})`, kind: "ai", roles: u.roles };
     const selectedType = await projectType(project);
     const ctrl = new AbortController();
-    req.raw.on("close", () => ctrl.abort());
+    reply.raw.on("close", () => ctrl.abort());
     reply.hijack();
     reply.raw.writeHead(200, { "content-type": "text/event-stream", "cache-control": "no-cache", connection: "keep-alive" });
     const send = (e: unknown) => reply.raw.write(`data: ${JSON.stringify(e)}\n\n`);

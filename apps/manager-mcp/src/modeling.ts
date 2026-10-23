@@ -10,7 +10,7 @@ import { orthogonalRoute } from './modeling-routing.js';
 import {registerAssemblyCapabilities,addReinforcementAssembly} from './modeling-assemblies.js';
 import {projectSemantics,PROJECT_ARCHETYPES} from './modeling-semantics.js';
 import {workflowInput,orderedOperations,resolveIntent,planningDetails,archetypeKnowledge} from './modeling-planner.js';
-import {registerDocumentCapabilities,documentUnderstanding,DocumentRequest} from './modeling-documents.js';
+import {registerDocumentCapabilities,registerDocumentSetCapability,documentRequirements,DocumentSetRequest,documentUnderstanding,DocumentRequest} from './modeling-documents.js';
 import {registerEngineCapabilities} from './modeling-engine-capabilities.js';
 
 const point = z.tuple([z.number().finite(), z.number().finite()]);
@@ -174,6 +174,7 @@ registerModelingCapability({ id: 'shared-component-array', kind: 'array', input:
 
 registerAssemblyCapabilities(registerModelingCapability);
 registerDocumentCapabilities(registerModelingCapability);
+registerDocumentSetCapability(registerModelingCapability);
 registerEngineCapabilities(registerModelingCapability);
 registerModelingCapability({id:'universal-project-workflow',kind:'workflow',input:workflowInput,engines:[],compile(b,r){
  archetypeKnowledge(r.archetype,r.systems);
@@ -275,7 +276,7 @@ function constraintReport(s:BimState,coordination:ReturnType<typeof coordinateMo
  results.push(...coordination.issues.filter(i=>i.severity!=='info').map(i=>({rule:'universal-indexed-coordination',elements:i.elements,reason:i.kind,severity:i.severity,message:i.message})));
  const graph=projectSemantics(s),nodes=new Set(graph.nodes.map(n=>n.id));
  for(const edge of graph.edges)if(!nodes.has(edge.source)||!nodes.has(edge.target))results.push({rule:'universal-relationship-integrity',elements:[edge.source,edge.target],reason:'INVALID_REFERENCE',severity:'error',message:`Dangling ${edge.relation} relationship.`});
- return {results,expectedInterfaces:coordination.issues.filter(i=>i.severity==='info').length,checkedRules:[...[...rules.values()].filter(r=>r.status==='implemented'&&(!kind||r.applies(kind))).map(r=>r.id),'universal-indexed-coordination','universal-relationship-integrity'],coverage:{universal:{geometry:'IMPLEMENTED',identity:'IMPLEMENTED',host:'IMPLEMENTED',dependencies:'IMPLEMENTED',connections:'IMPLEMENTED',units:'Explicit SI schemas; requested type units normalized; no guessed units',coordinates:'Existing domain/storey/georeference invariants',clearance:'Only when explicit clearance threshold requested'},disciplines:{structural:'Geometric/domain invariants; no capacity calculation',reinforcement:'Explicit paths and rectangular-column cover/parametric layout',MEP:'Explicit connector geometry and system consistency; no sizing',steel:'Native profiles and generic assemblies; no connection design',infrastructure:'Existing domain validators; BIM coordination does not prove infrastructure interference',energy:'Generic components/assemblies only; no electrical design',industrial:'Generic equipment/assemblies only; no process engineering'},standards:{status:'NOT IMPLEMENTED',reason:'No verified standard profile selected'}},engineeringAdequacy:false};
+ return {quality:{evidenceLevel:Object.values(s.elements).some(e=>e.props?.INSA_Source)?'SOURCE-BASED':'CONCEPTUAL',coordination:{status:results.some(r=>r.severity==='error')?'FAILED':results.some(r=>r.severity==='warning')?'REQUIRES_REVIEW':'CHECKED_WITH_LIMITED_COVERAGE',scope:'BIM rules listed in checkedRules; not an engineering adequacy certificate'},components:Object.values(s.elements).map(e=>({id:e.id,evidenceLevel:e.props?.INSA_Source?'SOURCE-BASED':'CONCEPTUAL',verificationStatus:e.props?.INSA_Source?.verificationStatus??'Assumed',issues:results.filter(r=>r.elements.includes(e.id)).map(r=>r.reason)})),promotionToCoordinated:'Requires reviewed source/assumption acceptance and all relevant discipline checks; automatic promotion disabled'},results,expectedInterfaces:coordination.issues.filter(i=>i.severity==='info').length,checkedRules:[...[...rules.values()].filter(r=>r.status==='implemented'&&(!kind||r.applies(kind))).map(r=>r.id),'universal-indexed-coordination','universal-relationship-integrity'],coverage:{universal:{geometry:'IMPLEMENTED',identity:'IMPLEMENTED',host:'IMPLEMENTED',dependencies:'IMPLEMENTED',connections:'IMPLEMENTED',units:'Explicit SI schemas; requested type units normalized; no guessed units',coordinates:'Existing domain/storey/georeference invariants',clearance:'Only when explicit clearance threshold requested'},disciplines:{structural:'Geometric/domain invariants; no capacity calculation',reinforcement:'Explicit paths and rectangular-column cover/parametric layout',MEP:'Explicit connector geometry and system consistency; no sizing',steel:'Native profiles and generic assemblies; no connection design',infrastructure:'Existing domain validators; BIM coordination does not prove infrastructure interference',energy:'Generic components/assemblies only; no electrical design',industrial:'Generic equipment/assemblies only; no process engineering'},standards:{status:'NOT IMPLEMENTED',reason:'No verified standard profile selected'}},engineeringAdequacy:false};
 }
 const revise: CommandTool<any> = { name: 'model_revise', title: 'model.revise', module: 'modeling', kind: 'command', effect: 'write', permission: 'bim.read',
   input: z.object({ changes: z.array(z.object({ tool: z.enum(['bim_update_elements', 'bim_update_storeys', 'bim_update_types','bim_update_families','bim_create_types','bim_set_properties','bim_update_assembly_type', 'infra_update_alignment', 'infra_update_road_corridor', 'infra_update_component_type']), input: z.record(z.string(), z.unknown()) }).strict()).min(1).max(50) }).strict(),
@@ -304,18 +305,19 @@ const repair: CommandTool<any> = { ...revise, name: 'model_repair', title: 'mode
     return {...result,summary:{...result.summary,repaired:repaired.map(id=>({id,status:after.issues.some(i=>i.id===id)?'unresolved':'verified'})),remaining:after.issues.filter(i=>i.severity!=='info'),iterations,attemptedRepairs:attempted.size,maxAttempts:i.maxAttempts}};
   } };
 export const modelingModule: ModuleDef = { id: 'modeling', title: 'Universal Modeling Brain', initialState: () => ({}), apply: s => s, tools: [
-  query('project_analyze', 'files.read', z.object({}), async ctx => {
+  query('project_analyze', 'files.read', z.object({capabilityKinds:z.array(z.string()).max(50).optional(),queryNames:z.array(z.string()).max(100).optional()}).strict(), async (ctx,selection) => {
     const c = await context(ctx);
     return { project: ctx.project, model: c.states?.get('bim')?.project, storeys: Object.values(c.states?.get('bim')?.storeys ?? {}),
-      documents: Object.values(c.states?.get('files')?.files ?? {}), capabilities: [...capabilities.values()].map(({ compile: _compile, input, ...c }) => ({ ...c, requirementsSchema: z.toJSONSchema(input, { target: 'draft-7', unrepresentable: 'any' }) })),
+      documents: Object.values(c.states?.get('files')?.files ?? {}), capabilities: [...capabilities.values()].filter(c=>!selection.capabilityKinds||selection.capabilityKinds.includes(c.kind)).map(({ compile: _compile, input, ...c }) => ({ ...c, requirementsSchema: z.toJSONSchema(input, { target: 'draft-7', unrepresentable: 'any' }) })),
       rulePacks: [...rules.values()].map(({ applies: _applies, evaluate: _evaluate, ...p }) => p),
       engines: listEngines(),semantics:semanticSummary(c.states!.get('bim'),c.states!.get('infra')),archetypes:PROJECT_ARCHETYPES,
-      semanticQueries:[{tool:'semantic.library',input:{}},{tool:'semantic.graph',input:{ids:'optional qualified node ID array'}},{tool:'documents.understand',input:{file:'registered source ID',version:'explicit integer revision',sheet:'optional worksheet'}}],planningKnowledge:archetypeKnowledge(),standardProfile: { status: 'Missing', engineeringAdequacy: false },
-      queries: ctx.platform.listTools().filter(t => t.kind === 'query' && ['bim', 'infra', 'files'].includes(t.module) && !/export|upload|render/.test(t.name) && can(ctx.actor, t.permission, ctx.platform.roles))
+      semanticQueries:[{tool:'semantic.library',input:{}},{tool:'semantic.graph',input:{ids:'optional qualified node ID array'}},{tool:'documents.requirements',input:{sources:'reviewed source/revision/role/field mappings',reviewedMapping:true}},{tool:'documents.understand',input:{file:'registered source ID',version:'explicit integer revision',sheet:'optional worksheet'}}],planningKnowledge:archetypeKnowledge(),standardProfile: { status: 'Missing', engineeringAdequacy: false },
+      queries: ctx.platform.listTools().filter(t => (!selection.queryNames||selection.queryNames.includes(t.name)) && t.kind === 'query' && ['bim', 'infra', 'files'].includes(t.module) && !/export|upload|render/.test(t.name) && can(ctx.actor, t.permission, ctx.platform.roles))
         .map(t => ({ name: t.name, description: t.description, input: z.toJSONSchema(t.input, { target: 'draft-7', unrepresentable: 'any' }) })),
       knowledgeStates: ['Verified', 'Derived', 'Assumed', 'Missing', 'Conflicting', 'RequiresApproval'] };
   }),
   query('project_query', 'bim.read', z.object({ tool: z.string(), input: z.record(z.string(), z.unknown()).default({}) }).strict(), async (ctx, i) => {
+    if(i.tool==='documents.requirements')return documentRequirements(await context(ctx),DocumentSetRequest.parse(i.input));
     if(i.tool==='documents.understand')return documentUnderstanding(await context(ctx),DocumentRequest.parse(i.input));
     if(i.tool==='semantic.library'||i.tool==='semantic.graph'){
       const input=z.object({ids:z.array(z.string()).max(1000).optional(),includeGeometry:z.boolean().default(false)}).strict().parse(i.input),c=await context(ctx),bim=c.states!.get('bim') as BimState,graph=projectSemantics(bim,c.states!.get('infra'),input.includeGeometry?coordinateModel(bim):undefined);

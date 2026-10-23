@@ -4,10 +4,11 @@ import { api, AssistantEvent } from "./api";
 type Item =
   | { kind: "user"; text: string }
   | { kind: "assistant"; text: string }
-  | { kind: "tool"; id: string; name: string; state: "running" | "applied" | "proposed" | "ok" | "preview" | "error"; detail?: string; image?: string }
+  | { kind: "tool"; id: string; name: string; state: "running" | "applied" | "proposed" | "ok" | "preview" | "error"; proposalId?: string; detail?: string; image?: string }
   | { kind: "error"; text: string };
 
 const TOOL_TR: Record<string, string> = {
+  project_analyze:'Proje bağlamı',project_query:'Kaynak sorgusu',model_plan:'Model planı',model_generate:'Model üretimi',model_revise:'Revizyon',model_validate:'Doğrulama',model_repair:'Onarım',model_export:'Dışa aktarım',
   bim_create_storeys: "Katlar", bim_create_grids: "Akslar", bim_create_types: "Tipler", bim_create_walls: "Duvarlar",
   bim_create_slabs: "Döşemeler", bim_create_columns: "Kolonlar", bim_create_beams: "Kirişler", bim_place_openings: "Kapı / pencere",
   bim_move_elements: "Taşıma", bim_update_elements: "Güncelleme", bim_set_properties: "Özellikler", bim_delete_elements: "Silme",
@@ -23,19 +24,21 @@ const EXAMPLES = [
 
 const KEY = (p: string) => `insa_chat_${p}`;
 
-export function Assistant({ project, onProposals }: { project: string; onProposals: () => void }) {
+export function Assistant({ project, onProposals, proposalStates = {} }: { project: string; onProposals: () => void; proposalStates?: Record<string,string> }) {
   const [status, setStatus] = useState<{ enabled: boolean; model: string | null } | null>(null);
   const [items, setItems] = useState<Item[]>([]);
   const [history, setHistory] = useState<unknown[]>([]);
   const [text, setText] = useState("");
+  const [telemetry,setTelemetry]=useState<{modelCalls:number;toolCalls:number;cachedCalls:number;elapsedMs:number;inputTokens:number;outputTokens:number;usageAvailable:boolean}|null>(null);
   const [busy, setBusy] = useState(false);
   const ctrl = useRef<AbortController | null>(null);
   const end = useRef<HTMLDivElement>(null);
 
   useEffect(() => { api.assistantStatus().then(setStatus).catch(() => setStatus({ enabled: false, model: null })); }, []);
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem(KEY(project)) ?? "null");
-    setItems(saved?.items ?? []); setHistory(saved?.history ?? []);
+    try{const saved=JSON.parse(localStorage.getItem(KEY(project))??'null');setItems(saved?.items??[]);setHistory(saved?.history??[]);}catch{setItems([]);setHistory([]);}
+    setText(sessionStorage.getItem(`insa_draft_${project}`)??'');
+    return ()=>ctrl.current?.abort();
   }, [project]);
   useEffect(() => { end.current?.scrollIntoView({ behavior: "smooth" }); }, [items]);
   const save = (it: Item[], h: unknown[]) => {
@@ -45,7 +48,7 @@ export function Assistant({ project, onProposals }: { project: string; onProposa
 
   const send = async (message: string) => {
     if (!message.trim() || busy) return;
-    setText(""); setBusy(true);
+    setText("");sessionStorage.removeItem(`insa_draft_${project}`);setBusy(true);setTelemetry(null);
     let list: Item[] = [...items, { kind: "user", text: message }];
     let h = history;
     setItems(list);
@@ -59,8 +62,9 @@ export function Assistant({ project, onProposals }: { project: string; onProposa
         });
         else if (e.type === "tool_call") upd((l) => [...l, { kind: "tool", id: e.id, name: e.name, state: "running" }]);
         else if (e.type === "tool_result") upd((l) => l.map((x) => (x.kind === "tool" && x.id === e.id
-          ? { ...x, state: e.ok ? ((e.status as any) ?? "ok") : "error", detail: e.ok ? (e.summary ? JSON.stringify(e.summary) : undefined) : String(e.summary), image: e.image }
+          ? { ...x, state: e.ok ? ((e.status as any) ?? "ok") : "error", proposalId:e.proposalId, detail: e.ok ? (e.summary ? JSON.stringify(e.summary) : undefined) : String(e.summary), image: e.image }
           : x)));
+        else if (e.type === "telemetry") setTelemetry(e);
         else if (e.type === "done") h = e.messages;
         else if (e.type === "error") upd((l) => [...l, { kind: "error", text: e.message }]);
       }, c.signal);
@@ -71,7 +75,7 @@ export function Assistant({ project, onProposals }: { project: string; onProposa
   };
 
   if (status && !status.enabled)
-    return <div className="empty-state assistant-empty"><strong>Proje asistanı henüz etkin değil</strong><p>Modeli incelemek, dosyaları yüklemek ve araçlarla çalışmak için diğer panelleri kullanabilirsiniz.</p><details><summary>Bağlantı bilgisi</summary><p>Asistan bağlantısının sunucu yöneticisi tarafından yapılandırılması gerekiyor.</p></details></div>;
+    return <div className="empty-state assistant-empty"><strong>Proje asistanı henüz etkin değil</strong><p>Modeli incelemek, dosyaları yüklemek ve araçlarla çalışmak için diğer panelleri kullanabilirsiniz.</p><p>Proje sohbeti ve başlangıç isteği korunur.</p>{text&&<blockquote>{text}</blockquote>}<details><summary>Bağlantı bilgisi</summary><p>Asistan bağlantısının sunucu yöneticisi tarafından yapılandırılması gerekiyor.</p></details></div>;
   return (
     <div className="chat">
       <div className="msgs">
@@ -83,16 +87,20 @@ export function Assistant({ project, onProposals }: { project: string; onProposa
           if (it.kind === "user") return <div key={i} className="msg user">{it.text}</div>;
           if (it.kind === "assistant") return <div key={i} className="msg bot">{it.text}</div>;
           if (it.kind === "error") return <div key={i} className="msg err">{it.text}</div>;
+          const current=it.proposalId?proposalStates[it.proposalId]:undefined;
+          const state=current==='applied'?'applied':current==='failed'||current==='rejected'?'error':it.state;
           return (
-            <div key={i} className={`tool ${it.state}`} title={it.detail}>
-              <span>{TOOL_TR[it.name] ?? it.name}</span> <span className="st">{STATE_TR[it.state] ?? it.state}</span>
-              {it.state === "proposed" && <button className="link" onClick={onProposals}>Önerilere git</button>}
+            <div key={i} className={`tool ${state}`} title={it.detail}>
+              <span>{TOOL_TR[it.name] ?? it.name}</span> <span className="st">{current==='rejected'?'reddedildi':STATE_TR[state] ?? state}</span>
+              {state === "proposed" && <button className="link" onClick={onProposals}>Önerilere git</button>}
+              {it.name==='model_plan'&&it.detail&&<details><summary>Planı incele</summary><pre style={{whiteSpace:'pre-wrap',maxHeight:320,overflow:'auto'}}>{(()=>{try{const p=JSON.parse(it.detail);return JSON.stringify({status:p.status,projectType:p.projectType,missing:p.missing,newTypes:p.newTypes,reusedTypes:p.reusedTypes,operations:p.operationSteps,approval:p.approvalRequirements,validation:p.validationSteps},null,2);}catch{return it.detail;}})()}</pre></details>}
               {it.state === "error" && <div className="muted">{it.detail}</div>}
               {it.image && <img src={`data:image/png;base64,${it.image}`} onClick={(e) => window.open((e.target as HTMLImageElement).src)} />}
             </div>);
         })}
         <div ref={end} />
       </div>
+      {telemetry&&<small role="status">{telemetry.modelCalls} model çağrısı · {telemetry.toolCalls} araç · {telemetry.cachedCalls} tekrar önlendi · {(telemetry.elapsedMs/1000).toFixed(1)} s {telemetry.usageAvailable?`${telemetry.inputTokens}/${telemetry.outputTokens} token`:'Token bilgisi yok'}</small>}
       <div className="composer">
         <textarea value={text} onChange={(e) => setText(e.target.value)} rows={3} placeholder="Örn: kuzey cephesine 3 pencere ekle"
           onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); void send(text); } }} />

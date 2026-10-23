@@ -6,7 +6,7 @@ export const DEFAULT_MODEL = "claude-sonnet-5-5";
 
 export class AnthropicClient implements ModelClient {
   private client: Anthropic;
-  constructor(apiKey: string, readonly model = DEFAULT_MODEL) { this.client = new Anthropic({ apiKey }); }
+  constructor(apiKey: string, readonly model = DEFAULT_MODEL) { this.client = new Anthropic({ apiKey, maxRetries: 1, timeout: 60000 }); }
 
   async run(req: Parameters<ModelClient["run"]>[0], onText: (d: string) => void): Promise<ModelResponse> {
     const stream = this.client.messages.stream({
@@ -15,6 +15,6 @@ export class AnthropicClient implements ModelClient {
     }, { signal: req.signal });
     stream.on("text", (delta) => onText(delta));
     const msg = await stream.finalMessage();
-    return { content: msg.content as any, stop_reason: msg.stop_reason };
+    return { content: msg.content as any, stop_reason: msg.stop_reason, usage: { inputTokens: msg.usage.input_tokens, outputTokens: msg.usage.output_tokens } };
   }
 }

@@ -100,7 +100,8 @@ export const api = {
 export type AssistantEvent =
   | { type: "text"; delta: string }
   | { type: "tool_call"; id: string; name: string; input: unknown }
-  | { type: "tool_result"; id: string; name: string; ok: boolean; status?: string; summary: unknown; image?: string }
+  | { type: "tool_result"; id: string; name: string; ok: boolean; status?: string; proposalId?: string; summary: unknown; image?: string }
+  | { type: "telemetry"; modelCalls:number; toolCalls:number; cachedCalls:number; elapsedMs:number; inputTokens:number; outputTokens:number; usageAvailable:boolean; contextCharacters:number }
   | { type: "done"; messages: unknown[]; stop_reason: string | null; steps: number }
   | { type: "error"; message: string };
 

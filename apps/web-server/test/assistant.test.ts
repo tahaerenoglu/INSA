@@ -29,7 +29,7 @@ test("assistant endpoint streams text, tool calls and results; writes as ai:<use
   const r = await app.inject({ method: "POST", url: "/api/projects/ofis/assistant", headers: h, payload: { message: "zemin kat ekle", history: [] } });
   assert.equal(r.headers["content-type"], "text/event-stream");
   const ev = parse(r.body);
-  assert.deepEqual([...new Set(ev.map((e) => e.type))], ["text", "tool_call", "tool_result", "done"]);
+  assert.deepEqual([...new Set(ev.map((e) => e.type))], ["text", "tool_call", "tool_result", "telemetry", "done"]);
   const tr = ev.find((e) => e.type === "tool_result");
   assert.equal(tr.status, "proposed");
   const done = ev.at(-1);

@@ -224,7 +224,7 @@ export function App() {
 
 
   const openProject=(id:string,navigate=true)=>{
-    setSelected(null);setElement(null);setSummary(null);setTree([]);setInfra(null);setProposals([]);setHistory([]);setPlanStorey('');setModelQuery('');setAppearanceWarnings([]);setError('');setLive(false);setIsolatedInfraIds([]);setMeshSectionOpen(false);setCenter('3d');setTab('props');setMeasurementOn(false);setSnapOn(true);setProject(id);
+    setSelected(null);setElement(null);setSummary(null);setTree([]);setInfra(null);setProposals([]);setHistory([]);setPlanStorey('');setModelQuery('');setAppearanceWarnings([]);setError('');setLive(false);setIsolatedInfraIds([]);setMeshSectionOpen(false);setCenter('3d');setTab(sessionStorage.getItem(`insa_draft_${id}`)?'assistant':'props');setMeasurementOn(false);setSnapOn(true);setProject(id);
     if(navigate){const url=new URL(window.location.href);if(id)url.searchParams.set('project',id);else url.searchParams.delete('project');url.searchParams.delete('view');url.searchParams.delete('infraOnly');window.history.pushState(null,'',url);}
   };
   useEffect(()=>{const back=()=>openProject(new URLSearchParams(window.location.search).get('project')??'',false);window.addEventListener('popstate',back);return()=>window.removeEventListener('popstate',back);},[]);
@@ -453,7 +453,7 @@ export function App() {
 
           {project && <div style={{ display: tab === "assistant" ? "block" : "none", height: "100%" }}>
 
-            <Assistant project={project} onProposals={() => { setTab("proposals"); void refresh(false); }} />
+            <Assistant key={project} project={project} proposalStates={Object.fromEntries(proposals.map(p=>[p.id,p.status]))} onProposals={() => { setTab("proposals"); void refresh(false); }} />
 
           </div>}
 
