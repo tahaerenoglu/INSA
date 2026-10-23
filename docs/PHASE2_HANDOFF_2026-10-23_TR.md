@@ -24,7 +24,7 @@ Phase 2 ürün kodu değiştirilmeden `npm test` yeniden çalıştırıldı:
 
 Önceki rapordaki 738/612/110/16 sonucu güncel başlangıç kabul edilmedi. Yeni koşu yukarıdaki sayıları verdi.
 
-İlk hata incelemesi: mevcut otomatik duvar birleşimleri ile bazı eski fixture/testlerin ayrıca aynı birleşimi oluşturması arasındaki uyumsuzluk belirgin (`DUPLICATE_WALL_JOIN`: logdaki 54 reason örneği). Diğer reason örnekleri `INVALID_GEOMETRY`, `WALL_INTERSECTION`, `WALL_EDIT_HOSTED_CONFLICT`, `ELEMENT_IN_USE`, `INVALID_DIMENSION`, `INVALID_WALL_JOIN`. Bu sayılar başarısız test sayısı değildir; stack/alt test tekrarları içerir. Bütün 109 hatanın tek tek kök neden sınıflandırması henüz tamamlanmadı. Sadece logdaki beklenen snapshot/event-version tanı mesajları test başarısızlığı sayılmamalıdır.
+Reporter'ın son başarısız test blokları artık `scripts/compare-modeling-test-runs.mjs` ile kimlik bazında ayrıştırılıyor. 109 kayıt mekanizmaya göre sınıflandırıldı: 54 duplicate join, 18 diğer domain reason, 23 assertion, 2 Windows tsx launcher, 2 response shape, 1 symlink yetkisi, 9 üst dosya/suite kaydı. Ayrıntı yeni Phase 2 teknik raporundadır. Bütün legacy assertion'ların ürün düzeyindeki kök nedeni henüz çözülmedi; mekanizma sınıflandırması bunun yerine geçmez.
 
 ## İncelenen mevcut kod
 
@@ -39,9 +39,17 @@ Phase 2 ürün kodu değiştirilmeden `npm test` yeniden çalıştırıldı:
 
 ## Uygulama durumu
 
-Git aktarımı istenmeden önce Phase 2 ürün kodunda değişiklik yapılmadı. Kaynak inceleme, yeniden test, yedekleme ve araştırma yapıldı. P1 uygulaması sıradaki iştir; önceki Phase 1 raporundaki özellikler mevcut kaynakta korunuyor.
+Git aktarımından sonra P1'in çatı/koordinasyon/güvenli onarım bölümü uygulandı. Gerçek beşik/kırma düzlemleriyle parçalı duvar üst sınırı, quantities, IFC clipping; polyhedral solid derivation; sweep-and-prune broad phase; SAT/gerçek mesafe/sonlu MEP merkez hattı narrow phase; sekiz koordinasyon sınıfı; ortak validate/repair ve üretimde sınırlı güvenli onarım döngüsü eklendi. Yeni kalıcı model veya LLM aracı yoktur.
 
-Planlanan ilk somut adım: mevcut `roofGeometry` düzlemlerini `wallRoof` içinde kullanarak beşik/kırma çatıya bağlı duvarların parçalı üst sınırını, quantities ve IFC geometrisini tek türetilmiş hesaptan üretmek. Ardından spatial broad-phase ve gerçek narrow-phase geometri kontrolüyle koordinasyon kayıtlarını ortak validate/repair araçlarına bağlamak. AABB tek başına kesin clash kanıtı olarak kullanılmamalı.
+Gerçek MCP/HTTP, IFC tessellation, Fragments, preview/onay/undo/replay testleri çalıştırıldı. Üç gerçek izole örnek `output/umb-phase2-2026-10-23/` altında üretildi; `scripts/phase2-modeling-demo.mts` ile yeniden üretilebilir.
+
+Tam kapsam ve nihai test kanıtı: `docs/PHASE2_GEOMETRY_COORDINATION_2026-10-23_TR.md` ve `docs/PHASE2_TEST_COMPARISON_2026-10-23.json`.
+
+Sonuç: 751/625/110/16 (toplam/pass/fail/skip); yeni 11 test geçti, eski 109 başarısız kimlik aynı kaldı, ek 1 eski altyapı testinde Windows proposals.json rename EPERM. İki eski altyapı testi son sıralı tekrar koşusunda 2/2 geçti; bu tam koşudaki hatayı silmez. Odak geometri/ortak araç testleri 22/22, typecheck ve web build başarılı. Tam paket yeşil değil.
+
+Sıradaki iş P1'i tamamlamaktır: genel eğimli cephe/kademeli çatılar, genel ilişki grafı, duvar hosted boşlukları/eğrisel profiller, MEP zarf/gövde clash ve yoğun model artımlı indeks. P2–P5 bu teslimde genişletilmedi. Donatı otomatik layout hâlâ dik dikdörtgen kolon; MEP ortak üretim hâlâ onaylı şaft + kısıtlı ortogonal rota. Doküman anlamlandırma ve chat-first UI ilk aşama düzeyindedir. Bunları bitmiş gibi sunma.
+
+Devam ederken önce `git status --short` ve bu teknik raporu oku. Canlı `data/` üzerinde test yapma. İlgisiz 109 legacy hatayı tek seferde yeniden yazma. Yeni iş için yakın geometri/governance testlerini ve typecheck'i çalıştır; yeni değişiklikten sonra tam koşuyu baseline ile aynı karşılaştırıcıdan geçir.
 
 ## Araştırma ve sınırlar
 

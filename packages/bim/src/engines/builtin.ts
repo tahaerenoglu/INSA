@@ -36,7 +36,7 @@ defineHandlers<Wall>({
   references: el => el.topRoof ? [{ target: el.topRoof, ref: { kind: 'roof_attachment' as const, id: el.id } }] : [],
   kind: "wall", placementKind: () => "wall_axis", ifc: central, plan: central,
   placement: (_s, el) => ({ kind: "wall_axis" as const, storey: el.storey, start: el.start, end: el.end, baseOffset: el.baseOffset }),
-  representation: (s, el) => { const f = wallFrame(s, el), top = wallRoof(s, el); return { kind: "wall_extrusion" as const, footprint: f.footprint, bottom: el.baseOffset, height: top?.maxHeight ?? el.height, ...(top ? { topRoof: el.topRoof, topProfile: f.footprint.map(p => top.heightAt(p)) } : {}), thickness: f.t, ends: { start: f.ends.start, end: f.ends.end } }; },
+  representation: (s, el) => { const f = wallFrame(s, el), top = wallRoof(s, el); return { kind: "wall_extrusion" as const, footprint: f.footprint, bottom: el.baseOffset, height: top?.maxHeight ?? el.height, ...(top ? { topRoof: el.topRoof, topProfile: f.footprint.map(p => top.heightAt(p)), topPatches: top.patches } : {}), thickness: f.t, ends: { start: f.ends.start, end: f.ends.end } }; },
   signature: (_s, el, cat) => sig(cat, el.storey, el.start, el.end, el.baseOffset, el.height, el.topRoof ?? null),
   validate: (s, el, d) => { checkEngineChain(s, el, d); checkWall(s, el, d); },
   quantities: builtinQuantities, label: (_s, el) => el.category,                                   // structure.shear_wall: its category, not "wall"

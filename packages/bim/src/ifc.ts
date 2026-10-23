@@ -327,13 +327,14 @@ export function toIfc(s: BimState, opts: IfcOptions): string {
     let solid = extrude(st.add("IFCARBITRARYCLOSEDPROFILEDEF", `.AREA.,$,${polyline2(local)}`), identity, roofTop?.maxHeight ?? el.height);
     let hasColumnCuts = false;
     if (roofTop) {
-      const roof = roofTop.roof, slope = roof.slope;
-      const pitch = (slope?.pitch ?? 0) * Math.PI / 180, az = (slope?.azimuth ?? 0) * Math.PI / 180;
-      const nx = -Math.sin(pitch) * Math.cos(az), ny = -Math.sin(pitch) * Math.sin(az), nz = Math.cos(pitch);
+      for (const facet of roofTop.planes) {
+      const [nx,ny,nz] = facet.normal;
       const normal = dir3(nx * f.dir[0] + ny * f.dir[1], -nx * f.dir[1] + ny * f.dir[0], nz);
-      const plane = st.add('IFCPLANE', axis3(pt3(0, 0, roofTop.start - el.baseOffset), normal));
+      const height = facet.a*el.start[0]+facet.b*el.start[1]+facet.c;
+      const plane = st.add('IFCPLANE', axis3(pt3(0, 0, height - el.baseOffset), normal));
       const half = st.add('IFCHALFSPACESOLID', `${plane},.F.`);
       solid = st.add('IFCBOOLEANCLIPPINGRESULT', `.DIFFERENCE.,${solid},${half}`);
+      }
       hasColumnCuts = true;
     }
     // Structural columns own their occupied volume; trim the wall body rather

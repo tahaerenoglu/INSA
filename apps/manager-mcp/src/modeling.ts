@@ -2,7 +2,7 @@
 import { createHash } from 'node:crypto';
 import { z } from 'zod';
 import { DomainError, canonicalJson, can, type ModuleDef, type ToolContext, type CommandTool, type QueryTool } from '@insa/core';
-import { bimModule, modelIssues, listEngines, engineOfKind, structuralConnectivity, type BimState } from '@insa/bim';
+import { bimModule, modelIssues, listEngines, engineOfKind, coordinateModel, type BimState } from '@insa/bim';
 import { infraModule, type InfraState } from '@insa/infra';
 import { filesModule } from '@insa/files';
 import { reinforcementLayout, reinforcementGeometryIssues } from './modeling-rebar.js';
@@ -13,7 +13,8 @@ const source = z.object({ file: z.string(), version: z.number().int().positive()
   status: z.enum(['Verified', 'Derived', 'Assumed', 'Missing', 'Conflicting', 'RequiresApproval']), value: z.unknown().optional(), unit: z.string().optional(),
   parameter: z.string().optional(), role: z.enum(['geometry', 'specification', 'boq']).default('geometry') }).strict();
 const building = z.object({ kind: z.literal('building'), floors: z.number().int().min(1).max(30), totalArea: z.number().positive().max(100000),
-  floorHeight: z.number().min(2).max(10).default(3), roofPitch: z.number().min(1).max(60).default(20) }).strict();
+  floorHeight: z.number().min(2).max(10).default(3), roofPitch: z.number().min(1).max(60).default(20),
+  roofForm: z.enum(['mono','gable','hip']).default('mono'), roofOverhang: z.number().min(0).max(3).default(.3) }).strict();
 const reinforcement = z.object({ kind: z.literal('reinforcement'), hosts: z.array(z.string()).min(1).max(200), cover: z.number().positive(),
   diameter: z.number().positive(), stirrupDiameter: z.number().positive(), spacing: z.number().positive(), steelGrade: z.string().min(1) }).strict();
 const network = z.object({ kind: z.literal('network'), name: z.string().min(1), domain: z.enum(['piping', 'hvac', 'electrical']),
@@ -112,7 +113,10 @@ registerModelingCapability({ id: 'conceptual-frame', kind: 'building', input: bu
     b.add('bim_create_boundaries', { boundaries: [{ category: 'structure.slab', storey, type: slab, outline, holes: [shaft], offset: 0 }] });
     b.add('bim_create_walls', { walls: [{ storey, type: wall, points: outline, closed: true, height: r.floorHeight }] });
   }
-  const roof = b.created(() => b.add('bim_create_boundaries', { boundaries: [{ category: 'architecture.roof', storey: `UMB-L${r.floors}`, type: roofType, outline, offset: .2 / Math.cos(r.roofPitch * Math.PI / 180), slope: { azimuth: 0, pitch: r.roofPitch } }] }))[0];
+  const offset=.2/Math.cos(r.roofPitch*Math.PI/180);
+  const roof = b.created(() => r.roofForm==='mono'
+    ? b.add('bim_create_boundaries', { boundaries: [{ category: 'architecture.roof', storey: `UMB-L${r.floors}`, type: roofType, outline, offset, slope: { azimuth: 0, pitch: r.roofPitch } }] })
+    : b.add('bim_create_pitched_roofs',{roofs:[{storey:`UMB-L${r.floors}`,type:roofType,outline,form:r.roofForm,ridge:'long',pitch:r.roofPitch,overhang:r.roofOverhang,offset}]}))[0];
   const top = Object.values(b.bim.storeys).find(s => s.name === `UMB-L${r.floors - 1}`)!;
   b.add('bim_attach_walls_to_roof', { roof, walls: Object.values(b.bim.elements).filter(e => e.kind === 'wall' && e.storey === top.id).map(e => e.id) });
 } });
@@ -192,14 +196,24 @@ function compile(ctx: ToolContext<any>, input: Input) {
   const planId = 'PLAN-' + hash({ project: ctx.project, requirements: parsed.data, sources: input.sources, state: [...before].filter(([id]) => id !== 'modeling') });
   if (input.planId && input.planId !== planId) throw new DomainError('Model changed since preview; plan again.', 'STALE_MODEL_PLAN');
   const b = new Builder(ctx); cap.compile(b, parsed.data);
+  // Coordinate only newly created elements and their neighbors. Safe fixes become ordinary governed child commands.
+  const old = before.get('bim') as BimState,created=Object.keys(b.bim.elements).filter(id=>!old.elements[id]);
+  const attempted=new Set<string>();let repairIterations=0;
+  for(let iteration=0;iteration<2&&created.length;iteration++){
+    const safe=coordinateModel(b.bim,{ids:created}).issues.filter(i=>i.repair&&!attempted.has(i.id));
+    if(!safe.length)break;
+    for(const issue of safe){attempted.add(issue.id);b.add(issue.repair!.tool,issue.repair!.input);}
+    repairIterations++;
+  }
+  const coordination=coordinateModel(b.bim,{ids:created});
+  if(coordination.issues.some(i=>i.severity==='error'))throw new DomainError('Generated geometry has unresolved coordination errors. Nothing was committed.','MODEL_VALIDATION_FAILED',{issues:JSON.stringify(coordination.issues.filter(i=>i.severity==='error'))});
   const packs = [...rules.values()].filter(r => r.status === 'implemented' && r.applies(cap.kind));
   const validation = packs.flatMap(r => r.evaluate(b.bim));
   if (validation.length) throw new DomainError('Generated model failed validation.', 'MODEL_VALIDATION_FAILED', { issues: JSON.stringify(validation) });
-  const old = before.get('bim') as BimState;
   return { steps: b.steps, permissions: ['bim.read', ...(input.sources.length ? ['files.read'] : []), ...(input.requirements.kind === 'corridor' ? ['infra.read'] : [])], summary: { planId, requestId: input.requestId, sources: input.sources, engines: cap.engines,
-    created: Object.keys(b.bim.elements).filter(id => !old.elements[id]),
+    created,coordination,repair:{maxIterations:2,iterations:repairIterations,attemptedIssues:[...attempted]},
     infrastructure: Object.keys(b.states.get('infra')?.roads ?? {}).filter(id => !before.get('infra')?.roads?.[id]),
-    assumptions: input.requirements.kind === 'building' ? ['Conceptual rectangular footprint; totalArea is summed gross floor area.', 'Example concrete sections and thicknesses; no structural adequacy calculation.', 'Reserved conceptual service shaft at one-quarter footprint in every slab.', 'Single-plane sloping roof; no sloping facade engine.'] : [],
+    assumptions: input.requirements.kind === 'building' ? ['Conceptual rectangular footprint; totalArea is summed gross floor area.', 'Example concrete sections and thicknesses; no structural adequacy calculation.', 'Reserved conceptual service shaft at one-quarter footprint in every slab.', `Roof form ${(parsed.data as z.infer<typeof building>).roofForm}; no sloping facade engine.`] : [],
     warnings: ['Conceptual model; no structural, hydraulic, electrical or code adequacy calculation.'], validation, rulePacks: packs.map(p => p.id),
     stages: b.steps.map((s, i) => ({ id: i + 1, tool: s.tool, dependsOn: i ? [i] : [] })) } };
 }
@@ -235,9 +249,28 @@ const revise: CommandTool<any> = { name: 'model_revise', title: 'model.revise', 
   input: z.object({ changes: z.array(z.object({ tool: z.enum(['bim_update_elements', 'bim_update_storeys', 'bim_update_types', 'infra_update_alignment', 'infra_update_road_corridor', 'infra_update_component_type']), input: z.record(z.string(), z.unknown()) }).strict()).min(1).max(50) }).strict(),
   description: 'Controlled atomic revision through registered domain editors; dependent validation and authorization remain enforced.',
   decide() { throw new Error('Composite command'); }, expand(ctx, i) { return revision(ctx, i.changes); } };
-const repair: CommandTool<any> = { ...revise, name: 'model_repair', title: 'model.repair', input: z.object({ roof: z.string(), walls: z.array(z.string()).min(1) }).strict(),
-  description: 'Attach explicitly selected walls to one single-plane roof. Geometry follows subsequent roof edits. Ambiguous structural or routing decisions are refused.',
-  expand(ctx, i) { return revision(ctx, [{ tool: 'bim_attach_walls_to_roof', input: i }]); } };
+const repair: CommandTool<any> = { ...revise, name: 'model_repair', title: 'model.repair', input: z.object({ roof: z.string().optional(), walls: z.array(z.string()).min(1).optional(),
+  issueIds:z.array(z.string()).min(1).max(200).optional(),maxAttempts:z.number().int().min(1).max(3).default(2) }).strict(),
+  description: 'Preview or atomically repair unique compatible connector pairs, unjoined wall endpoints and adjacent roof attachments detected by model.validate. Bounded revalidation; hard clashes and ambiguous alternatives require design decisions.',
+  expand(ctx, i) {
+    if(i.roof||i.walls){if(!i.roof||!i.walls||i.issueIds)throw new DomainError('Provide roof + walls, or issueIds, not a mixture.','INVALID_INPUT');return revision(ctx,[{tool:'bim_attach_walls_to_roof',input:{roof:i.roof,walls:i.walls}}]);}
+    const b=new Builder(ctx),initial=coordinateModel(b.bim),selected=i.issueIds?new Set<string>(i.issueIds):undefined;
+    if(selected&&[...selected].some(id=>!initial.issues.some(issue=>issue.id===id)))throw new DomainError('A selected issue no longer exists; validate again.','STALE_MODEL_PLAN');
+    const attempted=new Set<string>(),repaired:string[]=[];let iterations=0;
+    for(let attempt=0;attempt<i.maxAttempts;attempt++){
+      const before=b.steps.length;
+      for(const issue of coordinateModel(b.bim).issues)if(issue.repair&&(!selected||selected.has(issue.id))&&!attempted.has(issue.id)){
+        attempted.add(issue.id);b.add(issue.repair.tool,issue.repair.input);repaired.push(issue.id);
+      }
+      if(b.steps.length===before)break;
+      iterations++;
+    }
+    if(!b.steps.length)throw new DomainError('No unique safe repair is available; explicit engineering selection is required.','UNSUPPORTED_CAPABILITY');
+    const after=coordinateModel(b.bim),oldErrors=new Set(initial.issues.filter(i=>i.severity==='error').map(i=>i.id));
+    if(after.issues.some(i=>i.severity==='error'&&!oldErrors.has(i.id)))throw new DomainError('Repair would introduce a new coordination error. Nothing was committed.','MODEL_VALIDATION_FAILED');
+    const result=revision(ctx,b.steps);
+    return {...result,summary:{...result.summary,repaired:repaired.map(id=>({id,status:after.issues.some(i=>i.id===id)?'unresolved':'verified'})),remaining:after.issues.filter(i=>i.severity!=='info'),iterations,attemptedRepairs:attempted.size,maxAttempts:i.maxAttempts}};
+  } };
 export const modelingModule: ModuleDef = { id: 'modeling', title: 'Universal Modeling Brain', initialState: () => ({}), apply: s => s, tools: [
   query('project_analyze', 'files.read', z.object({}), async ctx => {
     const c = await context(ctx);
@@ -255,7 +288,7 @@ export const modelingModule: ModuleDef = { id: 'modeling', title: 'Universal Mod
     return ctx.platform.execute(ctx.actor, ctx.project, t.name, i.input);
   }),
   query('model_plan', 'bim.read', ModelingInput, async (ctx, i) => compile(await context(ctx), i)), generate, revise,
-  query('model_validate', 'bim.read', z.object({}), async ctx => {
+  query('model_validate', 'bim.read', z.object({ids:z.array(z.string()).min(1).optional(),tolerance:z.number().positive().max(.01).default(.0001),clearance:z.number().min(0).max(10).default(0)}).strict(), async (ctx,input) => {
     const s = await ctx.platform.state<BimState>(ctx.project, 'bim');
     const issues = [...modelIssues(s), ...reinforcementGeometryIssues(s)];
     const checkedModules = ['bim'];
@@ -264,9 +297,11 @@ export const modelingModule: ModuleDef = { id: 'modeling', title: 'Universal Mod
       try { infraModule.validate?.(structuredClone(state), state); checkedModules.push('infra'); }
       catch (e) { if (!(e instanceof DomainError)) throw e; issues.push({ id: 'infra', reason: e.reason, message: e.message }); }
     }
-    return { issues, checkedModules, expectedStructuralConnections: structuralConnectivity(s),
-      checks: ['domain-invariants', 'host-relations', 'MEP-junction-consistency', 'attached-wall-roof'],
-      unsupported: ['general solid-solid clash detection', 'engineering adequacy', 'automatic obstacle rerouting'] };
+    const coordination=coordinateModel(s,input);
+    issues.push(...coordination.issues.filter(i=>i.severity!=='info').map(i=>({...i,reason:i.kind})));
+    return { issues, checkedModules,coordination,expectedStructuralConnections:coordination.issues.filter(i=>i.kind==='ExpectedStructuralIntersection'),
+      checks: ['domain-invariants', 'host-relations', 'MEP-junction-consistency', 'piecewise-wall-roof','indexed-polyhedral-coordination'],
+      unsupported:coordination.coverage.unsupported };
   }), repair,
   query('model_export', 'bim.export', z.object({ format: z.enum(['ifc', 'frag']).default('ifc'), scope: z.enum(['bim', 'infra']).default('bim'), allowPartial: z.boolean().default(false) }), async (ctx, i) => {
     if (i.scope === 'infra') {

@@ -22,6 +22,71 @@ function setup(approvalMode: 'auto' | 'ai' = 'auto') {
   const state = () => p.state<BimState>('universal', 'bim');
   return { p, stores, modules, ex, state };
 }
+
+test('P1 repair: unique connector repair previews, requires AI approval, revalidates and survives replay/undo', async () => {
+  const t=setup('ai');
+  await t.ex('bim_create_storeys',{storeys:[{name:'L0',elevation:0}]});
+  await t.ex('bim_create_types',{types:[{kind:'pipe',name:'P25',diameter:.025}]});
+  await t.ex('bim_create_mep_systems',{systems:[{name:'CW',domain:'piping',classification:'domestic_cold_water'}]});
+  const point=(x:number)=>({storey:'L0',at:[x,0],offset:1});
+  await t.ex('bim_create_pipes',{pipes:[{type:'P25',system:'CW',route:[point(0),point(1)]},{type:'P25',system:'CW',route:[point(1),point(2)]}]});
+  const before=canonicalJson(await t.state()),seq=await t.p.seq('universal');
+  const validation=(await t.ex('model_validate',{})).result;
+  const missing=validation.coordination.issues.filter((i:any)=>i.kind==='MissingConnection');
+  assert.equal(missing.length,1);assert.equal(missing[0].autoRepairable,true);
+  assert.ok(validation.issues.some((i:any)=>i.reason==='DisconnectedSystem'));
+  const input={issueIds:[missing[0].id],maxAttempts:2};
+  assert.equal((await t.ex('model_repair',input,human,true)).status,'preview');
+  assert.equal(await t.p.seq('universal'),seq);assert.equal(canonicalJson(await t.state()),before);
+  const pending=await t.ex('model_repair',input,ai);assert.equal(pending.status,'proposed');
+  assert.equal(await t.p.seq('universal'),seq);
+  await t.p.approve({...human,id:'reviewer'},'universal',pending.proposalId);
+  assert.equal(Object.keys((await t.state()).mepJunctions).length,1);
+  assert.deepEqual((await t.ex('model_validate',{})).result.issues,[]);
+  const current=canonicalJson(await t.state());
+  assert.equal(canonicalJson(await new Platform({modules:t.modules,stores:t.stores,snapshotPolicy:false}).state('universal','bim')),current);
+  await assert.rejects(t.ex('model_repair',input),(e:any)=>e.reason==='STALE_MODEL_PLAN');
+  await t.ex('platform_undo',{});assert.equal(canonicalJson(await t.state()),before);
+});
+
+test('P1 repair: ambiguous coincident connectors require selection and never mutate the model', async () => {
+  const t=setup();await t.ex('bim_create_storeys',{storeys:[{name:'L0',elevation:0}]});
+  await t.ex('bim_create_types',{types:[{kind:'pipe',name:'P25',diameter:.025}]});
+  await t.ex('bim_create_mep_systems',{systems:[{name:'CW',domain:'piping',classification:'domestic_cold_water'}]});
+  const point=(x:number,y=0)=>({storey:'L0',at:[x,y],offset:1});
+  await t.ex('bim_create_pipes',{pipes:[{type:'P25',system:'CW',route:[point(0),point(1)]},{type:'P25',system:'CW',route:[point(1),point(2)]},{type:'P25',system:'CW',route:[point(1),point(2,.1)]}]});
+  const issues=(await t.ex('model_validate',{})).result.coordination.issues.filter((i:any)=>i.kind==='MissingConnection');
+  assert.ok(issues.length>0);assert.ok(issues.every((i:any)=>!i.autoRepairable));
+  const before=canonicalJson(await t.state()),seq=await t.p.seq('universal');
+  await assert.rejects(t.ex('model_repair',{}),(e:any)=>e.reason==='UNSUPPORTED_CAPABILITY');
+  assert.equal(canonicalJson(await t.state()),before);assert.equal(await t.p.seq('universal'),seq);
+});
+
+for(const roofForm of ['gable','hip'])test(`P1 high-level ${roofForm} building uses the existing roof engine and Fragments pipeline`, async()=>{
+  const t=setup();await t.ex('model_generate',{...home,requirements:{...home.requirements,roofForm}});
+  assert.equal(Object.values((await t.state()).elements).filter(e=>e.kind==='pitched_roof').length,1);
+  assert.deepEqual((await t.ex('model_validate',{})).result.issues,[]);
+  assert.ok((await ifcToFrag(toIfc(await t.state(),{projectKey:'phase2'}))).byteLength>1000);
+});
+
+test('P1 generation: bounded coordination repairs unique links and refuses unowned crossing solids atomically',async()=>{
+  registerModelingCapability({id:'coordination-proof',kind:'coordination-proof',engines:['profile_member','mep_segment'],input:z.object({kind:z.literal('coordination-proof'),clash:z.boolean()}),compile(b,r){
+    if(r.clash)b.add('bim_create_profile_members',{members:[{category:'structure.framing',storey:'L0',type:'B',start:[0,1],end:[2,1],z:2.5},{category:'structure.framing',storey:'L0',type:'B',start:[1,0],end:[1,2],z:2.5}]});
+    else {const point=(x:number)=>({storey:'L0',at:[x,0],offset:1});b.add('bim_create_pipes',{pipes:[{type:'P25',system:'CW',route:[point(0),point(1)]},{type:'P25',system:'CW',route:[point(1),point(2)]}]});}
+  }});
+  const t=setup();await t.ex('bim_create_storeys',{storeys:[{name:'L0',elevation:0}]});
+  await t.ex('bim_create_types',{types:[{kind:'pipe',name:'P25',diameter:.025},{kind:'beam',name:'B',profile:{shape:'rect',b:.2,h:.2}}]});
+  await t.ex('bim_create_mep_systems',{systems:[{name:'CW',domain:'piping',classification:'domestic_cold_water'}]});
+  const request={intent:'Coordination extension proof',requestId:'bounded',requirements:{kind:'coordination-proof',clash:false}};
+  const plan=(await t.ex('model_plan',request)).result.summary;
+  assert.equal(plan.repair.iterations,1);assert.equal(plan.repair.attemptedIssues.length,1);
+  assert.equal(Object.keys((await t.state()).mepJunctions).length,0);
+  await t.ex('model_generate',{...request,planId:plan.planId});
+  assert.equal(Object.keys((await t.state()).mepJunctions).length,1);
+  const before=canonicalJson(await t.state()),seq=await t.p.seq('universal');
+  await assert.rejects(t.ex('model_generate',{...request,requestId:'crossing',requirements:{kind:'coordination-proof',clash:true}}),(e:any)=>e.reason==='MODEL_VALIDATION_FAILED');
+  assert.equal(canonicalJson(await t.state()),before);assert.equal(await t.p.seq('universal'),seq);
+});
 test('A/G: high-level building plan -> atomic generation -> live roof dependency -> IFC -> undo/replay/snapshot', async () => {
   const t = setup();
   const plan = await t.ex('model_plan', home);
