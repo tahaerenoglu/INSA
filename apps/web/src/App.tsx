@@ -147,6 +147,10 @@ export function App() {
   const [tools, setTools] = useState<ToolInfo[]>([]);
   const [measurementOn,setMeasurementOn]=useState(false),[snapOn,setSnapOn]=useState(true),[measurementText,setMeasurementText]=useState('');
 
+  const [sourceModels,setSourceModels]=useState<{id:string;title:string;discipline:string;version:number;loaded:boolean;visible:boolean;warningCount?:number}[]>([]);
+  const [sourceStatus,setSourceStatus]=useState('');
+  const [sourceElement,setSourceElement]=useState<any>(null);
+  const sourceLoadVersion=useRef(0);
   const [selected, setSelected] = useState<string | null>(null);
 
   const [element, setElement] = useState<any>(null);
@@ -224,8 +228,8 @@ export function App() {
 
 
   const openProject=(id:string,navigate=true)=>{
-    setSelected(null);setElement(null);setSummary(null);setTree([]);setInfra(null);setProposals([]);setHistory([]);setPlanStorey('');setModelQuery('');setAppearanceWarnings([]);setError('');setLive(false);setIsolatedInfraIds([]);setMeshSectionOpen(false);setCenter('3d');setTab(sessionStorage.getItem(`insa_draft_${id}`)?'assistant':'props');setMeasurementOn(false);setSnapOn(true);setProject(id);
-    if(navigate){const url=new URL(window.location.href);if(id)url.searchParams.set('project',id);else url.searchParams.delete('project');url.searchParams.delete('view');url.searchParams.delete('infraOnly');window.history.pushState(null,'',url);}
+    ++sourceLoadVersion.current;setSourceModels([]);setSourceStatus('');setSourceElement(null);setSelected(null);setElement(null);setSummary(null);setTree([]);setInfra(null);setProposals([]);setHistory([]);setPlanStorey('');setModelQuery('');setAppearanceWarnings([]);setError('');setLive(false);setIsolatedInfraIds([]);setMeshSectionOpen(false);setCenter('3d');setTab(sessionStorage.getItem(`insa_draft_${id}`)?'assistant':'props');setMeasurementOn(false);setSnapOn(true);setProject(id);
+    if(navigate){const url=new URL(window.location.href);if(id)url.searchParams.set('project',id);else url.searchParams.delete('project');url.searchParams.delete('view');url.searchParams.delete('sourceModels');url.searchParams.delete('infraOnly');window.history.pushState(null,'',url);}
   };
   useEffect(()=>{const back=()=>openProject(new URLSearchParams(window.location.search).get('project')??'',false);window.addEventListener('popstate',back);return()=>window.removeEventListener('popstate',back);},[]);
   // viewer lifecycle
@@ -247,6 +251,7 @@ export function App() {
 
     v.init(canvasRef.current).catch(fail);
 
+    v.onSourceSelect=data=>{setSourceElement(data);setTab('props');setInspectorOpen(true);};
     v.onSelect = (gid) => {
 
       if (!gid) return setSelected(null);
@@ -320,6 +325,21 @@ export function App() {
   }, [project, planStorey, isolatedInfraIds]);
 
 
+
+  const openSourceModels=async(items:{id:string;title:string;discipline:string;version:number}[])=>{
+    const viewer=viewerRef.current;if(!viewer||!items.length||currentProject.current!==project)return;
+    const request=++sourceLoadVersion.current,selectedProject=project;
+    const current=()=>sourceLoadVersion.current===request&&currentProject.current===selectedProject&&viewerRef.current===viewer;
+    setCenter('3d');setSourceElement(null);setSourceModels(items.map(i=>({...i,loaded:false,visible:true})));setSourceStatus('Kaynak BIM modelleri açılıyor…');
+    try{const generation=await viewer.beginSourceModels();
+      for(const item of items){if(!current())return;setSourceStatus(`${item.discipline}: ${item.title} yükleniyor…`);const result=await api.sourceFrag(selectedProject,item.id,item.version);if(!current())return;await viewer.addSourceModel(result.bytes,item.id,item.title,generation,item.version);if(!current())return;setSourceModels(old=>old.map(m=>m.id===item.id?{...m,loaded:true,warningCount:result.warningCount}:m));}
+      if(!current())return;await viewer.fit();setSourceStatus(`${items.length} kaynak BIM modeli. Özgün ölçüler; düzenlenebilir INSA elemanı değil.`);
+      sessionStorage.setItem(`insa_source_models_${selectedProject}`,JSON.stringify(items));const url=new URL(window.location.href);url.searchParams.set('sourceModels','all');window.history.replaceState(null,'',url);
+      void viewer.sourceDiagnostics().then(stats=>{if(current())(window as any).__insaSourceModels=stats;}).catch(()=>{});
+    }catch(e){if(current()){setSourceStatus('Kaynak model açılamadı; yüklenen disiplinler aşağıda gösterilir.');fail(e);}}
+  };
+  const closeSourceModels=()=>{++sourceLoadVersion.current;void viewerRef.current?.clearSourceModels();setSourceModels([]);setSourceStatus('');setSourceElement(null);sessionStorage.removeItem(`insa_source_models_${project}`);const url=new URL(window.location.href);url.searchParams.delete('sourceModels');window.history.replaceState(null,'',url);};
+  useEffect(()=>{let active=true;setSourceModels([]);setSourceStatus('');setSourceElement(null);try{const saved=JSON.parse(sessionStorage.getItem(`insa_source_models_${project}`)??'null');if(user&&Array.isArray(saved)&&saved.length&&saved.length<=10)void openSourceModels(saved);else if(user&&project&&new URL(window.location.href).searchParams.get('sourceModels')==='all')void api.run(project,'files_list',{limit:200}).then(r=>{if(active)void openSourceModels(r.result.files.filter((f:any)=>!f.archived&&/\.(ifc|ifczip)$/i.test(f.current.filename)).slice(0,10).map((f:any)=>({id:f.id,title:f.title,discipline:f.discipline,version:f.current.version})));}).catch(e=>active&&fail(e));}catch{}return()=>{active=false;};},[user,project]);
 
   // project switch + live stream
 
@@ -412,7 +432,7 @@ export function App() {
       <aside className="left" aria-label="Proje gezgini">
         <div className="explorer-heading"><div><span className="eyebrow">PROJE GEZGİNİ</span><h2>Model ağacı</h2></div><button className="icon-button" aria-label="Proje gezginini kapat" onClick={()=>setSidebarOpen(false)}><PanelLeftClose size={17}/></button></div>
         {isolatedInfraIds.length>0&&<div className="isolation-notice">Filtreli görünüm<button className="text-button" onClick={clearInfraIsolation}>Tümünü göster</button></div>}
-        <ProjectExplorer key={project} project={project} resources={infra?.resources??[]} tree={tree} selected={selected} query={modelQuery} onQuery={setModelQuery} kindLabels={KIND_TR} onSelect={id=>{setSelected(id);openPanel('props');setCenter('3d');void viewerRef.current?.selectInfrastructure(id);}} onBimSelect={pickFromTree} onVisibility={(id,v)=>viewerRef.current?.setInfrastructureVisible(id,v)} onBimVisibility={(items,v)=>void viewerRef.current?.setBimVisible(items.flatMap(i=>i.global_ids??[i.global_id]),v)} onBimIsolate={keep=>void viewerRef.current?.isolateBim(tree.flatMap(st=>Object.values(st.groups).flat().flatMap(i=>i.global_ids??[i.global_id])),keep.flatMap(i=>i.global_ids??[i.global_id]))} onBimShowAll={()=>void viewerRef.current?.setBimVisible(tree.flatMap(st=>Object.values(st.groups).flat().flatMap(i=>i.global_ids??[i.global_id])),true)}/>
+        {sourceModels.length>0?<section style={{padding:16}}><h3>Kaynak BIM disiplinleri</h3><p role="status">{sourceStatus}</p><p>Kaynak dosyalar ortak IFC koordinatlarında gösterilir. Pafta/parametrik yeniden üretim veya uygunluk onayı değildir.</p>{sourceModels.map(m=><label key={m.id} style={{display:'block',margin:'16px 0'}}><input type="checkbox" checked={m.visible} disabled={!m.loaded} onChange={e=>{const visible=e.target.checked;setSourceModels(old=>old.map(x=>x.id===m.id?{...x,visible}:x));void viewerRef.current?.sourceVisible(m.id,visible);}}/> {m.discipline}<small style={{display:'block'}}>{m.title} · v{m.version} · {m.loaded?'Açık':'Bekliyor'}</small>{!!m.warningCount&&<small style={{display:'block',color:'#945500'}}>Dönüşümde {m.warningCount} geometri uyarısı; tam eşdeğerlik doğrulanmadı.</small>}</label>)}<button onClick={closeSourceModels}>INSA modeline dön</button></section>:<ProjectExplorer key={project} project={project} resources={infra?.resources??[]} tree={tree} selected={selected} query={modelQuery} onQuery={setModelQuery} kindLabels={KIND_TR} onSelect={id=>{setSelected(id);openPanel('props');setCenter('3d');void viewerRef.current?.selectInfrastructure(id);}} onBimSelect={pickFromTree} onVisibility={(id,v)=>viewerRef.current?.setInfrastructureVisible(id,v)} onBimVisibility={(items,v)=>void viewerRef.current?.setBimVisible(items.flatMap(i=>i.global_ids??[i.global_id]),v)} onBimIsolate={keep=>void viewerRef.current?.isolateBim(tree.flatMap(st=>Object.values(st.groups).flat().flatMap(i=>i.global_ids??[i.global_id])),keep.flatMap(i=>i.global_ids??[i.global_id]))} onBimShowAll={()=>void viewerRef.current?.setBimVisible(tree.flatMap(st=>Object.values(st.groups).flat().flatMap(i=>i.global_ids??[i.global_id])),true)}/> }
         {infra?.diagnostic&&<p role="status" className="muted">{infra.diagnostic}</p>}
       </aside>
 
@@ -428,7 +448,7 @@ export function App() {
         </div>
         {appearanceWarnings.length>0&&<div role="status" style={{padding:8,color:"#835000",background:"#fff3d0"}}>Bazı dokular yüklenemedi; temel malzeme rengi gösteriliyor. ({appearanceWarnings.length})</div>}
 
-        {center==='files'&&<ProjectFiles key={project} project={project} seq={summary?.seq??0} canWrite={Boolean(me?.permissions?.some((p:string)=>p==='*'||p==='files.*'||p==='files.write'))} onProposal={()=>{setTab('proposals');void refresh(false);}}/>}
+        {center==='files'&&<ProjectFiles key={project} project={project} onSourceModels={items=>void openSourceModels(items.slice(0,10))} seq={summary?.seq??0} canWrite={Boolean(me?.permissions?.some((p:string)=>p==='*'||p==='files.*'||p==='files.write'))} onProposal={()=>{setTab('proposals');void refresh(false);}}/>}
 
         <div ref={canvasRef} className="canvas" style={{ display: center === "3d" ? "block" : "none" }} />
 
@@ -457,7 +477,7 @@ export function App() {
 
           </div>}
 
-          {tab === "props" && (!selected?<div className="empty-state inspector-empty"><Box size={32}/><strong>Bir elemanla başlayın</strong><p>Özelliklerini, malzemesini ve miktarlarını görmek için modelden veya ağaçtan bir eleman seçin.</p><div className="empty-actions"><button className="ghost" onClick={()=>openPanel('navigate')}><Compass size={14}/>Güzergâhta gezin</button><button className="ghost" onClick={()=>setCenter('files')}><Files size={14}/>Proje dosyaları</button></div></div>:selected?.startsWith('infra:')?<StructureProperties element={element} materials={infra?.materials??{}} resources={infra?.resources??[]}/>:<Properties element={element} project={project} />)}
+          {tab === "props" && (sourceModels.length>0?<section style={{padding:16}}><h3>Kaynak IFC özellikleri</h3><p>Salt okunur kaynak; kimlikler dosya ve IFC GUID ile korunur.</p>{sourceElement?<pre style={{whiteSpace:'pre-wrap',overflowWrap:'anywhere'}}>{JSON.stringify(sourceElement,null,2)}</pre>:<p>3B modelden bir eleman seçin.</p>}</section>:!selected?<div className="empty-state inspector-empty"><Box size={32}/><strong>Bir elemanla başlayın</strong><p>Özelliklerini, malzemesini ve miktarlarını görmek için modelden veya ağaçtan bir eleman seçin.</p><div className="empty-actions"><button className="ghost" onClick={()=>openPanel('navigate')}><Compass size={14}/>Güzergâhta gezin</button><button className="ghost" onClick={()=>setCenter('files')}><Files size={14}/>Proje dosyaları</button></div></div>:selected?.startsWith('infra:')?<StructureProperties element={element} materials={infra?.materials??{}} resources={infra?.resources??[]}/>:<Properties element={element} project={project} />)}
 
           {tab === "proposals" && (
 

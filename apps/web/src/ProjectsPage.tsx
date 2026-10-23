@@ -9,7 +9,7 @@ export function ProjectsPage({user,projects,canCreate,onOpen,onChanged,onLogout}
  const submit=async()=>{
   setBusy(true);setError('');let id=created;
   try{
-   if(files.some(f=>f.size>10*1024*1024))throw Error('Her dosya en fazla 10 MiB olabilir.');
+   if(files.some(f=>f.size>(/\.ifczip$/i.test(f.name)?16:10)*1024*1024))throw Error('Her dosya en fazla 10 MiB olabilir.');
    if(!id){id=`proje-${Date.now().toString(36)}-${crypto.randomUUID().slice(0,8)}`;const r=await api.createProject(id,name.trim(),description.trim(),projectType);setCreated(id);onChanged();if(r.status==='proposed'){setNotice(`Proje kaydı ${r.proposalId} onayını bekliyor. Dosyaları onaydan sonra proje içinden yükleyebilirsiniz.`);return;}}
    for(const file of files){
     setNotice(`${file.name} yükleniyor…`);const stage=await api.stageProjectFile(id,file);

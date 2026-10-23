@@ -8,7 +8,7 @@
  */
 import * as fs from "node:fs";
 import {registerGoogleMap} from './google-map.js';
-import {fileVersion,type FilesState} from '@insa/files';
+import {fileVersion,ifcSourceBytes,type FilesState} from '@insa/files';
 import Fastify, { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { randomUUID } from "node:crypto";
 import { createHash } from "node:crypto";
@@ -48,6 +48,8 @@ export function buildApp(opts: AppOptions): FastifyInstance {
   const users = opts.users ?? DEV_USERS;
   const sessions = new Map<string, WebUser>();
   const fragCache = new Map<string, { seq: number; bytes: Uint8Array }>();
+  const sourceFragCache=new Map<string,{bytes:Uint8Array;warningIds:number[]}>();
+  let sourceConversion:Promise<unknown>=Promise.resolve();
   const app = Fastify({ logger: opts.logger ?? false, bodyLimit: 20 * 1024 * 1024 });
 
   app.setErrorHandler((err: any, req, reply) => {
@@ -279,6 +281,26 @@ export function buildApp(opts: AppOptions): FastifyInstance {
       .send(fs.createReadStream(a.path));
   });
   app.get("/api/projects/:project/audit", async (req) => result(await run(auth(req), projectOf(req), "platform_audit_log", { limit: 100 })));
+
+  // Read-only source BIM: original IFC geometry, distinct from authored state.
+  app.get('/api/projects/:project/files/:file/model.frag',async(req,reply)=>{
+    const actor=auth(req),project=projectOf(req);
+    if(!can(actor,'files.read',platform.roles)||!can(actor,'bim.read',platform.roles))throw new HttpError(403,'Not allowed');
+    const {version}=z.object({version:z.coerce.number().int().positive()}).parse(req.query);
+    const {file,version:revision}=fileVersion(await platform.state<FilesState>(project,'files'),(req.params as any).file,version);
+    if(file.archived)throw new HttpError(409,'Source file is archived.');
+    if(!/\.(ifc|ifczip)$/i.test(revision.filename))throw new HttpError(415,'IFC or IFCZIP source required.');
+    const original=platform.requireArtifacts().readProjectFile(project,revision.asset),key=project+':'+revision.sha256;
+    const convert=async()=>{
+      let entry=sourceFragCache.get(key);
+      if(!entry){const warningIds=new Set<number>(),bytes=await ifcToFrag(ifcSourceBytes(original,/\.ifczip$/i.test(revision.filename)),{onGeometryWarning:id=>warningIds.add(id)});entry={bytes,warningIds:[...warningIds]};sourceFragCache.set(key,entry);
+        while(sourceFragCache.size>5||[...sourceFragCache.values()].reduce((n,b)=>n+b.bytes.length,0)>128*1024*1024){const oldest=sourceFragCache.keys().next().value;if(!oldest)break;sourceFragCache.delete(oldest);}}
+      return entry;
+    };
+    const pending=sourceConversion.then(convert);sourceConversion=pending.catch(()=>{});
+    const {bytes,warningIds}=await pending;
+    return reply.header('content-type','application/octet-stream').header('cache-control','private, no-store').header('x-insa-model-kind','source-reference').header('x-insa-geometry-warning-count',warningIds.length).header('x-insa-geometry-warning-ids',warningIds.slice(0,50).join(',')).send(Buffer.from(bytes));
+  });
 
   // ------------------------------------------------------------ in-app assistant
   const model = opts.model === undefined ? defaultModel() : opts.model;

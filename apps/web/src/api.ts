@@ -23,6 +23,7 @@ async function req<T>(method: string, url: string, body?: unknown): Promise<T> {
 }
 
 export const api = {
+  async sourceFrag(p:string,file:string,version:number){const response=await fetch(`/api/projects/${encodeURIComponent(p)}/files/${encodeURIComponent(file)}/model.frag?version=${version}`,{headers:{authorization:`Bearer ${token}`}});if(!response.ok){const error=await response.json();throw new ApiError(response.status,error.error);}return {bytes:new Uint8Array(await response.arrayBuffer()),warningCount:Number(response.headers.get('x-insa-geometry-warning-count')??0)};},
   portalMapTargets:(p:string)=>req<any>('GET',`/api/projects/${encodeURIComponent(p)}/google-map/portal-targets`),
   portalMapPlan:(p:string,input:unknown)=>req<any>('POST',`/api/projects/${encodeURIComponent(p)}/google-map/portal-plan`,input),
   bridgeMapTargets:(p:string)=>req<any>('GET',`/api/projects/${encodeURIComponent(p)}/google-map/bridge-targets`),
@@ -30,7 +31,7 @@ export const api = {
   googleMap:(p:string)=>req<any>('GET',`/api/projects/${encodeURIComponent(p)}/google-map`),
   googleMapSession:(p:string,provider:'google'|'cesium'|'terrain'='google',accessToken?:string)=>req<{apiKey:string;provider:'google'|'cesium'|'terrain';assetId?:number}>('POST',`/api/projects/${encodeURIComponent(p)}/google-map/session`,{provider,...(accessToken?{accessToken}:{})}),
   projectFileUrl:(p:string,file:string,version:number)=>`/api/projects/${encodeURIComponent(p)}/files/${encodeURIComponent(file)}/download?version=${version}&token=${encodeURIComponent(token)}`,
-  async stageProjectFile(p:string,file:File){if(file.size>10*1024*1024)throw new Error('En fazla 10 MiB yüklenebilir.');const base64=await new Promise<string>((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result).split(',')[1]);reader.onerror=()=>reject(new Error('Dosya okunamadı.'));reader.readAsDataURL(file);});return req<any>('POST',`/api/projects/${encodeURIComponent(p)}/tools/files_upload`,{input:{filename:file.name,base64}});},
+  async stageProjectFile(p:string,file:File){if(file.size>(/\.ifczip$/i.test(file.name)?16:10)*1024*1024)throw new Error('Dosya sınırı 10 MiB; IFCZIP için 16 MiB.');const base64=await new Promise<string>((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result).split(',')[1]);reader.onerror=()=>reject(new Error('Dosya okunamadı.'));reader.readAsDataURL(file);});return req<any>('POST',`/api/projects/${encodeURIComponent(p)}/tools/files_upload`,{input:{filename:file.name,base64}});},
   async uploadCad(p:string,file:File){const base64=await new Promise<string>((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result).split(',')[1]);reader.onerror=reject;reader.readAsDataURL(file);});return req<any>('POST',`/api/projects/${encodeURIComponent(p)}/cad-source`,{filename:file.name,base64});},
   cadSourceUrl:(p:string,id:string)=>`/api/projects/${encodeURIComponent(p)}/cad-source/${encodeURIComponent(id)}?token=${token}`,
 

@@ -1,0 +1,21 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';
+import fs from 'node:fs';import os from 'node:os';import path from 'node:path';
+import {zipSync} from 'fflate';import {ArtifactStore,MemoryStores} from '@insa/core';
+import {toIfc,type BimState} from '@insa/bim';import {createPlatform} from '../../manager-mcp/src/runtime.js';import {buildApp} from '../src/app.js';
+test('source IFCZIP uses registered project revision and permissions, converts without mutating authoring state, archived sources reject',async t=>{
+ const root=fs.mkdtempSync(path.join(os.tmpdir(),'insa-source-ifc-'));t.after(()=>{assert.ok(path.resolve(root).startsWith(path.resolve(os.tmpdir())+path.sep));assert.ok(path.basename(root).startsWith('insa-source-ifc-'));fs.rmSync(root,{recursive:true,force:true});});
+ const platform=createPlatform(new MemoryStores(),new ArtifactStore(root)),app=buildApp({platform,model:null});t.after(()=>app.close());
+ const token=(await app.inject({method:'POST',url:'/api/auth/login',payload:{user:'taha'}})).json().token,headers={authorization:`Bearer ${token}`};
+ await app.inject({method:'POST',url:'/api/projects',headers,payload:{id:'source',name:'Source',projectType:'superstructure'}});
+ const actor={id:'source-test',name:'Test',kind:'human' as const,roles:['bim_manager']},run=(tool:string,input:unknown)=>platform.execute(actor,'source',tool,input) as Promise<any>;
+ await run('bim_create_storeys',{storeys:[{name:'L0',elevation:0}]});await run('bim_create_types',{types:[{kind:'column',name:'C1',profile:{shape:'rect',b:.4,h:.6}}]});await run('bim_create_profile_members',{members:[{category:'structure.column',type:'C1',storey:'L0',at:[0,0],height:3}]});
+ const ifc=toIfc(await platform.state<BimState>('source','bim'),{projectKey:'source'}),zipped=zipSync({'building.ifc':new TextEncoder().encode(ifc)});
+ const staged=(await run('files_upload',{filename:'building.ifczip',base64:Buffer.from(zipped).toString('base64')})).result;
+ const registered=await run('files_register',{filename:'building.ifczip',asset:staged.asset});const id=registered.summary.id,url=`/api/projects/source/files/${id}/model.frag?version=1`,seq=await platform.seq('source');
+ const unauth=await app.inject({method:'GET',url});assert.equal(unauth.statusCode,401);
+ const badVersion=await app.inject({method:'GET',url:url.replace('version=1','version=2'),headers});assert.notEqual(badVersion.statusCode,200);
+ const response=await app.inject({method:'GET',url,headers});assert.equal(response.statusCode,200);assert.equal(response.headers['x-insa-model-kind'],'source-reference');assert.ok(response.rawPayload.length>1000);assert.equal(await platform.seq('source'),seq);
+ const again=await app.inject({method:'GET',url,headers});assert.deepEqual(again.rawPayload,response.rawPayload);
+ const crossing=await app.inject({method:'GET',url:url.replace('/source/','/other/'),headers});assert.notEqual(crossing.statusCode,200);
+ await run('files_update',{file:id,archived:true});assert.equal((await app.inject({method:'GET',url,headers})).statusCode,409);
+});

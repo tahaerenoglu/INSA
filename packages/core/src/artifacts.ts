@@ -50,17 +50,17 @@ export class ArtifactStore {
 
   /** Immutable project documents reuse the same scoped artifact storage as CAD/terrain. */
   saveProjectFile(project:string,extension:string,data:Uint8Array){
-    if(!/^(pdf|txt|md|csv|json|xml|kml|kmz|dxf|dwg|ifc|docx|xlsx|png|jpg|jpeg)$/.test(extension)||!data.length||data.length>10*1024*1024)throw invalid('Unsupported document type or size; maximum 10 MiB.');
+    if(!/^(pdf|txt|md|csv|json|xml|kml|kmz|dxf|dwg|ifc|ifczip|docx|xlsx|png|jpg|jpeg)$/.test(extension)||!data.length||data.length>(extension==='ifczip'?16:10)*1024*1024)throw invalid('Unsupported document type or size; maximum 10 MiB (IFCZIP: 16 MiB).');
     const sha256=createHash('sha256').update(data).digest('hex'),id=`file-${sha256}.${extension}`,dir=this.dir(project,true),full=this.fileIn(dir,id);
     if(!fs.existsSync(full)){const tmp=path.join(dir,`.tmp-${randomUUID()}`);fs.writeFileSync(tmp,data,{flag:'wx'});fs.renameSync(tmp,full);}return {id,sha256,bytes:data.length};
   }
   readProjectFile(project:string,id:string):Buffer{
-    if(!/^file-[a-f0-9]{64}\.(pdf|txt|md|csv|json|xml|kml|kmz|dxf|dwg|ifc|docx|xlsx|png|jpg|jpeg)$/.test(id))throw invalid('Invalid project file reference.');
+    if(!/^file-[a-f0-9]{64}\.(pdf|txt|md|csv|json|xml|kml|kmz|dxf|dwg|ifc|ifczip|docx|xlsx|png|jpg|jpeg)$/.test(id))throw invalid('Invalid project file reference.');
     const full=this.fileIn(this.dir(project,false),id);if(!fs.existsSync(full))throw new DomainError('Project file missing.','ARTIFACT_NOT_FOUND');
-    if(fs.realpathSync(full)!==full||!fs.statSync(full).isFile()||fs.statSync(full).size>10*1024*1024)throw invalid('Invalid project file.');
+    if(fs.realpathSync(full)!==full||!fs.statSync(full).isFile()||fs.statSync(full).size>(id.endsWith('.ifczip')?16:10)*1024*1024)throw invalid('Invalid project file.');
     const bytes=fs.readFileSync(full);if(createHash('sha256').update(bytes).digest('hex')!==id.slice(5,69))throw invalid('Project file checksum mismatch.');return bytes;
   }
-  private fileAnalysisId(asset:string){if(!/^file-[a-f0-9]{64}\.(pdf|txt|md|csv|json|xml|kml|kmz|dxf|dwg|ifc|docx|xlsx|png|jpg|jpeg)$/.test(asset))throw invalid('Invalid project file reference.');return `analysis-${asset.slice(5).replace('.','-')}-v1.json`;}
+  private fileAnalysisId(asset:string){if(!/^file-[a-f0-9]{64}\.(pdf|txt|md|csv|json|xml|kml|kmz|dxf|dwg|ifc|ifczip|docx|xlsx|png|jpg|jpeg)$/.test(asset))throw invalid('Invalid project file reference.');return `analysis-${asset.slice(5).replace('.','-')}-v1.json`;}
   saveFileAnalysis(project:string,asset:string,data:string){
     this.readProjectFile(project,asset);if(Buffer.byteLength(data)>8*1024*1024)throw invalid('File analysis exceeds storage limit.');const full=this.fileIn(this.dir(project,true),this.fileAnalysisId(asset));
     if(!fs.existsSync(full)){const tmp=full+'.'+randomUUID()+'.tmp';fs.writeFileSync(tmp,data,{flag:'wx'});fs.renameSync(tmp,full);}

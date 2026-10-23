@@ -1,0 +1,1581 @@
+{
+  "baseline": {
+    "summary": {
+      "tests": 773,
+      "pass": 648,
+      "fail": 109,
+      "skipped": 16,
+      "cancelled": 0
+    },
+    "failures": [
+      {
+        "file": "apps/manager-mcp/test/authoring.test.ts",
+        "name": "MCP: split / merge / trim / extend / rehost run, return structured results, honour dry_run and refuse invalid edits without a trace",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: Error [WALL_INTERSECTION]: Walls W-0004 and W-0005 cross inside their segments. Split them into endpoint junctions before creating this geometry.",
+        "key": "apps/manager-mcp/test/authoring.test.ts :: MCP: split / merge / trim / extend / rehost run, return structured results, honour dry_run and refuse invalid edits without a trace"
+      },
+      {
+        "file": "apps/manager-mcp/test/mcp.test.ts",
+        "name": "stdio MCP governance: proposals need a human, roles are enforced",
+        "reason": "WINDOWS_TSX_LAUNCH",
+        "evidence": "Error: spawnSync C:\\Users\\terenoglu\\OneDrive - Kalyon Yatırım Holding A.Ş\\Masaüstü\\Codes\\INSA\\node_modules\\.bin\\tsx ENOENT",
+        "key": "apps/manager-mcp/test/mcp.test.ts :: stdio MCP governance: proposals need a human, roles are enforced"
+      },
+      {
+        "file": "apps/manager-mcp/test/parity.test.ts",
+        "name": "Platform.listTools() == the manager MCP server's tools/list, exactly (names, order-independent), including every required BIM tool",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: tools/list == Platform.listTools()",
+        "key": "apps/manager-mcp/test/parity.test.ts :: Platform.listTools() == the manager MCP server's tools/list, exactly (names, order-independent), including every required BIM tool"
+      },
+      {
+        "file": "apps/manager-mcp/test/security.test.ts",
+        "name": "MCP: invalid project ids are rejected with INVALID_PROJECT_ID and never reach storage",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: nothing created inside it either",
+        "key": "apps/manager-mcp/test/security.test.ts :: MCP: invalid project ids are rejected with INVALID_PROJECT_ID and never reach storage"
+      },
+      {
+        "file": "apps/manager-mcp/test/security.test.ts",
+        "name": "MCP: undo is governed — viewer denied; AI undo becomes a proposal; a human approves it",
+        "reason": "WINDOWS_TSX_LAUNCH",
+        "evidence": "Error: spawnSync C:\\Users\\terenoglu\\OneDrive - Kalyon Yatırım Holding A.Ş\\Masaüstü\\Codes\\INSA\\node_modules\\.bin\\tsx ENOENT",
+        "key": "apps/manager-mcp/test/security.test.ts :: MCP: undo is governed — viewer denied; AI undo becomes a proposal; a human approves it"
+      },
+      {
+        "file": "apps/manager-mcp/test/spatial.test.ts",
+        "name": "MCP: detect regions -> room + space -> query -> move -> occupancy refused -> unbounded after unjoin",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: touching is not joining",
+        "key": "apps/manager-mcp/test/spatial.test.ts :: MCP: detect regions -> room + space -> query -> move -> occupancy refused -> unbounded after unjoin"
+      },
+      {
+        "file": "apps/manager-mcp/test/topology.test.ts",
+        "name": "MCP: detect -> join -> query -> propagate -> unjoin, structured rejections, no event on failure",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:",
+        "key": "apps/manager-mcp/test/topology.test.ts :: MCP: detect -> join -> query -> propagate -> unjoin, structured rejections, no event on failure"
+      },
+      {
+        "file": "apps/web-server/test/api.test.ts",
+        "name": "auth, tools catalogue and the same governed tools over HTTP",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: {\"error\":\"Internal error. The details were logged on the server.\",\"code\":\"internal\",\"reason\":\"INTERNAL_ERROR\"}",
+        "key": "apps/web-server/test/api.test.ts :: auth, tools catalogue and the same governed tools over HTTP"
+      },
+      {
+        "file": "apps/web-server/test/api.test.ts",
+        "name": "viewer role: can look, cannot change (403)",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: {\"error\":\"Internal error. The details were logged on the server.\",\"code\":\"internal\",\"reason\":\"INTERNAL_ERROR\"}",
+        "key": "apps/web-server/test/api.test.ts :: viewer role: can look, cannot change (403)"
+      },
+      {
+        "file": "apps/web-server/test/api.test.ts",
+        "name": "viewer endpoints: .frag cached per model version, IFC, plan PNG",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: {\"error\":\"Internal error. The details were logged on the server.\",\"code\":\"internal\",\"reason\":\"INTERNAL_ERROR\"}",
+        "key": "apps/web-server/test/api.test.ts :: viewer endpoints: .frag cached per model version, IFC, plan PNG"
+      },
+      {
+        "file": "apps/web-server/test/architecture.test.ts",
+        "name": "the model tree has separate Floors / Ceilings / Roofs / Stairs / Railings / Rooms / Spaces groups; details carry category and engine",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: {\"error\":\"Internal error. The details were logged on the server.\",\"code\":\"internal\",\"reason\":\"INTERNAL_ERROR\"}",
+        "key": "apps/web-server/test/architecture.test.ts :: the model tree has separate Floors / Ceilings / Roofs / Stairs / Railings / Rooms / Spaces groups; details carry category and engine"
+      },
+      {
+        "file": "apps/web-server/test/assistant.test.ts",
+        "name": "assistant endpoint streams text, tool calls and results; writes as ai:<user>",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:",
+        "key": "apps/web-server/test/assistant.test.ts :: assistant endpoint streams text, tool calls and results; writes as ai:<user>"
+      },
+      {
+        "file": "apps/web-server/test/assistant.test.ts",
+        "name": "assistant disabled without a model -> 503; history is accepted for follow-up turns",
+        "reason": "RESPONSE_SHAPE_TYPEERROR",
+        "evidence": "TypeError: Cannot read properties of undefined (reading 'messages')",
+        "key": "apps/web-server/test/assistant.test.ts :: assistant disabled without a model -> 503; history is accepted for follow-up turns"
+      },
+      {
+        "file": "apps/web-server/test/authoring.test.ts",
+        "name": "split / merge / trim over HTTP keep the model tree, the element detail, the plan and the IFC consistent",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: {\"error\":\"Internal error. The details were logged on the server.\",\"code\":\"internal\",\"reason\":\"INTERNAL_ERROR\"}",
+        "key": "apps/web-server/test/authoring.test.ts :: split / merge / trim over HTTP keep the model tree, the element detail, the plan and the IFC consistent"
+      },
+      {
+        "file": "apps/web-server/test/mep.test.ts",
+        "name": "tree groups: pipes, ducts, cable trays, conduits; detail: category, engine, system, route, world route, length, connectors, junction",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: {\"error\":\"Internal error. The details were logged on the server.\",\"code\":\"internal\",\"reason\":\"INTERNAL_ERROR\"}",
+        "key": "apps/web-server/test/mep.test.ts :: tree groups: pipes, ducts, cable trays, conduits; detail: category, engine, system, route, world route, length, connectors, junction"
+      },
+      {
+        "file": "apps/web-server/test/road-profile.test.ts",
+        "name": "profile corridor replays, retains design basis and materials, updates native selectable pieces, and undo restores them",
+        "reason": "RESPONSE_SHAPE_TYPEERROR",
+        "evidence": "TypeError: Cannot read properties of undefined (reading 'parts')",
+        "key": "apps/web-server/test/road-profile.test.ts :: profile corridor replays, retains design basis and materials, updates native selectable pieces, and undo restores them"
+      },
+      {
+        "file": "apps/web-server/test/security.test.ts",
+        "name": "HTTP: invalid project ids -> 400 INVALID_PROJECT_ID (same Core rule), valid ids unchanged",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: ofis",
+        "key": "apps/web-server/test/security.test.ts :: HTTP: invalid project ids -> 400 INVALID_PROJECT_ID (same Core rule), valid ids unchanged"
+      },
+      {
+        "file": "apps/web-server/test/security.test.ts",
+        "name": "HTTP: undo is governed — viewer 403, AI proposal stays pending, human undo applies",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:",
+        "key": "apps/web-server/test/security.test.ts :: HTTP: undo is governed — viewer 403, AI proposal stays pending, human undo applies"
+      },
+      {
+        "file": "apps/web-server/test/security.test.ts",
+        "name": "HTTP: exports are artifacts — path argument refused, downloads only within the project",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:",
+        "key": "apps/web-server/test/security.test.ts :: HTTP: exports are artifacts — path argument refused, downloads only within the project"
+      },
+      {
+        "file": "apps/web-server/test/structural.test.ts",
+        "name": "tree groups: structure.brace / pile / shear_wall / slab / footing / foundation_slab plus the architectural ones, each separate",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: {\"error\":\"Internal error. The details were logged on the server.\",\"code\":\"internal\",\"reason\":\"INTERNAL_ERROR\"}",
+        "key": "apps/web-server/test/structural.test.ts :: tree groups: structure.brace / pile / shear_wall / slab / footing / foundation_slab plus the architectural ones, each separate"
+      },
+      {
+        "file": "apps/web-server/test/terrain.test.ts",
+        "name": "authorized raw upload, immutable download, shared scene coordinates and project isolation",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: {\"error\":\"Bu araç seçili proje türünde kullanılamaz: infra_import_terrain\",\"code\":\"http\",\"reason\":\"TOOL_NOT_AVAILABLE_FOR_PROJECT_TYPE\"}",
+        "key": "apps/web-server/test/terrain.test.ts :: authorized raw upload, immutable download, shared scene coordinates and project isolation"
+      },
+      {
+        "file": "packages/bim/test/architecture-more.test.ts",
+        "name": "packages\\bim\\test\\architecture-more.test.ts",
+        "reason": "FILE_OR_SUITE_WRAPPER",
+        "evidence": "'test failed'",
+        "key": "packages/bim/test/architecture-more.test.ts :: packages\\bim\\test\\architecture-more.test.ts"
+      },
+      {
+        "file": "packages/bim/test/architecture-properties.test.ts",
+        "name": "P11 · random mixed Phase 10 + Phase 11 histories: snapshot reload == full replay, and the reloaded platform keeps authoring",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/architecture-properties.test.ts :: P11 · random mixed Phase 10 + Phase 11 histories: snapshot reload == full replay, and the reloaded platform keeps authoring"
+      },
+      {
+        "file": "packages/bim/test/architecture-scenario.test.ts",
+        "name": "two-storey building: ceilings, mono-pitch roof, stair, railing + Phase 10 edits; validate, query, level change, plan, IFC, snapshot, reload, undo, replay",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/architecture-scenario.test.ts :: two-storey building: ceilings, mono-pitch roof, stair, railing + Phase 10 edits; validate, query, level change, plan, IFC, snapshot, reload, undo, replay"
+      },
+      {
+        "file": "packages/bim/test/architecture.test.ts",
+        "name": "created through the generic boundary tool; thickness extends UP from the reference plane; floor and ceiling at one footprint are different things",
+        "reason": "INVALID_GEOMETRY",
+        "evidence": "Error: The same physical geometry occurs twice.",
+        "key": "packages/bim/test/architecture.test.ts :: created through the generic boundary tool; thickness extends UP from the reference plane; floor and ceiling at one footprint are different things"
+      },
+      {
+        "file": "packages/bim/test/architecture.test.ts",
+        "name": "a roof updates its plane; a flat roof stays flat; two planes with the same outline are not duplicates; floor / ceiling types are refused (central chain)",
+        "reason": "INVALID_GEOMETRY",
+        "evidence": "Error: The same physical geometry occurs twice.",
+        "key": "packages/bim/test/architecture.test.ts :: a roof updates its plane; a flat roof stays flat; two planes with the same outline are not duplicates; floor / ceiling types are refused (central chain)"
+      },
+      {
+        "file": "packages/bim/test/architecture.test.ts",
+        "name": "generic move / update / reassign / delete; duplicates; query by engine",
+        "reason": "INVALID_GEOMETRY",
+        "evidence": "Error: The same physical geometry occurs twice.",
+        "key": "packages/bim/test/architecture.test.ts :: generic move / update / reassign / delete; duplicates; query by engine"
+      },
+      {
+        "file": "packages/bim/test/authoring-edit.test.ts",
+        "name": "trims the end to the target and joins it (a T at the crossing); hosted content keeps its place; undo restores",
+        "reason": "WALL_INTERSECTION",
+        "evidence": "Error: Walls W-0001 and W-0002 cross inside their segments. Split them into endpoint junctions before creating this geometry.",
+        "key": "packages/bim/test/authoring-edit.test.ts :: trims the end to the target and joins it (a T at the crossing); hosted content keeps its place; undo restores"
+      },
+      {
+        "file": "packages/bim/test/authoring-edit.test.ts",
+        "name": "trimming the START shifts start-relative parameters: openings and tees keep their physical place; one in the removed part rejects",
+        "reason": "WALL_INTERSECTION",
+        "evidence": "Error: Walls W-0001 and W-0002 cross inside their segments. Split them into endpoint junctions before creating this geometry.",
+        "key": "packages/bim/test/authoring-edit.test.ts :: trimming the START shifts start-relative parameters: openings and tees keep their physical place; one in the removed part rejects"
+      },
+      {
+        "file": "packages/bim/test/authoring-edit.test.ts",
+        "name": "trimming to the END of the target joins endpoint to endpoint; join: false only moves the end (touching, no topology)",
+        "reason": "WALL_EDIT_HOSTED_CONFLICT",
+        "evidence": "Error: the T-junction J-0001 would fall off the edited wall.",
+        "key": "packages/bim/test/authoring-edit.test.ts :: trimming to the END of the target joins endpoint to endpoint; join: false only moves the end (touching, no topology)"
+      },
+      {
+        "file": "packages/bim/test/authoring-edit.test.ts",
+        "name": "refused: parallel (and near-parallel) target, target that does not reach, nothing to trim, too short, joined endpoint, other storey, itself",
+        "reason": "WALL_INTERSECTION",
+        "evidence": "Error: Walls W-0002 and W-0005 cross inside their segments. Split them into endpoint junctions before creating this geometry.",
+        "key": "packages/bim/test/authoring-edit.test.ts :: refused: parallel (and near-parallel) target, target that does not reach, nothing to trim, too short, joined endpoint, other storey, itself"
+      },
+      {
+        "file": "packages/bim/test/authoring-edit.test.ts",
+        "name": "refused: target behind the endpoint, within the wall, missed, parallel, endpoint already joined",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring-edit.test.ts :: refused: target behind the endpoint, within the wall, missed, parallel, endpoint already joined"
+      },
+      {
+        "file": "packages/bim/test/authoring-edit.test.ts",
+        "name": "moves an opening and its fill together (never different hosts); keep_position; overlap and fit are refused atomically; undo",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring-edit.test.ts :: moves an opening and its fill together (never different hosts); keep_position; overlap and fit are refused atomically; undo"
+      },
+      {
+        "file": "packages/bim/test/authoring-edit.test.ts",
+        "name": "a compound extend (geometry + new junction + hosted shift) that ends in a spatial occupancy conflict leaves NOTHING behind: events, state, snapshots, audit",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring-edit.test.ts :: a compound extend (geometry + new junction + hosted shift) that ends in a spatial occupancy conflict leaves NOTHING behind: events, state, snapshots, audit"
+      },
+      {
+        "file": "packages/bim/test/authoring-edit.test.ts",
+        "name": "split: the preview is the same decision as the apply, and persists nothing",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring-edit.test.ts :: split: the preview is the same decision as the apply, and persists nothing"
+      },
+      {
+        "file": "packages/bim/test/authoring-edit.test.ts",
+        "name": "merge: the preview is the same decision as the apply, and persists nothing",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring-edit.test.ts :: merge: the preview is the same decision as the apply, and persists nothing"
+      },
+      {
+        "file": "packages/bim/test/authoring-edit.test.ts",
+        "name": "trim: the preview is the same decision as the apply, and persists nothing",
+        "reason": "WALL_INTERSECTION",
+        "evidence": "Error: Walls W-0001 and W-0002 cross inside their segments. Split them into endpoint junctions before creating this geometry.",
+        "key": "packages/bim/test/authoring-edit.test.ts :: trim: the preview is the same decision as the apply, and persists nothing"
+      },
+      {
+        "file": "packages/bim/test/authoring-edit.test.ts",
+        "name": "rehost: the preview is the same decision as the apply, and persists nothing",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring-edit.test.ts :: rehost: the preview is the same decision as the apply, and persists nothing"
+      },
+      {
+        "file": "packages/bim/test/authoring-edit.test.ts",
+        "name": "every command: live state == the state rebuilt from its events; ids and events are deterministic across two identical runs",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring-edit.test.ts :: every command: live state == the state rebuilt from its events; ids and events are deterministic across two identical runs"
+      },
+      {
+        "file": "packages/bim/test/authoring-edit.test.ts",
+        "name": "history -> snapshot -> reload -> keep authoring == full replay; BIM_STATE_VERSION is unchanged by Phase 10",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring-edit.test.ts :: history -> snapshot -> reload -> keep authoring == full replay; BIM_STATE_VERSION is unchanged by Phase 10"
+      },
+      {
+        "file": "packages/bim/test/authoring-edit.test.ts",
+        "name": "extend-and-join closes a room; join: false (touching) does not; undo opens it again; the element itself is never touched",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring-edit.test.ts :: extend-and-join closes a room; join: false (touching) does not; undo opens it again; the element itself is never touched"
+      },
+      {
+        "file": "packages/bim/test/authoring-edit.test.ts",
+        "name": "a split keeps the room bounded with the same area; a partition split into halves keeps both rooms; merging back restores the signatures",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring-edit.test.ts :: a split keeps the room bounded with the same area; a partition split into halves keeps both rooms; merging back restores the signatures"
+      },
+      {
+        "file": "packages/bim/test/authoring-properties.test.ts",
+        "name": "P1 · split is refused exactly when an opening is crossed; otherwise split then merge restores the model (ids, joins, hosted content)",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/authoring-properties.test.ts :: P1 · split is refused exactly when an opening is crossed; otherwise split then merge restores the model (ids, joins, hosted content)"
+      },
+      {
+        "file": "packages/bim/test/authoring-properties.test.ts",
+        "name": "P2 · split preserves the total wall length; P3 · it preserves the world position of every hosted opening; P5 · and every external connection",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/authoring-properties.test.ts :: P2 · split preserves the total wall length; P3 · it preserves the world position of every hosted opening; P5 · and every external connection"
+      },
+      {
+        "file": "packages/bim/test/authoring-properties.test.ts",
+        "name": "P4 · merge preserves the world position of hosted openings and the physical place of tees, for either survivor and either orientation of the second wall",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/authoring-properties.test.ts :: P4 · merge preserves the world position of hosted openings and the physical place of tees, for either survivor and either orientation of the second wall"
+      },
+      {
+        "file": "packages/bim/test/authoring-properties.test.ts",
+        "name": "P6 · live == replay for split; P7 · for merge",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/authoring-properties.test.ts :: P6 · live == replay for split; P7 · for merge"
+      },
+      {
+        "file": "packages/bim/test/authoring-properties.test.ts",
+        "name": "P8 · trim / extend: live == replay, hosted content stays put, the end ends exactly on the target; P9 · dry run = apply without persisting",
+        "reason": "WALL_INTERSECTION",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/authoring-properties.test.ts :: P8 · trim / extend: live == replay, hosted content stays put, the end ends exactly on the target; P9 · dry run = apply without persisting"
+      },
+      {
+        "file": "packages/bim/test/authoring-properties.test.ts",
+        "name": "P10 · random authoring sequences: snapshot reload == full replay, and the reloaded platform keeps authoring",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/authoring-properties.test.ts :: P10 · random authoring sequences: snapshot reload == full replay, and the reloaded platform keeps authoring"
+      },
+      {
+        "file": "packages/bim/test/authoring-properties.test.ts",
+        "name": "P11 · spatial: a topology-preserving split keeps both rooms bounded with identical area and perimeter and no room event; merging back restores the region signatures",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/authoring-properties.test.ts :: P11 · spatial: a topology-preserving split keeps both rooms bounded with identical area and perimeter and no room event; merging back restores the region signatures"
+      },
+      {
+        "file": "packages/bim/test/authoring-properties.test.ts",
+        "name": "P12 · identical command scripts give identical states and (command ids aside) identical events",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/authoring-properties.test.ts :: P12 · identical command scripts give identical states and (command ids aside) identical events"
+      },
+      {
+        "file": "packages/bim/test/authoring-scenario.test.ts",
+        "name": "the 18-step scenario: build, edit with every primitive, validate, plan, IFC, snapshot, reload, undo, replay",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring-scenario.test.ts :: the 18-step scenario: build, edit with every primitive, validate, plan, IFC, snapshot, reload, undo, replay"
+      },
+      {
+        "file": "packages/bim/test/authoring.test.ts",
+        "name": "splitT reports the ACTUAL position after a snap to a T at the split point (not the requested t), consistent with splitPoint",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: W-0002:start is already teed onto W-0001 (J-0001).",
+        "key": "packages/bim/test/authoring.test.ts :: splitT reports the ACTUAL position after a snap to a T at the split point (not the requested t), consistent with splitPoint"
+      },
+      {
+        "file": "packages/bim/test/authoring.test.ts",
+        "name": "joins move with their end: start joins stay, end joins go to the new wall; tees transfer with renormalised t; a tee at the split point joins the new junction",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring.test.ts :: joins move with their end: start joins stay, end joins go to the new wall; tees transfer with renormalised t; a tee at the split point joins the new junction"
+      },
+      {
+        "file": "packages/bim/test/authoring.test.ts",
+        "name": "hosted openings, doors and windows keep their ids and physical positions; an opening crossed by the split rejects the whole command",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring.test.ts :: hosted openings, doors and windows keep their ids and physical positions; an opening crossed by the split rejects the whole command"
+      },
+      {
+        "file": "packages/bim/test/authoring.test.ts",
+        "name": "undo restores the pre-split state exactly (ids, joins, openings, counters)",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring.test.ts :: undo restores the pre-split state exactly (ids, joins, openings, counters)"
+      },
+      {
+        "file": "packages/bim/test/authoring.test.ts",
+        "name": "merge is the inverse of split: elements, joins, hosted content and the room regions return to the original (signatures included)",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring.test.ts :: merge is the inverse of split: elements, joins, hosted content and the room regions return to the original (signatures included)"
+      },
+      {
+        "file": "packages/bim/test/authoring.test.ts",
+        "name": "survivor and direction: `primary` (else the smaller id) survives with its own direction; hosted content, tees and far-end joins are transferred",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring.test.ts :: survivor and direction: `primary` (else the smaller id) survives with its own direction; hosted content, tees and far-end joins are transferred"
+      },
+      {
+        "file": "packages/bim/test/authoring.test.ts",
+        "name": "refused: not collinear, not explicitly joined (touching / collinear / tee), different type, vertical, room bounding, ambiguous junction, conflicting properties",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: Missing expected rejection.",
+        "key": "packages/bim/test/authoring.test.ts :: refused: not collinear, not explicitly joined (touching / collinear / tee), different type, vertical, room bounding, ambiguous junction, conflicting properties"
+      },
+      {
+        "file": "packages/bim/test/authoring.test.ts",
+        "name": "undo restores the merged-away wall, its joins and its hosted content",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring.test.ts :: undo restores the merged-away wall, its joins and its hosted content"
+      },
+      {
+        "file": "packages/bim/test/authoring.test.ts",
+        "name": "a perpendicular T branch ends at the host's near face; the host stays continuous; the axes and stored fields are untouched",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: W-0002:start is already teed onto W-0001 (J-0001).",
+        "key": "packages/bim/test/authoring.test.ts :: a perpendicular T branch ends at the host's near face; the host stays continuous; the axes and stored fields are untouched"
+      },
+      {
+        "file": "packages/bim/test/authoring.test.ts",
+        "name": "an oblique T is cut along the host face; a shallow T, a multi-wall junction and an over-short branch fall back to square ends (valid solids)",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: W-0002:start is already teed onto W-0001 (J-0001).",
+        "key": "packages/bim/test/authoring.test.ts :: an oblique T is cut along the host face; a shallow T, a multi-wall junction and an over-short branch fall back to square ends (valid solids)"
+      },
+      {
+        "file": "packages/bim/test/authoring.test.ts",
+        "name": "spatial semantics do not depend on the clipped solid: a room's region is the wall-axis region before and after the T is joined or clipped",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring.test.ts :: spatial semantics do not depend on the clipped solid: a room's region is the wall-axis region before and after the T is joined or clipped"
+      },
+      {
+        "file": "packages/bim/test/authoring.test.ts",
+        "name": "the plan reflects the clipped branch (derived from the same representation)",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: W-0002:start is already teed onto W-0001 (J-0001).",
+        "key": "packages/bim/test/authoring.test.ts :: the plan reflects the clipped branch (derived from the same representation)"
+      },
+      {
+        "file": "packages/bim/test/building.test.ts",
+        "name": "sample building: walls, mitres, layers, quantities",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: net 34.07712000000003",
+        "key": "packages/bim/test/building.test.ts :: sample building: walls, mitres, layers, quantities"
+      },
+      {
+        "file": "packages/bim/test/building.test.ts",
+        "name": "delete cascades and undo restores",
+        "reason": "ELEMENT_IN_USE",
+        "evidence": "Error: wall W-0001 is still referenced (2 joins); remove those relations first (disconnect MEP connectors with bim_disconnect_mep; or delete hosted elements with cascade_hosted). Nothing was deleted.",
+        "key": "packages/bim/test/building.test.ts :: delete cascades and undo restores"
+      },
+      {
+        "file": "packages/bim/test/category-contracts.test.ts",
+        "name": "contract · architecture.room (spatial)",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/category-contracts.test.ts :: contract · architecture.room (spatial)"
+      },
+      {
+        "file": "packages/bim/test/category-contracts.test.ts",
+        "name": "contract · mechanical.space (spatial)",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/category-contracts.test.ts :: contract · mechanical.space (spatial)"
+      },
+      {
+        "file": "packages/bim/test/components.test.ts",
+        "name": "packages\\bim\\test\\components.test.ts",
+        "reason": "FILE_OR_SUITE_WRAPPER",
+        "evidence": "'test failed'",
+        "key": "packages/bim/test/components.test.ts :: packages\\bim\\test\\components.test.ts"
+      },
+      {
+        "file": "packages/bim/test/engines-properties.test.ts",
+        "name": "P2 · a legacy (Phase 8) beam / column history and the canonical profile_member commands give identical elements and quantities",
+        "reason": "ERR_ASSERTION",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/engines-properties.test.ts :: P2 · a legacy (Phase 8) beam / column history and the canonical profile_member commands give identical elements and quantities"
+      },
+      {
+        "file": "packages/bim/test/engines-properties.test.ts",
+        "name": "P7 · legacy update histories: upcast full replay == snapshot + tail == the canonical live model",
+        "reason": "ERR_ASSERTION",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/engines-properties.test.ts :: P7 · legacy update histories: upcast full replay == snapshot + tail == the canonical live model"
+      },
+      {
+        "file": "packages/bim/test/engines-properties.test.ts",
+        "name": "P8 · undo across the migration: legacy histories undone through the replay equal the canonical histories undone",
+        "reason": "ERR_ASSERTION",
+        "evidence": "Error: Property failed after 5 tests",
+        "key": "packages/bim/test/engines-properties.test.ts :: P8 · undo across the migration: legacy histories undone through the replay equal the canonical histories undone"
+      },
+      {
+        "file": "packages/bim/test/engines.test.ts",
+        "name": "packages\\bim\\test\\engines.test.ts",
+        "reason": "FILE_OR_SUITE_WRAPPER",
+        "evidence": "'test failed'",
+        "key": "packages/bim/test/engines.test.ts :: packages\\bim\\test\\engines.test.ts"
+      },
+      {
+        "file": "packages/bim/test/exports.test.ts",
+        "name": "8 · a symlinked export directory cannot redirect writes outside the root",
+        "reason": "WINDOWS_SYMLINK_PERMISSION",
+        "evidence": "Error: EPERM: operation not permitted, symlink 'C:\\Users\\TERENO~1\\AppData\\Local\\Temp\\insa-exp-bGIzhj\\outside' -> 'C:\\Users\\TERENO~1\\AppData\\Local\\Temp\\insa-exp-bGIzhj\\data\\ofis\\exports'",
+        "key": "packages/bim/test/exports.test.ts :: 8 · a symlinked export directory cannot redirect writes outside the root"
+      },
+      {
+        "file": "packages/bim/test/mep-scenario.test.ts",
+        "name": "packages\\bim\\test\\mep-scenario.test.ts",
+        "reason": "FILE_OR_SUITE_WRAPPER",
+        "evidence": "'test failed'",
+        "key": "packages/bim/test/mep-scenario.test.ts :: packages\\bim\\test\\mep-scenario.test.ts"
+      },
+      {
+        "file": "packages/bim/test/mep.test.ts",
+        "name": "a MEP duplicate = same category + system + type + route; a pipe and a conduit on one line, or two systems on one route, are NOT duplicates; usage names categories, never the engine",
+        "reason": "INVALID_GEOMETRY",
+        "evidence": "Error: The same physical geometry occurs twice.",
+        "key": "packages/bim/test/mep.test.ts :: a MEP duplicate = same category + system + type + route; a pipe and a conduit on one line, or two systems on one route, are NOT duplicates; usage names categories, never the engine"
+      },
+      {
+        "file": "packages/bim/test/phase13-fixture.test.ts",
+        "name": "packages\\bim\\test\\phase13-fixture.test.ts",
+        "reason": "FILE_OR_SUITE_WRAPPER",
+        "evidence": "'test failed'",
+        "key": "packages/bim/test/phase13-fixture.test.ts :: packages\\bim\\test\\phase13-fixture.test.ts"
+      },
+      {
+        "file": "packages/bim/test/reinforcement.test.ts",
+        "name": "bar set: derived bars, lengths and volume equal independent oracles; the bend radius fillets every corner; quantities",
+        "reason": "INVALID_DIMENSION",
+        "evidence": "Error: C-0001 height must be greater than 0.0001 m (got 0).",
+        "key": "packages/bim/test/reinforcement.test.ts :: bar set: derived bars, lengths and volume equal independent oracles; the bend radius fillets every corner; quantities"
+      },
+      {
+        "file": "packages/bim/test/reinforcement.test.ts",
+        "name": "refusals: host rules, mesh / tendon layer rules, overlap, bend radius that does not fit, degenerate paths, unknown host; nothing is written",
+        "reason": "INVALID_DIMENSION",
+        "evidence": "Error: C-0001 height must be greater than 0.0001 m (got 0).",
+        "key": "packages/bim/test/reinforcement.test.ts :: refusals: host rules, mesh / tendon layer rules, overlap, bend radius that does not fit, degenerate paths, unknown host; nothing is written"
+      },
+      {
+        "file": "packages/bim/test/reinforcement.test.ts",
+        "name": "host relation: bars move WITH their host and never alone; the host cannot be deleted while it hosts bars (no cascade); undo / replay / snapshot / dry run",
+        "reason": "INVALID_DIMENSION",
+        "evidence": "Error: C-0001 height must be greater than 0.0001 m (got 0).",
+        "key": "packages/bim/test/reinforcement.test.ts :: host relation: bars move WITH their host and never alone; the host cannot be deleted while it hosts bars (no cascade); undo / replay / snapshot / dry run"
+      },
+      {
+        "file": "packages/bim/test/replay.test.ts",
+        "name": "BIM replay equivalence after every command: snapshot + tail == full replay (creates, multi-event, hosted, batch, delete, undo)",
+        "reason": "ELEMENT_IN_USE",
+        "evidence": "Error: wall W-0001 is still referenced (2 joins); remove those relations first (disconnect MEP connectors with bim_disconnect_mep; or delete hosted elements with cascade_hosted). Nothing was deleted.",
+        "key": "packages/bim/test/replay.test.ts :: BIM replay equivalence after every command: snapshot + tail == full replay (creates, multi-event, hosted, batch, delete, undo)"
+      },
+      {
+        "file": "packages/bim/test/spatial-properties.test.ts",
+        "name": "P1 · a joined rectangle is exactly one region: area = w*d, perimeter = 2(w+d)",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/spatial-properties.test.ts :: P1 · a joined rectangle is exactly one region: area = w*d, perimeter = 2(w+d)"
+      },
+      {
+        "file": "packages/bim/test/spatial-properties.test.ts",
+        "name": "P2 · moving a boundary wall: same element and point, new derived region, replay equivalent",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/spatial-properties.test.ts :: P2 · moving a boundary wall: same element and point, new derived region, replay equivalent"
+      },
+      {
+        "file": "packages/bim/test/spatial-properties.test.ts",
+        "name": "P3 · a tee-joined partition splits the region: the room resolves to one side, the other side is unoccupied",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/spatial-properties.test.ts :: P3 · a tee-joined partition splits the region: the room resolves to one side, the other side is unoccupied"
+      },
+      {
+        "file": "packages/bim/test/spatial-properties.test.ts",
+        "name": "P4 · unjoining any corner opens the region even though the coordinates still coincide (touching is not joining)",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/spatial-properties.test.ts :: P4 · unjoining any corner opens the region even though the coordinates still coincide (touching is not joining)"
+      },
+      {
+        "file": "packages/bim/test/spatial-properties.test.ts",
+        "name": "P5 · two elements of the same category can never share a region; different categories can",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/spatial-properties.test.ts :: P5 · two elements of the same category can never share a region; different categories can"
+      },
+      {
+        "file": "packages/bim/test/spatial-properties.test.ts",
+        "name": "P6 · regions do not depend on join creation order, record order or join member order",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/spatial-properties.test.ts :: P6 · regions do not depend on join creation order, record order or join member order"
+      },
+      {
+        "file": "packages/bim/test/spatial-properties.test.ts",
+        "name": "P7 · identical loops on two storeys stay independent: an L0 room never uses L1 walls",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/spatial-properties.test.ts :: P7 · identical loops on two storeys stay independent: an L0 room never uses L1 walls"
+      },
+      {
+        "file": "packages/bim/test/spatial-properties.test.ts",
+        "name": "P8 · tees cut the host virtually: correct regions, host wall unchanged, parametric boundary references",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/spatial-properties.test.ts :: P8 · tees cut the host virtually: correct regions, host wall unchanged, parametric boundary references"
+      },
+      {
+        "file": "packages/bim/test/spatial-properties.test.ts",
+        "name": "P9 · random spatial histories: live == full replay == snapshot + tail, including derived regions",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/spatial-properties.test.ts :: P9 · random spatial histories: live == full replay == snapshot + tail, including derived regions"
+      },
+      {
+        "file": "packages/bim/test/spatial-properties.test.ts",
+        "name": "P10 · turning a partition off merges regions: refused atomically iff two same-category rooms would share it",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/spatial-properties.test.ts :: P10 · turning a partition off merges regions: refused atomically iff two same-category rooms would share it"
+      },
+      {
+        "file": "packages/bim/test/spatial.test.ts",
+        "name": "packages\\bim\\test\\spatial.test.ts",
+        "reason": "FILE_OR_SUITE_WRAPPER",
+        "evidence": "'test failed'",
+        "key": "packages/bim/test/spatial.test.ts :: packages\\bim\\test\\spatial.test.ts"
+      },
+      {
+        "file": "packages/bim/test/structural-properties.test.ts",
+        "name": "P8 · a shear wall keeps its category through Phase 10 split / merge; P10 · existing beams and columns are unchanged",
+        "reason": "ERR_ASSERTION",
+        "evidence": "Error: Property failed after 2 tests",
+        "key": "packages/bim/test/structural-properties.test.ts :: P8 · a shear wall keeps its category through Phase 10 split / merge; P10 · existing beams and columns are unchanged"
+      },
+      {
+        "file": "packages/bim/test/structural-scenario.test.ts",
+        "name": "two-storey structural bay + architecture: validate, query, level change, brace update, shear wall split / merge, footing move, plan, IFC matrix, snapshot, reload, undo, replay",
+        "reason": "INVALID_GEOMETRY",
+        "evidence": "Error: The same physical geometry occurs twice.",
+        "key": "packages/bim/test/structural-scenario.test.ts :: two-storey structural bay + architecture: validate, query, level change, brace update, shear wall split / merge, footing move, plan, IFC matrix, snapshot, reload, undo, replay"
+      },
+      {
+        "file": "packages/bim/test/structural.test.ts",
+        "name": "packages\\bim\\test\\structural.test.ts",
+        "reason": "FILE_OR_SUITE_WRAPPER",
+        "evidence": "'test failed'",
+        "key": "packages/bim/test/structural.test.ts :: packages\\bim\\test\\structural.test.ts"
+      },
+      {
+        "file": "packages/bim/test/topology-properties.test.ts",
+        "name": "P1 · moving a shared junction keeps every joined endpoint on one point; replay == snapshot + tail == live",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/topology-properties.test.ts :: P1 · moving a shared junction keeps every joined endpoint on one point; replay == snapshot + tail == live"
+      },
+      {
+        "file": "packages/bim/test/topology-properties.test.ts",
+        "name": "P2 · after any host update the tee endpoint equals the host point at its t",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/topology-properties.test.ts :: P2 · after any host update the tee endpoint equals the host point at its t"
+      },
+      {
+        "file": "packages/bim/test/topology-properties.test.ts",
+        "name": "P3 · moving a constrained tee endpoint on its own is always refused and changes nothing",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/topology-properties.test.ts :: P3 · moving a constrained tee endpoint on its own is always refused and changes nothing"
+      },
+      {
+        "file": "packages/bim/test/topology-properties.test.ts",
+        "name": "P4 · unjoin never moves a wall: coordinates before == after (only relation and miter data change)",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/topology-properties.test.ts :: P4 · unjoin never moves a wall: coordinates before == after (only relation and miter data change)"
+      },
+      {
+        "file": "packages/bim/test/topology-properties.test.ts",
+        "name": "P6 · the connected component of any wall is exactly its explicitly joined chain",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/topology-properties.test.ts :: P6 · the connected component of any wall is exactly its explicitly joined chain"
+      },
+      {
+        "file": "packages/bim/test/topology-properties.test.ts",
+        "name": "P7 · deleting a wall with joins or openings is refused atomically; without usages it succeeds",
+        "reason": "ELEMENT_IN_USE",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/topology-properties.test.ts :: P7 · deleting a wall with joins or openings is refused atomically; without usages it succeeds"
+      },
+      {
+        "file": "packages/bim/test/topology.test.ts",
+        "name": "packages\\bim\\test\\topology.test.ts",
+        "reason": "FILE_OR_SUITE_WRAPPER",
+        "evidence": "'test failed'",
+        "key": "packages/bim/test/topology.test.ts :: packages\\bim\\test\\topology.test.ts"
+      },
+      {
+        "file": "packages/bim/test/validate-duplicates.test.ts",
+        "name": "1 · two windows in the SAME wall at different positions are not duplicates",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/validate-duplicates.test.ts :: 1 · two windows in the SAME wall at different positions are not duplicates"
+      },
+      {
+        "file": "packages/bim/test/validate-duplicates.test.ts",
+        "name": "2 · two doors in the SAME wall at different positions are not duplicates",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/validate-duplicates.test.ts :: 2 · two doors in the SAME wall at different positions are not duplicates"
+      },
+      {
+        "file": "packages/bim/test/validate-duplicates.test.ts",
+        "name": "3 · two rooms on the SAME storey in DIFFERENT bounded regions are not duplicates",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/validate-duplicates.test.ts :: 3 · two rooms on the SAME storey in DIFFERENT bounded regions are not duplicates"
+      },
+      {
+        "file": "packages/bim/test/validate-duplicates.test.ts",
+        "name": "4 · a room and a space in the SAME region stay valid (Phase 8 category occupancy), with no duplicate warning",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/validate-duplicates.test.ts :: 4 · a room and a space in the SAME region stay valid (Phase 8 category occupancy), with no duplicate warning"
+      },
+      {
+        "file": "packages/bim/test/validate-duplicates.test.ts",
+        "name": "5 · real duplicate physical geometry is still reported, per engine",
+        "reason": "INVALID_WALL_JOIN",
+        "evidence": "Error: Junction J-0001: W-0001 and W-0002 overlap (collinear, same side).",
+        "key": "packages/bim/test/validate-duplicates.test.ts :: 5 · real duplicate physical geometry is still reported, per engine"
+      },
+      {
+        "file": "packages/bim/test/validate-duplicates.test.ts",
+        "name": "7 · the signature helper: hosted components and spatial elements have none; openings compare host, position and size; the result is deterministic",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/validate-duplicates.test.ts :: 7 · the signature helper: hosted components and spatial elements have none; openings compare host, position and size; the result is deterministic"
+      },
+      {
+        "file": "packages/bim/test/validate-duplicates.test.ts",
+        "name": "8 · the invariants that really govern these elements are untouched: same-category occupancy and overlapping openings are still refused",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/validate-duplicates.test.ts :: 8 · the invariants that really govern these elements are untouched: same-category occupancy and overlapping openings are still refused"
+      },
+      {
+        "file": "packages/bim/test/vertical.test.ts",
+        "name": "packages\\bim\\test\\vertical.test.ts",
+        "reason": "FILE_OR_SUITE_WRAPPER",
+        "evidence": "'test failed'",
+        "key": "packages/bim/test/vertical.test.ts :: packages\\bim\\test\\vertical.test.ts"
+      }
+    ],
+    "mechanisms": {
+      "ERR_ASSERTION": 23,
+      "WINDOWS_TSX_LAUNCH": 2,
+      "RESPONSE_SHAPE_TYPEERROR": 2,
+      "FILE_OR_SUITE_WRAPPER": 9,
+      "DUPLICATE_WALL_JOIN": 54,
+      "INVALID_GEOMETRY": 5,
+      "WALL_INTERSECTION": 5,
+      "WALL_EDIT_HOSTED_CONFLICT": 1,
+      "ELEMENT_IN_USE": 3,
+      "WINDOWS_SYMLINK_PERMISSION": 1,
+      "INVALID_DIMENSION": 3,
+      "INVALID_WALL_JOIN": 1
+    }
+  },
+  "final": {
+    "summary": {
+      "tests": 776,
+      "pass": 651,
+      "fail": 109,
+      "skipped": 16,
+      "cancelled": 0
+    },
+    "failures": [
+      {
+        "file": "apps/manager-mcp/test/authoring.test.ts",
+        "name": "MCP: split / merge / trim / extend / rehost run, return structured results, honour dry_run and refuse invalid edits without a trace",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: Error [WALL_INTERSECTION]: Walls W-0004 and W-0005 cross inside their segments. Split them into endpoint junctions before creating this geometry.",
+        "key": "apps/manager-mcp/test/authoring.test.ts :: MCP: split / merge / trim / extend / rehost run, return structured results, honour dry_run and refuse invalid edits without a trace"
+      },
+      {
+        "file": "apps/manager-mcp/test/mcp.test.ts",
+        "name": "stdio MCP governance: proposals need a human, roles are enforced",
+        "reason": "WINDOWS_TSX_LAUNCH",
+        "evidence": "Error: spawnSync C:\\Users\\terenoglu\\OneDrive - Kalyon Yatırım Holding A.Ş\\Masaüstü\\Codes\\INSA\\node_modules\\.bin\\tsx ENOENT",
+        "key": "apps/manager-mcp/test/mcp.test.ts :: stdio MCP governance: proposals need a human, roles are enforced"
+      },
+      {
+        "file": "apps/manager-mcp/test/parity.test.ts",
+        "name": "Platform.listTools() == the manager MCP server's tools/list, exactly (names, order-independent), including every required BIM tool",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: tools/list == Platform.listTools()",
+        "key": "apps/manager-mcp/test/parity.test.ts :: Platform.listTools() == the manager MCP server's tools/list, exactly (names, order-independent), including every required BIM tool"
+      },
+      {
+        "file": "apps/manager-mcp/test/security.test.ts",
+        "name": "MCP: invalid project ids are rejected with INVALID_PROJECT_ID and never reach storage",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: nothing created inside it either",
+        "key": "apps/manager-mcp/test/security.test.ts :: MCP: invalid project ids are rejected with INVALID_PROJECT_ID and never reach storage"
+      },
+      {
+        "file": "apps/manager-mcp/test/security.test.ts",
+        "name": "MCP: undo is governed — viewer denied; AI undo becomes a proposal; a human approves it",
+        "reason": "WINDOWS_TSX_LAUNCH",
+        "evidence": "Error: spawnSync C:\\Users\\terenoglu\\OneDrive - Kalyon Yatırım Holding A.Ş\\Masaüstü\\Codes\\INSA\\node_modules\\.bin\\tsx ENOENT",
+        "key": "apps/manager-mcp/test/security.test.ts :: MCP: undo is governed — viewer denied; AI undo becomes a proposal; a human approves it"
+      },
+      {
+        "file": "apps/manager-mcp/test/spatial.test.ts",
+        "name": "MCP: detect regions -> room + space -> query -> move -> occupancy refused -> unbounded after unjoin",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: touching is not joining",
+        "key": "apps/manager-mcp/test/spatial.test.ts :: MCP: detect regions -> room + space -> query -> move -> occupancy refused -> unbounded after unjoin"
+      },
+      {
+        "file": "apps/manager-mcp/test/topology.test.ts",
+        "name": "MCP: detect -> join -> query -> propagate -> unjoin, structured rejections, no event on failure",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:",
+        "key": "apps/manager-mcp/test/topology.test.ts :: MCP: detect -> join -> query -> propagate -> unjoin, structured rejections, no event on failure"
+      },
+      {
+        "file": "apps/web-server/test/api.test.ts",
+        "name": "auth, tools catalogue and the same governed tools over HTTP",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: {\"error\":\"Internal error. The details were logged on the server.\",\"code\":\"internal\",\"reason\":\"INTERNAL_ERROR\"}",
+        "key": "apps/web-server/test/api.test.ts :: auth, tools catalogue and the same governed tools over HTTP"
+      },
+      {
+        "file": "apps/web-server/test/api.test.ts",
+        "name": "viewer role: can look, cannot change (403)",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: {\"error\":\"Internal error. The details were logged on the server.\",\"code\":\"internal\",\"reason\":\"INTERNAL_ERROR\"}",
+        "key": "apps/web-server/test/api.test.ts :: viewer role: can look, cannot change (403)"
+      },
+      {
+        "file": "apps/web-server/test/api.test.ts",
+        "name": "viewer endpoints: .frag cached per model version, IFC, plan PNG",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: {\"error\":\"Internal error. The details were logged on the server.\",\"code\":\"internal\",\"reason\":\"INTERNAL_ERROR\"}",
+        "key": "apps/web-server/test/api.test.ts :: viewer endpoints: .frag cached per model version, IFC, plan PNG"
+      },
+      {
+        "file": "apps/web-server/test/architecture.test.ts",
+        "name": "the model tree has separate Floors / Ceilings / Roofs / Stairs / Railings / Rooms / Spaces groups; details carry category and engine",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: {\"error\":\"Internal error. The details were logged on the server.\",\"code\":\"internal\",\"reason\":\"INTERNAL_ERROR\"}",
+        "key": "apps/web-server/test/architecture.test.ts :: the model tree has separate Floors / Ceilings / Roofs / Stairs / Railings / Rooms / Spaces groups; details carry category and engine"
+      },
+      {
+        "file": "apps/web-server/test/assistant.test.ts",
+        "name": "assistant endpoint streams text, tool calls and results; writes as ai:<user>",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:",
+        "key": "apps/web-server/test/assistant.test.ts :: assistant endpoint streams text, tool calls and results; writes as ai:<user>"
+      },
+      {
+        "file": "apps/web-server/test/assistant.test.ts",
+        "name": "assistant disabled without a model -> 503; history is accepted for follow-up turns",
+        "reason": "RESPONSE_SHAPE_TYPEERROR",
+        "evidence": "TypeError: Cannot read properties of undefined (reading 'messages')",
+        "key": "apps/web-server/test/assistant.test.ts :: assistant disabled without a model -> 503; history is accepted for follow-up turns"
+      },
+      {
+        "file": "apps/web-server/test/authoring.test.ts",
+        "name": "split / merge / trim over HTTP keep the model tree, the element detail, the plan and the IFC consistent",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: {\"error\":\"Internal error. The details were logged on the server.\",\"code\":\"internal\",\"reason\":\"INTERNAL_ERROR\"}",
+        "key": "apps/web-server/test/authoring.test.ts :: split / merge / trim over HTTP keep the model tree, the element detail, the plan and the IFC consistent"
+      },
+      {
+        "file": "apps/web-server/test/mep.test.ts",
+        "name": "tree groups: pipes, ducts, cable trays, conduits; detail: category, engine, system, route, world route, length, connectors, junction",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: {\"error\":\"Internal error. The details were logged on the server.\",\"code\":\"internal\",\"reason\":\"INTERNAL_ERROR\"}",
+        "key": "apps/web-server/test/mep.test.ts :: tree groups: pipes, ducts, cable trays, conduits; detail: category, engine, system, route, world route, length, connectors, junction"
+      },
+      {
+        "file": "apps/web-server/test/road-profile.test.ts",
+        "name": "profile corridor replays, retains design basis and materials, updates native selectable pieces, and undo restores them",
+        "reason": "RESPONSE_SHAPE_TYPEERROR",
+        "evidence": "TypeError: Cannot read properties of undefined (reading 'parts')",
+        "key": "apps/web-server/test/road-profile.test.ts :: profile corridor replays, retains design basis and materials, updates native selectable pieces, and undo restores them"
+      },
+      {
+        "file": "apps/web-server/test/security.test.ts",
+        "name": "HTTP: invalid project ids -> 400 INVALID_PROJECT_ID (same Core rule), valid ids unchanged",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: ofis",
+        "key": "apps/web-server/test/security.test.ts :: HTTP: invalid project ids -> 400 INVALID_PROJECT_ID (same Core rule), valid ids unchanged"
+      },
+      {
+        "file": "apps/web-server/test/security.test.ts",
+        "name": "HTTP: undo is governed — viewer 403, AI proposal stays pending, human undo applies",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:",
+        "key": "apps/web-server/test/security.test.ts :: HTTP: undo is governed — viewer 403, AI proposal stays pending, human undo applies"
+      },
+      {
+        "file": "apps/web-server/test/security.test.ts",
+        "name": "HTTP: exports are artifacts — path argument refused, downloads only within the project",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:",
+        "key": "apps/web-server/test/security.test.ts :: HTTP: exports are artifacts — path argument refused, downloads only within the project"
+      },
+      {
+        "file": "apps/web-server/test/structural.test.ts",
+        "name": "tree groups: structure.brace / pile / shear_wall / slab / footing / foundation_slab plus the architectural ones, each separate",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: {\"error\":\"Internal error. The details were logged on the server.\",\"code\":\"internal\",\"reason\":\"INTERNAL_ERROR\"}",
+        "key": "apps/web-server/test/structural.test.ts :: tree groups: structure.brace / pile / shear_wall / slab / footing / foundation_slab plus the architectural ones, each separate"
+      },
+      {
+        "file": "apps/web-server/test/terrain.test.ts",
+        "name": "authorized raw upload, immutable download, shared scene coordinates and project isolation",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: {\"error\":\"Bu araç seçili proje türünde kullanılamaz: infra_import_terrain\",\"code\":\"http\",\"reason\":\"TOOL_NOT_AVAILABLE_FOR_PROJECT_TYPE\"}",
+        "key": "apps/web-server/test/terrain.test.ts :: authorized raw upload, immutable download, shared scene coordinates and project isolation"
+      },
+      {
+        "file": "packages/bim/test/architecture-more.test.ts",
+        "name": "packages\\bim\\test\\architecture-more.test.ts",
+        "reason": "FILE_OR_SUITE_WRAPPER",
+        "evidence": "'test failed'",
+        "key": "packages/bim/test/architecture-more.test.ts :: packages\\bim\\test\\architecture-more.test.ts"
+      },
+      {
+        "file": "packages/bim/test/architecture-properties.test.ts",
+        "name": "P11 · random mixed Phase 10 + Phase 11 histories: snapshot reload == full replay, and the reloaded platform keeps authoring",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/architecture-properties.test.ts :: P11 · random mixed Phase 10 + Phase 11 histories: snapshot reload == full replay, and the reloaded platform keeps authoring"
+      },
+      {
+        "file": "packages/bim/test/architecture-scenario.test.ts",
+        "name": "two-storey building: ceilings, mono-pitch roof, stair, railing + Phase 10 edits; validate, query, level change, plan, IFC, snapshot, reload, undo, replay",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/architecture-scenario.test.ts :: two-storey building: ceilings, mono-pitch roof, stair, railing + Phase 10 edits; validate, query, level change, plan, IFC, snapshot, reload, undo, replay"
+      },
+      {
+        "file": "packages/bim/test/architecture.test.ts",
+        "name": "created through the generic boundary tool; thickness extends UP from the reference plane; floor and ceiling at one footprint are different things",
+        "reason": "INVALID_GEOMETRY",
+        "evidence": "Error: The same physical geometry occurs twice.",
+        "key": "packages/bim/test/architecture.test.ts :: created through the generic boundary tool; thickness extends UP from the reference plane; floor and ceiling at one footprint are different things"
+      },
+      {
+        "file": "packages/bim/test/architecture.test.ts",
+        "name": "a roof updates its plane; a flat roof stays flat; two planes with the same outline are not duplicates; floor / ceiling types are refused (central chain)",
+        "reason": "INVALID_GEOMETRY",
+        "evidence": "Error: The same physical geometry occurs twice.",
+        "key": "packages/bim/test/architecture.test.ts :: a roof updates its plane; a flat roof stays flat; two planes with the same outline are not duplicates; floor / ceiling types are refused (central chain)"
+      },
+      {
+        "file": "packages/bim/test/architecture.test.ts",
+        "name": "generic move / update / reassign / delete; duplicates; query by engine",
+        "reason": "INVALID_GEOMETRY",
+        "evidence": "Error: The same physical geometry occurs twice.",
+        "key": "packages/bim/test/architecture.test.ts :: generic move / update / reassign / delete; duplicates; query by engine"
+      },
+      {
+        "file": "packages/bim/test/authoring-edit.test.ts",
+        "name": "trims the end to the target and joins it (a T at the crossing); hosted content keeps its place; undo restores",
+        "reason": "WALL_INTERSECTION",
+        "evidence": "Error: Walls W-0001 and W-0002 cross inside their segments. Split them into endpoint junctions before creating this geometry.",
+        "key": "packages/bim/test/authoring-edit.test.ts :: trims the end to the target and joins it (a T at the crossing); hosted content keeps its place; undo restores"
+      },
+      {
+        "file": "packages/bim/test/authoring-edit.test.ts",
+        "name": "trimming the START shifts start-relative parameters: openings and tees keep their physical place; one in the removed part rejects",
+        "reason": "WALL_INTERSECTION",
+        "evidence": "Error: Walls W-0001 and W-0002 cross inside their segments. Split them into endpoint junctions before creating this geometry.",
+        "key": "packages/bim/test/authoring-edit.test.ts :: trimming the START shifts start-relative parameters: openings and tees keep their physical place; one in the removed part rejects"
+      },
+      {
+        "file": "packages/bim/test/authoring-edit.test.ts",
+        "name": "trimming to the END of the target joins endpoint to endpoint; join: false only moves the end (touching, no topology)",
+        "reason": "WALL_EDIT_HOSTED_CONFLICT",
+        "evidence": "Error: the T-junction J-0001 would fall off the edited wall.",
+        "key": "packages/bim/test/authoring-edit.test.ts :: trimming to the END of the target joins endpoint to endpoint; join: false only moves the end (touching, no topology)"
+      },
+      {
+        "file": "packages/bim/test/authoring-edit.test.ts",
+        "name": "refused: parallel (and near-parallel) target, target that does not reach, nothing to trim, too short, joined endpoint, other storey, itself",
+        "reason": "WALL_INTERSECTION",
+        "evidence": "Error: Walls W-0002 and W-0005 cross inside their segments. Split them into endpoint junctions before creating this geometry.",
+        "key": "packages/bim/test/authoring-edit.test.ts :: refused: parallel (and near-parallel) target, target that does not reach, nothing to trim, too short, joined endpoint, other storey, itself"
+      },
+      {
+        "file": "packages/bim/test/authoring-edit.test.ts",
+        "name": "refused: target behind the endpoint, within the wall, missed, parallel, endpoint already joined",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring-edit.test.ts :: refused: target behind the endpoint, within the wall, missed, parallel, endpoint already joined"
+      },
+      {
+        "file": "packages/bim/test/authoring-edit.test.ts",
+        "name": "moves an opening and its fill together (never different hosts); keep_position; overlap and fit are refused atomically; undo",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring-edit.test.ts :: moves an opening and its fill together (never different hosts); keep_position; overlap and fit are refused atomically; undo"
+      },
+      {
+        "file": "packages/bim/test/authoring-edit.test.ts",
+        "name": "a compound extend (geometry + new junction + hosted shift) that ends in a spatial occupancy conflict leaves NOTHING behind: events, state, snapshots, audit",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring-edit.test.ts :: a compound extend (geometry + new junction + hosted shift) that ends in a spatial occupancy conflict leaves NOTHING behind: events, state, snapshots, audit"
+      },
+      {
+        "file": "packages/bim/test/authoring-edit.test.ts",
+        "name": "split: the preview is the same decision as the apply, and persists nothing",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring-edit.test.ts :: split: the preview is the same decision as the apply, and persists nothing"
+      },
+      {
+        "file": "packages/bim/test/authoring-edit.test.ts",
+        "name": "merge: the preview is the same decision as the apply, and persists nothing",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring-edit.test.ts :: merge: the preview is the same decision as the apply, and persists nothing"
+      },
+      {
+        "file": "packages/bim/test/authoring-edit.test.ts",
+        "name": "trim: the preview is the same decision as the apply, and persists nothing",
+        "reason": "WALL_INTERSECTION",
+        "evidence": "Error: Walls W-0001 and W-0002 cross inside their segments. Split them into endpoint junctions before creating this geometry.",
+        "key": "packages/bim/test/authoring-edit.test.ts :: trim: the preview is the same decision as the apply, and persists nothing"
+      },
+      {
+        "file": "packages/bim/test/authoring-edit.test.ts",
+        "name": "rehost: the preview is the same decision as the apply, and persists nothing",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring-edit.test.ts :: rehost: the preview is the same decision as the apply, and persists nothing"
+      },
+      {
+        "file": "packages/bim/test/authoring-edit.test.ts",
+        "name": "every command: live state == the state rebuilt from its events; ids and events are deterministic across two identical runs",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring-edit.test.ts :: every command: live state == the state rebuilt from its events; ids and events are deterministic across two identical runs"
+      },
+      {
+        "file": "packages/bim/test/authoring-edit.test.ts",
+        "name": "history -> snapshot -> reload -> keep authoring == full replay; BIM_STATE_VERSION is unchanged by Phase 10",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring-edit.test.ts :: history -> snapshot -> reload -> keep authoring == full replay; BIM_STATE_VERSION is unchanged by Phase 10"
+      },
+      {
+        "file": "packages/bim/test/authoring-edit.test.ts",
+        "name": "extend-and-join closes a room; join: false (touching) does not; undo opens it again; the element itself is never touched",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring-edit.test.ts :: extend-and-join closes a room; join: false (touching) does not; undo opens it again; the element itself is never touched"
+      },
+      {
+        "file": "packages/bim/test/authoring-edit.test.ts",
+        "name": "a split keeps the room bounded with the same area; a partition split into halves keeps both rooms; merging back restores the signatures",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring-edit.test.ts :: a split keeps the room bounded with the same area; a partition split into halves keeps both rooms; merging back restores the signatures"
+      },
+      {
+        "file": "packages/bim/test/authoring-properties.test.ts",
+        "name": "P1 · split is refused exactly when an opening is crossed; otherwise split then merge restores the model (ids, joins, hosted content)",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/authoring-properties.test.ts :: P1 · split is refused exactly when an opening is crossed; otherwise split then merge restores the model (ids, joins, hosted content)"
+      },
+      {
+        "file": "packages/bim/test/authoring-properties.test.ts",
+        "name": "P2 · split preserves the total wall length; P3 · it preserves the world position of every hosted opening; P5 · and every external connection",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/authoring-properties.test.ts :: P2 · split preserves the total wall length; P3 · it preserves the world position of every hosted opening; P5 · and every external connection"
+      },
+      {
+        "file": "packages/bim/test/authoring-properties.test.ts",
+        "name": "P4 · merge preserves the world position of hosted openings and the physical place of tees, for either survivor and either orientation of the second wall",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/authoring-properties.test.ts :: P4 · merge preserves the world position of hosted openings and the physical place of tees, for either survivor and either orientation of the second wall"
+      },
+      {
+        "file": "packages/bim/test/authoring-properties.test.ts",
+        "name": "P6 · live == replay for split; P7 · for merge",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/authoring-properties.test.ts :: P6 · live == replay for split; P7 · for merge"
+      },
+      {
+        "file": "packages/bim/test/authoring-properties.test.ts",
+        "name": "P8 · trim / extend: live == replay, hosted content stays put, the end ends exactly on the target; P9 · dry run = apply without persisting",
+        "reason": "WALL_INTERSECTION",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/authoring-properties.test.ts :: P8 · trim / extend: live == replay, hosted content stays put, the end ends exactly on the target; P9 · dry run = apply without persisting"
+      },
+      {
+        "file": "packages/bim/test/authoring-properties.test.ts",
+        "name": "P10 · random authoring sequences: snapshot reload == full replay, and the reloaded platform keeps authoring",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/authoring-properties.test.ts :: P10 · random authoring sequences: snapshot reload == full replay, and the reloaded platform keeps authoring"
+      },
+      {
+        "file": "packages/bim/test/authoring-properties.test.ts",
+        "name": "P11 · spatial: a topology-preserving split keeps both rooms bounded with identical area and perimeter and no room event; merging back restores the region signatures",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/authoring-properties.test.ts :: P11 · spatial: a topology-preserving split keeps both rooms bounded with identical area and perimeter and no room event; merging back restores the region signatures"
+      },
+      {
+        "file": "packages/bim/test/authoring-properties.test.ts",
+        "name": "P12 · identical command scripts give identical states and (command ids aside) identical events",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/authoring-properties.test.ts :: P12 · identical command scripts give identical states and (command ids aside) identical events"
+      },
+      {
+        "file": "packages/bim/test/authoring-scenario.test.ts",
+        "name": "the 18-step scenario: build, edit with every primitive, validate, plan, IFC, snapshot, reload, undo, replay",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring-scenario.test.ts :: the 18-step scenario: build, edit with every primitive, validate, plan, IFC, snapshot, reload, undo, replay"
+      },
+      {
+        "file": "packages/bim/test/authoring.test.ts",
+        "name": "splitT reports the ACTUAL position after a snap to a T at the split point (not the requested t), consistent with splitPoint",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: W-0002:start is already teed onto W-0001 (J-0001).",
+        "key": "packages/bim/test/authoring.test.ts :: splitT reports the ACTUAL position after a snap to a T at the split point (not the requested t), consistent with splitPoint"
+      },
+      {
+        "file": "packages/bim/test/authoring.test.ts",
+        "name": "joins move with their end: start joins stay, end joins go to the new wall; tees transfer with renormalised t; a tee at the split point joins the new junction",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring.test.ts :: joins move with their end: start joins stay, end joins go to the new wall; tees transfer with renormalised t; a tee at the split point joins the new junction"
+      },
+      {
+        "file": "packages/bim/test/authoring.test.ts",
+        "name": "hosted openings, doors and windows keep their ids and physical positions; an opening crossed by the split rejects the whole command",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring.test.ts :: hosted openings, doors and windows keep their ids and physical positions; an opening crossed by the split rejects the whole command"
+      },
+      {
+        "file": "packages/bim/test/authoring.test.ts",
+        "name": "undo restores the pre-split state exactly (ids, joins, openings, counters)",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring.test.ts :: undo restores the pre-split state exactly (ids, joins, openings, counters)"
+      },
+      {
+        "file": "packages/bim/test/authoring.test.ts",
+        "name": "merge is the inverse of split: elements, joins, hosted content and the room regions return to the original (signatures included)",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring.test.ts :: merge is the inverse of split: elements, joins, hosted content and the room regions return to the original (signatures included)"
+      },
+      {
+        "file": "packages/bim/test/authoring.test.ts",
+        "name": "survivor and direction: `primary` (else the smaller id) survives with its own direction; hosted content, tees and far-end joins are transferred",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring.test.ts :: survivor and direction: `primary` (else the smaller id) survives with its own direction; hosted content, tees and far-end joins are transferred"
+      },
+      {
+        "file": "packages/bim/test/authoring.test.ts",
+        "name": "refused: not collinear, not explicitly joined (touching / collinear / tee), different type, vertical, room bounding, ambiguous junction, conflicting properties",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: Missing expected rejection.",
+        "key": "packages/bim/test/authoring.test.ts :: refused: not collinear, not explicitly joined (touching / collinear / tee), different type, vertical, room bounding, ambiguous junction, conflicting properties"
+      },
+      {
+        "file": "packages/bim/test/authoring.test.ts",
+        "name": "undo restores the merged-away wall, its joins and its hosted content",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring.test.ts :: undo restores the merged-away wall, its joins and its hosted content"
+      },
+      {
+        "file": "packages/bim/test/authoring.test.ts",
+        "name": "a perpendicular T branch ends at the host's near face; the host stays continuous; the axes and stored fields are untouched",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: W-0002:start is already teed onto W-0001 (J-0001).",
+        "key": "packages/bim/test/authoring.test.ts :: a perpendicular T branch ends at the host's near face; the host stays continuous; the axes and stored fields are untouched"
+      },
+      {
+        "file": "packages/bim/test/authoring.test.ts",
+        "name": "an oblique T is cut along the host face; a shallow T, a multi-wall junction and an over-short branch fall back to square ends (valid solids)",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: W-0002:start is already teed onto W-0001 (J-0001).",
+        "key": "packages/bim/test/authoring.test.ts :: an oblique T is cut along the host face; a shallow T, a multi-wall junction and an over-short branch fall back to square ends (valid solids)"
+      },
+      {
+        "file": "packages/bim/test/authoring.test.ts",
+        "name": "spatial semantics do not depend on the clipped solid: a room's region is the wall-axis region before and after the T is joined or clipped",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/authoring.test.ts :: spatial semantics do not depend on the clipped solid: a room's region is the wall-axis region before and after the T is joined or clipped"
+      },
+      {
+        "file": "packages/bim/test/authoring.test.ts",
+        "name": "the plan reflects the clipped branch (derived from the same representation)",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: W-0002:start is already teed onto W-0001 (J-0001).",
+        "key": "packages/bim/test/authoring.test.ts :: the plan reflects the clipped branch (derived from the same representation)"
+      },
+      {
+        "file": "packages/bim/test/building.test.ts",
+        "name": "sample building: walls, mitres, layers, quantities",
+        "reason": "ERR_ASSERTION",
+        "evidence": "AssertionError [ERR_ASSERTION]: net 34.07712000000003",
+        "key": "packages/bim/test/building.test.ts :: sample building: walls, mitres, layers, quantities"
+      },
+      {
+        "file": "packages/bim/test/building.test.ts",
+        "name": "delete cascades and undo restores",
+        "reason": "ELEMENT_IN_USE",
+        "evidence": "Error: wall W-0001 is still referenced (2 joins); remove those relations first (disconnect MEP connectors with bim_disconnect_mep; or delete hosted elements with cascade_hosted). Nothing was deleted.",
+        "key": "packages/bim/test/building.test.ts :: delete cascades and undo restores"
+      },
+      {
+        "file": "packages/bim/test/category-contracts.test.ts",
+        "name": "contract · architecture.room (spatial)",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/category-contracts.test.ts :: contract · architecture.room (spatial)"
+      },
+      {
+        "file": "packages/bim/test/category-contracts.test.ts",
+        "name": "contract · mechanical.space (spatial)",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/category-contracts.test.ts :: contract · mechanical.space (spatial)"
+      },
+      {
+        "file": "packages/bim/test/components.test.ts",
+        "name": "packages\\bim\\test\\components.test.ts",
+        "reason": "FILE_OR_SUITE_WRAPPER",
+        "evidence": "'test failed'",
+        "key": "packages/bim/test/components.test.ts :: packages\\bim\\test\\components.test.ts"
+      },
+      {
+        "file": "packages/bim/test/engines-properties.test.ts",
+        "name": "P2 · a legacy (Phase 8) beam / column history and the canonical profile_member commands give identical elements and quantities",
+        "reason": "ERR_ASSERTION",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/engines-properties.test.ts :: P2 · a legacy (Phase 8) beam / column history and the canonical profile_member commands give identical elements and quantities"
+      },
+      {
+        "file": "packages/bim/test/engines-properties.test.ts",
+        "name": "P7 · legacy update histories: upcast full replay == snapshot + tail == the canonical live model",
+        "reason": "ERR_ASSERTION",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/engines-properties.test.ts :: P7 · legacy update histories: upcast full replay == snapshot + tail == the canonical live model"
+      },
+      {
+        "file": "packages/bim/test/engines-properties.test.ts",
+        "name": "P8 · undo across the migration: legacy histories undone through the replay equal the canonical histories undone",
+        "reason": "ERR_ASSERTION",
+        "evidence": "Error: Property failed after 5 tests",
+        "key": "packages/bim/test/engines-properties.test.ts :: P8 · undo across the migration: legacy histories undone through the replay equal the canonical histories undone"
+      },
+      {
+        "file": "packages/bim/test/engines.test.ts",
+        "name": "packages\\bim\\test\\engines.test.ts",
+        "reason": "FILE_OR_SUITE_WRAPPER",
+        "evidence": "'test failed'",
+        "key": "packages/bim/test/engines.test.ts :: packages\\bim\\test\\engines.test.ts"
+      },
+      {
+        "file": "packages/bim/test/exports.test.ts",
+        "name": "8 · a symlinked export directory cannot redirect writes outside the root",
+        "reason": "WINDOWS_SYMLINK_PERMISSION",
+        "evidence": "Error: EPERM: operation not permitted, symlink 'C:\\Users\\TERENO~1\\AppData\\Local\\Temp\\insa-exp-WaWIKF\\outside' -> 'C:\\Users\\TERENO~1\\AppData\\Local\\Temp\\insa-exp-WaWIKF\\data\\ofis\\exports'",
+        "key": "packages/bim/test/exports.test.ts :: 8 · a symlinked export directory cannot redirect writes outside the root"
+      },
+      {
+        "file": "packages/bim/test/mep-scenario.test.ts",
+        "name": "packages\\bim\\test\\mep-scenario.test.ts",
+        "reason": "FILE_OR_SUITE_WRAPPER",
+        "evidence": "'test failed'",
+        "key": "packages/bim/test/mep-scenario.test.ts :: packages\\bim\\test\\mep-scenario.test.ts"
+      },
+      {
+        "file": "packages/bim/test/mep.test.ts",
+        "name": "a MEP duplicate = same category + system + type + route; a pipe and a conduit on one line, or two systems on one route, are NOT duplicates; usage names categories, never the engine",
+        "reason": "INVALID_GEOMETRY",
+        "evidence": "Error: The same physical geometry occurs twice.",
+        "key": "packages/bim/test/mep.test.ts :: a MEP duplicate = same category + system + type + route; a pipe and a conduit on one line, or two systems on one route, are NOT duplicates; usage names categories, never the engine"
+      },
+      {
+        "file": "packages/bim/test/phase13-fixture.test.ts",
+        "name": "packages\\bim\\test\\phase13-fixture.test.ts",
+        "reason": "FILE_OR_SUITE_WRAPPER",
+        "evidence": "'test failed'",
+        "key": "packages/bim/test/phase13-fixture.test.ts :: packages\\bim\\test\\phase13-fixture.test.ts"
+      },
+      {
+        "file": "packages/bim/test/reinforcement.test.ts",
+        "name": "bar set: derived bars, lengths and volume equal independent oracles; the bend radius fillets every corner; quantities",
+        "reason": "INVALID_DIMENSION",
+        "evidence": "Error: C-0001 height must be greater than 0.0001 m (got 0).",
+        "key": "packages/bim/test/reinforcement.test.ts :: bar set: derived bars, lengths and volume equal independent oracles; the bend radius fillets every corner; quantities"
+      },
+      {
+        "file": "packages/bim/test/reinforcement.test.ts",
+        "name": "refusals: host rules, mesh / tendon layer rules, overlap, bend radius that does not fit, degenerate paths, unknown host; nothing is written",
+        "reason": "INVALID_DIMENSION",
+        "evidence": "Error: C-0001 height must be greater than 0.0001 m (got 0).",
+        "key": "packages/bim/test/reinforcement.test.ts :: refusals: host rules, mesh / tendon layer rules, overlap, bend radius that does not fit, degenerate paths, unknown host; nothing is written"
+      },
+      {
+        "file": "packages/bim/test/reinforcement.test.ts",
+        "name": "host relation: bars move WITH their host and never alone; the host cannot be deleted while it hosts bars (no cascade); undo / replay / snapshot / dry run",
+        "reason": "INVALID_DIMENSION",
+        "evidence": "Error: C-0001 height must be greater than 0.0001 m (got 0).",
+        "key": "packages/bim/test/reinforcement.test.ts :: host relation: bars move WITH their host and never alone; the host cannot be deleted while it hosts bars (no cascade); undo / replay / snapshot / dry run"
+      },
+      {
+        "file": "packages/bim/test/replay.test.ts",
+        "name": "BIM replay equivalence after every command: snapshot + tail == full replay (creates, multi-event, hosted, batch, delete, undo)",
+        "reason": "ELEMENT_IN_USE",
+        "evidence": "Error: wall W-0001 is still referenced (2 joins); remove those relations first (disconnect MEP connectors with bim_disconnect_mep; or delete hosted elements with cascade_hosted). Nothing was deleted.",
+        "key": "packages/bim/test/replay.test.ts :: BIM replay equivalence after every command: snapshot + tail == full replay (creates, multi-event, hosted, batch, delete, undo)"
+      },
+      {
+        "file": "packages/bim/test/spatial-properties.test.ts",
+        "name": "P1 · a joined rectangle is exactly one region: area = w*d, perimeter = 2(w+d)",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/spatial-properties.test.ts :: P1 · a joined rectangle is exactly one region: area = w*d, perimeter = 2(w+d)"
+      },
+      {
+        "file": "packages/bim/test/spatial-properties.test.ts",
+        "name": "P2 · moving a boundary wall: same element and point, new derived region, replay equivalent",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/spatial-properties.test.ts :: P2 · moving a boundary wall: same element and point, new derived region, replay equivalent"
+      },
+      {
+        "file": "packages/bim/test/spatial-properties.test.ts",
+        "name": "P3 · a tee-joined partition splits the region: the room resolves to one side, the other side is unoccupied",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/spatial-properties.test.ts :: P3 · a tee-joined partition splits the region: the room resolves to one side, the other side is unoccupied"
+      },
+      {
+        "file": "packages/bim/test/spatial-properties.test.ts",
+        "name": "P4 · unjoining any corner opens the region even though the coordinates still coincide (touching is not joining)",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/spatial-properties.test.ts :: P4 · unjoining any corner opens the region even though the coordinates still coincide (touching is not joining)"
+      },
+      {
+        "file": "packages/bim/test/spatial-properties.test.ts",
+        "name": "P5 · two elements of the same category can never share a region; different categories can",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/spatial-properties.test.ts :: P5 · two elements of the same category can never share a region; different categories can"
+      },
+      {
+        "file": "packages/bim/test/spatial-properties.test.ts",
+        "name": "P6 · regions do not depend on join creation order, record order or join member order",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/spatial-properties.test.ts :: P6 · regions do not depend on join creation order, record order or join member order"
+      },
+      {
+        "file": "packages/bim/test/spatial-properties.test.ts",
+        "name": "P7 · identical loops on two storeys stay independent: an L0 room never uses L1 walls",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/spatial-properties.test.ts :: P7 · identical loops on two storeys stay independent: an L0 room never uses L1 walls"
+      },
+      {
+        "file": "packages/bim/test/spatial-properties.test.ts",
+        "name": "P8 · tees cut the host virtually: correct regions, host wall unchanged, parametric boundary references",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/spatial-properties.test.ts :: P8 · tees cut the host virtually: correct regions, host wall unchanged, parametric boundary references"
+      },
+      {
+        "file": "packages/bim/test/spatial-properties.test.ts",
+        "name": "P9 · random spatial histories: live == full replay == snapshot + tail, including derived regions",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/spatial-properties.test.ts :: P9 · random spatial histories: live == full replay == snapshot + tail, including derived regions"
+      },
+      {
+        "file": "packages/bim/test/spatial-properties.test.ts",
+        "name": "P10 · turning a partition off merges regions: refused atomically iff two same-category rooms would share it",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/spatial-properties.test.ts :: P10 · turning a partition off merges regions: refused atomically iff two same-category rooms would share it"
+      },
+      {
+        "file": "packages/bim/test/spatial.test.ts",
+        "name": "packages\\bim\\test\\spatial.test.ts",
+        "reason": "FILE_OR_SUITE_WRAPPER",
+        "evidence": "'test failed'",
+        "key": "packages/bim/test/spatial.test.ts :: packages\\bim\\test\\spatial.test.ts"
+      },
+      {
+        "file": "packages/bim/test/structural-properties.test.ts",
+        "name": "P8 · a shear wall keeps its category through Phase 10 split / merge; P10 · existing beams and columns are unchanged",
+        "reason": "ERR_ASSERTION",
+        "evidence": "Error: Property failed after 2 tests",
+        "key": "packages/bim/test/structural-properties.test.ts :: P8 · a shear wall keeps its category through Phase 10 split / merge; P10 · existing beams and columns are unchanged"
+      },
+      {
+        "file": "packages/bim/test/structural-scenario.test.ts",
+        "name": "two-storey structural bay + architecture: validate, query, level change, brace update, shear wall split / merge, footing move, plan, IFC matrix, snapshot, reload, undo, replay",
+        "reason": "INVALID_GEOMETRY",
+        "evidence": "Error: The same physical geometry occurs twice.",
+        "key": "packages/bim/test/structural-scenario.test.ts :: two-storey structural bay + architecture: validate, query, level change, brace update, shear wall split / merge, footing move, plan, IFC matrix, snapshot, reload, undo, replay"
+      },
+      {
+        "file": "packages/bim/test/structural.test.ts",
+        "name": "packages\\bim\\test\\structural.test.ts",
+        "reason": "FILE_OR_SUITE_WRAPPER",
+        "evidence": "'test failed'",
+        "key": "packages/bim/test/structural.test.ts :: packages\\bim\\test\\structural.test.ts"
+      },
+      {
+        "file": "packages/bim/test/topology-properties.test.ts",
+        "name": "P1 · moving a shared junction keeps every joined endpoint on one point; replay == snapshot + tail == live",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/topology-properties.test.ts :: P1 · moving a shared junction keeps every joined endpoint on one point; replay == snapshot + tail == live"
+      },
+      {
+        "file": "packages/bim/test/topology-properties.test.ts",
+        "name": "P2 · after any host update the tee endpoint equals the host point at its t",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/topology-properties.test.ts :: P2 · after any host update the tee endpoint equals the host point at its t"
+      },
+      {
+        "file": "packages/bim/test/topology-properties.test.ts",
+        "name": "P3 · moving a constrained tee endpoint on its own is always refused and changes nothing",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/topology-properties.test.ts :: P3 · moving a constrained tee endpoint on its own is always refused and changes nothing"
+      },
+      {
+        "file": "packages/bim/test/topology-properties.test.ts",
+        "name": "P4 · unjoin never moves a wall: coordinates before == after (only relation and miter data change)",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/topology-properties.test.ts :: P4 · unjoin never moves a wall: coordinates before == after (only relation and miter data change)"
+      },
+      {
+        "file": "packages/bim/test/topology-properties.test.ts",
+        "name": "P6 · the connected component of any wall is exactly its explicitly joined chain",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/topology-properties.test.ts :: P6 · the connected component of any wall is exactly its explicitly joined chain"
+      },
+      {
+        "file": "packages/bim/test/topology-properties.test.ts",
+        "name": "P7 · deleting a wall with joins or openings is refused atomically; without usages it succeeds",
+        "reason": "ELEMENT_IN_USE",
+        "evidence": "Error: Property failed after 1 tests",
+        "key": "packages/bim/test/topology-properties.test.ts :: P7 · deleting a wall with joins or openings is refused atomically; without usages it succeeds"
+      },
+      {
+        "file": "packages/bim/test/topology.test.ts",
+        "name": "packages\\bim\\test\\topology.test.ts",
+        "reason": "FILE_OR_SUITE_WRAPPER",
+        "evidence": "'test failed'",
+        "key": "packages/bim/test/topology.test.ts :: packages\\bim\\test\\topology.test.ts"
+      },
+      {
+        "file": "packages/bim/test/validate-duplicates.test.ts",
+        "name": "1 · two windows in the SAME wall at different positions are not duplicates",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/validate-duplicates.test.ts :: 1 · two windows in the SAME wall at different positions are not duplicates"
+      },
+      {
+        "file": "packages/bim/test/validate-duplicates.test.ts",
+        "name": "2 · two doors in the SAME wall at different positions are not duplicates",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/validate-duplicates.test.ts :: 2 · two doors in the SAME wall at different positions are not duplicates"
+      },
+      {
+        "file": "packages/bim/test/validate-duplicates.test.ts",
+        "name": "3 · two rooms on the SAME storey in DIFFERENT bounded regions are not duplicates",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/validate-duplicates.test.ts :: 3 · two rooms on the SAME storey in DIFFERENT bounded regions are not duplicates"
+      },
+      {
+        "file": "packages/bim/test/validate-duplicates.test.ts",
+        "name": "4 · a room and a space in the SAME region stay valid (Phase 8 category occupancy), with no duplicate warning",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/validate-duplicates.test.ts :: 4 · a room and a space in the SAME region stay valid (Phase 8 category occupancy), with no duplicate warning"
+      },
+      {
+        "file": "packages/bim/test/validate-duplicates.test.ts",
+        "name": "5 · real duplicate physical geometry is still reported, per engine",
+        "reason": "INVALID_WALL_JOIN",
+        "evidence": "Error: Junction J-0001: W-0001 and W-0002 overlap (collinear, same side).",
+        "key": "packages/bim/test/validate-duplicates.test.ts :: 5 · real duplicate physical geometry is still reported, per engine"
+      },
+      {
+        "file": "packages/bim/test/validate-duplicates.test.ts",
+        "name": "7 · the signature helper: hosted components and spatial elements have none; openings compare host, position and size; the result is deterministic",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/validate-duplicates.test.ts :: 7 · the signature helper: hosted components and spatial elements have none; openings compare host, position and size; the result is deterministic"
+      },
+      {
+        "file": "packages/bim/test/validate-duplicates.test.ts",
+        "name": "8 · the invariants that really govern these elements are untouched: same-category occupancy and overlapping openings are still refused",
+        "reason": "DUPLICATE_WALL_JOIN",
+        "evidence": "Error: These endpoints are already joined (J-0001).",
+        "key": "packages/bim/test/validate-duplicates.test.ts :: 8 · the invariants that really govern these elements are untouched: same-category occupancy and overlapping openings are still refused"
+      },
+      {
+        "file": "packages/bim/test/vertical.test.ts",
+        "name": "packages\\bim\\test\\vertical.test.ts",
+        "reason": "FILE_OR_SUITE_WRAPPER",
+        "evidence": "'test failed'",
+        "key": "packages/bim/test/vertical.test.ts :: packages\\bim\\test\\vertical.test.ts"
+      }
+    ],
+    "mechanisms": {
+      "ERR_ASSERTION": 23,
+      "WINDOWS_TSX_LAUNCH": 2,
+      "RESPONSE_SHAPE_TYPEERROR": 2,
+      "FILE_OR_SUITE_WRAPPER": 9,
+      "DUPLICATE_WALL_JOIN": 54,
+      "INVALID_GEOMETRY": 5,
+      "WALL_INTERSECTION": 5,
+      "WALL_EDIT_HOSTED_CONFLICT": 1,
+      "ELEMENT_IN_USE": 3,
+      "WINDOWS_SYMLINK_PERMISSION": 1,
+      "INVALID_DIMENSION": 3,
+      "INVALID_WALL_JOIN": 1
+    }
+  },
+  "added": [],
+  "resolved": [],
+  "changedMechanisms": []
+}

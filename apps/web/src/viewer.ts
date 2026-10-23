@@ -20,6 +20,10 @@ export class Viewer {
   private fragments!: OBC.FragmentsManager;
   private highlighter!: OBF.Highlighter;
   private modelId: string | null = null;
+  private sourceModels=new Map<string,{file:string;title:string;version:number}>();
+  private sourceMode=false;
+  private sourceVersion=0;
+  onSourceSelect:(data:unknown)=>void=()=>{};
   private firstLoad = true;
   private disposed = false;
   private loadVersion = 0;
@@ -83,6 +87,7 @@ export class Viewer {
       const localId = ids ? [...ids][0] : undefined;
       const model = modelId ? this.fragments.list.get(modelId) : undefined;
       if (!model || localId === undefined) return;
+      if(this.sourceModels.has(modelId!))return;
       const [guid] = await model.getGuidsByLocalIds([localId]);
       this.appearances?.highlight(guid??null);
       this.onSelect(guid ?? null);
@@ -97,6 +102,19 @@ export class Viewer {
       if(e.button!==0||Math.hypot(e.clientX-down[0],e.clientY-down[1])>4)return;
       const version=++pickVersion;
       const rect=container.getBoundingClientRect();raycaster.setFromCamera(new THREE.Vector2((e.clientX-rect.left)/rect.width*2-1,-(e.clientY-rect.top)/rect.height*2+1),this.world.camera.three);
+      if(this.sourceMode){
+        const dom=this.world.renderer?.three?.domElement;if(!dom)return;
+        const hits=await Promise.all([...this.sourceModels.keys()].map(async id=>{const model=this.fragments.list.get(id);if(!model?.object.visible)return null;const hit=await model.raycast({camera:this.world.camera.three,mouse:new THREE.Vector2(e.clientX,e.clientY),dom,...(this.measurementMode&&this.measurementSnapping?{snappingClasses:[FRAGS.SnappingClass.POINT,FRAGS.SnappingClass.LINE]}:{})});return hit?{id,model,hit}:null;}));
+        if(this.disposed||version!==pickVersion)return;
+        const selected=hits.filter((h):h is NonNullable<typeof h>=>!!h).sort((a,b)=>a.hit.distance-b.hit.distance)[0];
+        if(this.measurementMode){if(selected)this.addMeasurementPoint(selected.hit.point.clone());return;}
+        if(!selected){await this.highlighter.clear('select');this.onSourceSelect(null);return;}
+        await this.highlighter.highlightByID('select',{[selected.id]:new Set([selected.hit.localId])},true,false);
+        const [guid]=await selected.model.getGuidsByLocalIds([selected.hit.localId]);
+        const [data]=await selected.model.getItemsData([selected.hit.localId]);
+        if(!this.disposed&&version===pickVersion)this.onSourceSelect({source:this.sourceModels.get(selected.id),guid,localId:selected.hit.localId,attributes:data,modelKind:'Original IFC source; not an authored INSA element'});
+        return;
+      }
       const hit=this.appearances?raycaster.intersectObject(this.appearances.group,true).find(h=>h.object.userData.guid):undefined;
       const model=this.modelId?this.fragments.list.get(this.modelId):undefined,dom=this.world.renderer?.three?.domElement;
       const native=model&&dom?await model.raycast({camera:this.world.camera.three,mouse:new THREE.Vector2(e.clientX,e.clientY),dom,...(this.measurementMode&&this.measurementSnapping?{snappingClasses:[FRAGS.SnappingClass.POINT,FRAGS.SnappingClass.LINE]}:{})}).catch(()=>null):null;
@@ -139,13 +157,14 @@ export class Viewer {
       await this.appearanceQueue;
       if(this.appearances){this.world.scene.three.remove(this.appearances.group);this.appearances.dispose();this.appearances=null;}
       this.modelId = id;
+      model.object.visible=!this.sourceMode;
       if (oldId) {
         const old = this.fragments.list.get(oldId);
         if (old) this.world.scene.three.remove(old.object);
         await this.fragments.core.disposeModel(oldId);
       }
       await this.fragments.core.update(true);
-      if (this.firstLoad) { this.firstLoad = false; await this.world.camera.fitToItems(); }
+      if (this.firstLoad&&!this.sourceMode) { this.firstLoad = false; await this.world.camera.fitToItems(); }
     };
     const pending = this.loadQueue.then(replace);
     this.loadQueue = pending.catch(() => {});
@@ -153,6 +172,30 @@ export class Viewer {
   }
 
   /** Highlights (and optionally zooms to) an element by its IFC GlobalId. */
+  async beginSourceModels(){
+    await this.ready;await this.clearSourceModels();
+    this.sourceMode=true;
+    const native=this.modelId?this.fragments.list.get(this.modelId):undefined;if(native)native.object.visible=false;
+    if(this.appearances)this.appearances.group.visible=false;this.infrastructure.group.visible=false;
+    return this.sourceVersion;
+  }
+  async addSourceModel(bytes:Uint8Array,file:string,title:string,generation:number,revision=1){
+    await this.ready;if(this.disposed||generation!==this.sourceVersion)return;
+    const id=`source:${file}:v${revision}:${generation}`;
+    const model=await this.fragments.core.load(bytes,{modelId:id});
+    if(this.disposed||generation!==this.sourceVersion){if(!this.disposed){this.world.scene.three.remove(model.object);await this.fragments.core.disposeModel(id);}return;}
+    const spatial=Object.values(await model.getItemsOfCategories([/^IFCSPACE$/])).flat();if(spatial.length)await model.setVisible(spatial,false);
+    if(this.disposed||generation!==this.sourceVersion){if(!this.disposed){this.world.scene.three.remove(model.object);await this.fragments.core.disposeModel(id);}return;}
+    this.sourceModels.set(id,{file,title,version:revision});await this.fragments.core.update(true);
+  }
+  async sourceVisible(file:string,visible:boolean){for(const [id,item]of this.sourceModels)if(item.file===file){const model=this.fragments.list.get(id);if(model)model.object.visible=visible;}await this.fragments.core.update(true);}
+  async clearSourceModels(){
+    ++this.sourceVersion;this.sourceMode=false;await this.highlighter.clear('select');
+    for(const id of this.sourceModels.keys()){const model=this.fragments.list.get(id);if(model)this.world.scene.three.remove(model.object);await this.fragments.core.disposeModel(id);}this.sourceModels.clear();
+    const native=this.modelId?this.fragments.list.get(this.modelId):undefined;if(native)native.object.visible=true;
+    if(this.appearances)this.appearances.group.visible=true;this.infrastructure.group.visible=true;
+  }
+  async sourceDiagnostics(){return Promise.all([...this.sourceModels].map(async([id,source])=>{const model=this.fragments.list.get(id)!;const ids=await model.getItemsIdsWithGeometry();const box=model.box.clone();return {...source,id,geometryItems:ids.length,categories:await model.getCategories(),coordination:(await model.getCoordinationMatrix()).elements,bounds:{min:box.min.toArray(),max:box.max.toArray()}};}));}
   async select(globalIds: string|string[], zoom = true) {
     this.infrastructure.select(null);
     const model = this.modelId ? this.fragments.list.get(this.modelId) : undefined;
@@ -201,6 +244,7 @@ export class Viewer {
       if(this.disposed||model.modelId!==this.modelId)return;
       if(!this.appearances){this.appearances=new MaterialAppearanceView(model,project);this.world.scene.three.add(this.appearances.group);}
       await this.appearances.update(data);if(this.disposed)return;await this.fragments.core.update(true);
+      this.appearances.group.visible=!this.sourceMode;
       this.onAppearanceWarnings([...new Set(this.appearances.warnings)]);
       const info=this.world.renderer?.three?.info;
       (window as any).__insaAppearanceStats={...this.appearances.stats,modelId:this.modelId,geometryLoads:this.loadVersion,gpuTextures:info?.memory.textures,gpuGeometries:info?.memory.geometries,drawCalls:info?.render.calls};
@@ -214,6 +258,7 @@ export class Viewer {
   setMapGeoid(value:number){this.googleMap?.setGeoid(value);}
   async fit() {
     await this.ready;
+    if(this.sourceMode){const map:OBC.ModelIdMap={};for(const id of this.sourceModels.keys()){const source=this.fragments.list.get(id);if(source?.object.visible)map[id]=new Set(await source.getItemsIdsWithGeometry());}if(Object.keys(map).length)await this.world.camera.fitToItems(map);return;}
     const model=this.modelId?this.fragments.list.get(this.modelId):undefined;
     if((!model||!model.object.visible)&&!this.infrastructure.bounds().isEmpty())return this.fitInfrastructure();
     return this.world.camera.fitToItems();
@@ -240,7 +285,7 @@ export class Viewer {
     Object.defineProperty((window as any).__insaInfrastructureStats,'gpu',{enumerable:true,get:()=>({sourcePositionBytes:this.infrastructure.group.children.reduce((n,o)=>n+((o as THREE.Mesh).geometry?.getAttribute('position')?.array.byteLength??0),0),gpuGeometries:this.world.renderer?.three.info.memory.geometries,gpuTextures:this.world.renderer?.three.info.memory.textures,drawCalls:this.world.renderer?.three.info.render.calls,appearanceMaterials:this.infrastructure.stats.materials,cachedTextures:this.infrastructure.stats.textures,warnings:this.infrastructure.warnings})});
     (window as any).__insaInfrastructureStats.geometryKeys=this.infrastructure.group.children.map(o=>({id:o.userData.infraId,key:o.userData.geometryKey}));
   }
-  setCadSourceMode(enabled:boolean){const model=this.modelId?this.fragments.list.get(this.modelId):undefined;if(model)model.object.visible=!enabled;if(this.appearances)this.appearances.group.visible=!enabled;}
+  setCadSourceMode(enabled:boolean){const model=this.modelId?this.fragments.list.get(this.modelId):undefined;if(model)model.object.visible=!enabled&&!this.sourceMode;if(this.appearances)this.appearances.group.visible=!enabled&&!this.sourceMode;}
   async selectInfrastructure(id:string){await this.ready;await this.highlighter.clear('select');this.appearances?.highlight(null);this.infrastructure.select(id);this.onInfraSelect(id);await this.fitInfrastructure(id);}
   setInfrastructureWireframe(id:string,enabled:boolean){this.infrastructure.setWireframe(id,enabled);}
     setInfrastructureVisible(id:string,visible:boolean){this.infrastructure.setVisible(id,visible);}
