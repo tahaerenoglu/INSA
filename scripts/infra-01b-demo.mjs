@@ -1,0 +1,2 @@
+import fs from 'node:fs';import path from 'node:path';import {FileStores} from '@insa/core';import {createPlatform} from '../apps/manager-mcp/src/runtime.ts';import {buildDemo} from '../apps/web-server/test/fixtures/infrastructure-demo.ts';
+const root=path.resolve('test-results/infra-01b/data'),project='infra-01b-demo';fs.mkdirSync(root,{recursive:true});const p=createPlatform(new FileStores(root));if((await p.seq(project))===0)await buildDemo(p,project);console.log(JSON.stringify({root,project,seq:await p.seq(project)}));

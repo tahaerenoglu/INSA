@@ -1,0 +1,18 @@
+import {cadFixture,cadRegion,roles} from '../../../../packages/infra/test/cad-fixture.js';
+import {verticalFixture} from '../../../../packages/infra/test/cad-vertical-fixture.js';
+import {horizontalHash,verticalHash} from '../../../../packages/infra/src/index.js';
+export const reviewer:any={id:'human',name:'Fixture reviewer',kind:'human',roles:['bim_manager']};
+export async function prepareVerticalFixture(p:any,assets:any,project:string,options:Parameters<typeof verticalFixture>[0]={}){
+ const run=(t:string,i:any,actor=reviewer)=>p.execute(actor,project,t,i);
+ await run('bim_set_project',{name:'D2A vertical fixture'});await run('bim_set_georeference',{crs:{name:'LOCAL:CAD',vertical_datum:'LOCAL:CAD-Z'},eastings:412000,northings:4561000,orthogonal_height:0});await run('infra_set_crs',{crs:'LOCAL:CAD'});
+ const asset=assets.saveCadSource(project,cadFixture()),d=(await run('infra_review_cad',{action:'register',asset:asset.id,filename:'plan.dxf'})).summary.id;
+ const raw=cadRegion('alignment-plan',{include:['A','B','C','STA0','STA1'],roles:{...roles(),centerline:['A','B','C'],station:['STA0','STA1']},context:{kind:'plan',confirmed:true,sourceUnit:'meter',sourceOrigin:[0,0],engineeringOrigin:[412000,4561000],angle:0,startStation:0}}),{id,drawing,status,revision,sourceHash,...region}=raw;
+ const r=(await run('infra_review_cad',{action:'region',drawing:d,region})).summary.id;await run('infra_review_cad',{action:'confirm',drawing:d,regionId:r});const meta=(await run('infra_query_cad',{drawing:d})).result,c={drawing:d,region:r,reviewRevision:meta.regions[0].revision,sourceHash:asset.sha256,direction:'forward',sourceStart:[0,0],startStation:0,directionConfirmed:true,coordinateCrs:'LOCAL:CAD',coordinateConfirmed:true,georefHash:meta.georefHash};const h=(await run('infra_query_cad',{drawing:d,conversion:c})).result.conversion;await run('infra_create_alignment',{name:'Matched canonical',cad:{...c,previewHash:h.previewHash}});
+ const f=verticalFixture(options),vasset=assets.saveCadSource(project,f.bytes),vd=(await run('infra_review_cad',{action:'register',asset:vasset.id,filename:'matched-profile.dxf'})).summary.id;
+ const query=(await run('infra_query_cad',{drawing:vd})).result;
+ const rv=cadRegion('longitudinal-profile',{include:query.document.entities.map((e:any)=>e.id),roles:{...roles(),design:['VD'],existing:['VG']},context:f.context}),{id:vi,drawing:vv,status:vs,revision:vr,sourceHash:vh,...vregion}=rv;
+ const regionId=(await run('infra_review_cad',{action:'region',drawing:vd,region:vregion})).summary.id;await run('infra_review_cad',{action:'confirm',drawing:vd,regionId});const vm=(await run('infra_query_cad',{drawing:vd})).result,a=(await p.state(project,'infra')).alignments['AL-001'];
+ const config:any={drawing:vd,region:regionId,alignment:'AL-001',sourceHash:vasset.sha256,reviewRevision:vm.regions[0].revision,horizontalHash:horizontalHash(a),targetVerticalHash:verticalHash(a),georefHash:vm.georefHash,coordinateCrs:'LOCAL:CAD',coordinateConfirmed:true,designEntities:['VD'],rolesConfirmed:true,direction:options.reverseOrder?'decreasing':'increasing',directionConfirmed:true,correspondenceConfirmed:true,correspondenceReason:'Original AL-001 identity and station range checked',coverage:options.range?'partial':'full',identityText:'ALIGN_ID',datum:{mode:'project',source:'LOCAL:CAD-Z',name:'LOCAL:CAD-Z',confirmed:true,reason:'Same explicit source and project datum'},annotationChecks:f.checks,curves:f.curves,replaceConfirmed:false};
+ const preview=async(c=config)=>(await run('infra_query_cad',{drawing:vd,verticalConversion:c})).result.verticalConversion;
+ return {run,f,config,preview,alignment:a,drawing:vd,region:regionId};
+}

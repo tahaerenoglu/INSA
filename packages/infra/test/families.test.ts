@@ -1,0 +1,20 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';
+import {Platform} from '@insa/core';import {infraModule} from '../src/index.js';import {platform,ai} from './fixtures.js';
+test('persisted structure family places shared definitions, survives replay and respects undo/ownership',async()=>{
+ const p=platform(),project='families',run=async(tool:string,input:any)=>{const r:any=await p.execute(ai,project,tool,input);assert.equal(r.status,'applied');return r;};
+ await run('infra_create_alignment',{name:'Test',horizontal:[{x:0,y:0},{x:100,y:0}],vertical:[{station:0,z:10},{station:100,z:11}]});
+ await run('infra_create_component_types',{types:[{name:'Concrete',layer:{name:'Slab',role:'subbase',thickness:.3,leftExtent:2,rightExtent:2,materialId:'M-0001'}}]});
+ await run('infra_create_road_corridor',{name:'Structure track',alignment:'AL-001',from:0,to:20,sections:[0,20].map(station=>({station,leftWidth:2,rightWidth:2,leftShoulder:0,rightShoulder:0,leftCrossfall:0,rightCrossfall:0})),layers:[{componentType:'CT-001'}]});
+ await run('infra_create_section_types',{types:[{name:'Shell',profile:{shape:'circle',radius:3,center_y:1},layers:[{name:'Lining',thickness:.3}]}]});
+ await run('infra_create_tunnel',{name:'Shell1',alignment:'AL-001',ranges:[{from:0,to:20,section:'TS-001'}]});
+ const before:any=structuredClone(await p.state(project,'infra'));
+ await run('infra_create_family',{name:'Tunnel assembly',category:'Tüneller',members:['RD-001','TN-001']});
+ let s:any=await p.state(project,'infra');assert.deepEqual(s.roads,before.roads);assert.deepEqual(s.tunnels,before.tunnels);assert.equal(s.families['IF-001'].members[0].definition.layers[0].profile,undefined);
+ await run('infra_place_family',{family:'IF-001',alignment:'AL-001',station:40,name:'Second tunnel'});
+ s=await p.state(project,'infra');assert.equal(s.roads['RD-002'].layers[0].componentType,'CT-001');assert.equal(s.roads['RD-002'].layers[0].thickness,.3);assert.equal(s.roads['RD-002'].from,40);assert.equal(s.tunnels['TN-002'].ranges[0].section,'TS-001');assert.equal(Object.keys(s.families).length,1);
+ await assert.rejects(()=>run('infra_create_family',{name:'Duplicate ownership',category:'Tüneller',members:['TN-002']}),/bağlı/);
+ await assert.rejects(()=>run('infra_place_family',{family:'IF-001',alignment:'AL-001',station:10,name:'Overlapping'}),/overlap/);
+ const reopened=new Platform({modules:[infraModule],stores:p.stores});assert.deepEqual(await reopened.state(project,'infra'),s);
+ await run('platform_undo',{});s=await p.state(project,'infra');assert.equal(s.familyInstances['FI-002'],undefined);assert.equal(s.roads['RD-002'],undefined);assert.ok(s.familyInstances['FI-001']);assert.equal(Object.keys(s.componentTypes).length,1);
+ assert.equal((await p.state<any>('different','infra')).families,undefined);
+});

@@ -1,0 +1,1067 @@
+{
+  "project": "INSA_CAPABILITY_TEST_20261013_110354",
+  "inventory": {
+    "toolCount": 105,
+    "categories": 146,
+    "engines": [
+      {
+        "id": "wall",
+        "authoringLevel": 3,
+        "name": "Wall",
+        "status": "implemented",
+        "elementKind": "wall",
+        "placements": [
+          "wall_axis"
+        ],
+        "representations": [
+          "wall_extrusion"
+        ],
+        "typeFamilies": [
+          "layered"
+        ],
+        "operations": [
+          "create",
+          "update",
+          "move",
+          "reassign_storey",
+          "delete",
+          "join"
+        ],
+        "description": "Axis walls with layered types, explicit topology (joins, tees, miters), hosted openings, vertical intent and room bounding.",
+        "categories": [
+          "architecture.wall",
+          "architecture.wall_standard_case",
+          "structure.shear_wall"
+        ]
+      },
+      {
+        "id": "point_component",
+        "authoringLevel": 1,
+        "name": "Point component",
+        "status": "implemented",
+        "elementKind": "component",
+        "placements": [
+          "level_point"
+        ],
+        "representations": [
+          "box"
+        ],
+        "typeFamilies": [
+          "component"
+        ],
+        "operations": [
+          "create",
+          "update",
+          "move",
+          "reassign_storey",
+          "delete"
+        ],
+        "description": "Family -> ComponentType -> Component placed at a storey-relative point (furniture, equipment, fixtures, ...).",
+        "categories": [
+          "architecture.building_element_part",
+          "architecture.built_element",
+          "architecture.casework",
+          "architecture.chimney",
+          "architecture.furnishing_element",
+          "architecture.furniture",
+          "architecture.generic_model",
+          "architecture.shading_device",
+          "architecture.sign",
+          "architecture.system_furniture_element",
+          "architecture.transport_element",
+          "architecture.virtual_element",
+          "structure.bearing",
+          "structure.discrete_accessory",
+          "structure.fastener",
+          "structure.impact_protection_device",
+          "structure.mechanical_fastener",
+          "structure.tendon_anchor",
+          "structure.vibration_damper",
+          "structure.vibration_isolator",
+          "mechanical.air_terminal",
+          "mechanical.air_terminal_box",
+          "mechanical.air_to_air_heat_recovery",
+          "mechanical.boiler",
+          "mechanical.burner",
+          "mechanical.chiller",
+          "mechanical.coil",
+          "mechanical.compressor",
+          "mechanical.condenser",
+          "mechanical.cooled_beam",
+          "mechanical.cooling_tower",
+          "mechanical.damper",
+          "mechanical.distribution_chamber_element",
+          "mechanical.distribution_element",
+          "mechanical.distribution_flow_element",
+          "mechanical.duct_silencer",
+          "mechanical.energy_conversion_device",
+          "mechanical.engine",
+          "mechanical.equipment",
+          "mechanical.evaporative_cooler",
+          "mechanical.evaporator",
+          "mechanical.fan",
+          "mechanical.filter",
+          "mechanical.flow_controller",
+          "mechanical.flow_instrument",
+          "mechanical.flow_meter",
+          "mechanical.flow_moving_device",
+          "mechanical.flow_storage_device",
+          "mechanical.flow_terminal",
+          "mechanical.flow_treatment_device",
+          "mechanical.heat_exchanger",
+          "mechanical.humidifier",
+          "mechanical.liquid_terminal",
+          "mechanical.mobile_telecommunications_appliance",
+          "mechanical.signal",
+          "mechanical.space_heater",
+          "mechanical.tube_bundle",
+          "mechanical.unitary_equipment",
+          "electrical.actuator",
+          "electrical.alarm",
+          "electrical.audio_visual_appliance",
+          "electrical.communications_appliance",
+          "electrical.controller",
+          "electrical.distribution_board",
+          "electrical.distribution_control_element",
+          "electrical.electric_appliance",
+          "electrical.electric_distribution_board",
+          "electrical.electric_flow_storage_device",
+          "electrical.electric_flow_treatment_device",
+          "electrical.electric_generator",
+          "electrical.electric_motor",
+          "electrical.electric_time_control",
+          "electrical.equipment",
+          "electrical.junction_box",
+          "electrical.lamp",
+          "electrical.lighting_fixture",
+          "electrical.motor_connection",
+          "electrical.outlet",
+          "electrical.protective_device",
+          "electrical.protective_device_tripping_unit",
+          "electrical.sensor",
+          "electrical.solar_device",
+          "electrical.switching_device",
+          "electrical.transformer",
+          "electrical.unitary_control_element",
+          "plumbing.fixture",
+          "plumbing.interceptor",
+          "plumbing.medical_device",
+          "plumbing.pump",
+          "plumbing.stack_terminal",
+          "plumbing.tank",
+          "plumbing.valve",
+          "plumbing.waste_terminal",
+          "fire.fire_suppression_terminal",
+          "site.civil_element",
+          "site.component",
+          "site.geographic_element",
+          "site.mooring_device",
+          "site.navigation_element",
+          "site.vehicle"
+        ]
+      },
+      {
+        "id": "hosted_component",
+        "authoringLevel": 2,
+        "name": "Hosted component",
+        "status": "implemented",
+        "elementKind": "hosted_component",
+        "placements": [
+          "host"
+        ],
+        "representations": [
+          "hosted_insert"
+        ],
+        "typeFamilies": [
+          "opening"
+        ],
+        "operations": [
+          "create",
+          "update",
+          "delete",
+          "rehost",
+          "fill"
+        ],
+        "description": "Components filling a host void (doors, windows): they follow the opening in their host wall.",
+        "categories": [
+          "architecture.door",
+          "architecture.window"
+        ]
+      },
+      {
+        "id": "profile_member",
+        "authoringLevel": 2,
+        "name": "Profile member",
+        "status": "implemented",
+        "elementKind": "profile_member",
+        "placements": [
+          "member_axis",
+          "member_vertical",
+          "member_spatial_axis"
+        ],
+        "representations": [
+          "profile_sweep"
+        ],
+        "typeFamilies": [
+          "profile"
+        ],
+        "operations": [
+          "create",
+          "update",
+          "move",
+          "reassign_storey",
+          "delete"
+        ],
+        "description": "Linear members with a profile type swept along an axis (beams) or a vertical (columns), with vertical intent.",
+        "categories": [
+          "structure.brace",
+          "structure.caisson_foundation",
+          "structure.column",
+          "structure.deep_foundation",
+          "structure.framing",
+          "structure.pile"
+        ]
+      },
+      {
+        "id": "boundary",
+        "authoringLevel": 2,
+        "name": "Boundary element",
+        "status": "implemented",
+        "elementKind": "boundary",
+        "placements": [
+          "boundary",
+          "boundary_plane"
+        ],
+        "representations": [
+          "boundary_extrusion",
+          "boundary_plane_extrusion"
+        ],
+        "typeFamilies": [
+          "layered"
+        ],
+        "operations": [
+          "create",
+          "update",
+          "move",
+          "reassign_storey",
+          "delete"
+        ],
+        "description": "Polygon-bounded elements (outline + holes) extruded by a layered type from a horizontal reference level (floors, ceilings, flat roofs) or from a sloped plane (single-plane roofs). The category decides the thickness direction.",
+        "categories": [
+          "architecture.ceiling",
+          "architecture.floor",
+          "architecture.landing",
+          "architecture.roof",
+          "structure.footing",
+          "structure.foundation_slab",
+          "structure.plate",
+          "structure.slab"
+        ]
+      },
+      {
+        "id": "spatial",
+        "authoringLevel": 2,
+        "name": "Spatial element",
+        "status": "implemented",
+        "elementKind": "spatial",
+        "placements": [
+          "spatial_point"
+        ],
+        "representations": [
+          "spatial_prism"
+        ],
+        "typeFamilies": [],
+        "operations": [
+          "create",
+          "update",
+          "move",
+          "reassign_storey",
+          "delete"
+        ],
+        "description": "Rooms / spaces: a persisted location point; boundary, area and volume derived from explicitly joined room-bounding walls.",
+        "categories": [
+          "architecture.room",
+          "mechanical.space"
+        ]
+      },
+      {
+        "id": "stair",
+        "authoringLevel": 2,
+        "name": "Stair",
+        "status": "implemented",
+        "elementKind": "stair",
+        "placements": [
+          "stair_run"
+        ],
+        "representations": [
+          "stair_run"
+        ],
+        "typeFamilies": [
+          "stair"
+        ],
+        "operations": [
+          "create",
+          "update",
+          "move",
+          "reassign_storey",
+          "delete"
+        ],
+        "description": "Straight-run stairs: a walking line, width and riser count; the total rise follows the storeys (vertical intent). Treads and risers are derived.",
+        "categories": [
+          "architecture.stair",
+          "architecture.stair_flight"
+        ]
+      },
+      {
+        "id": "path",
+        "authoringLevel": 2,
+        "name": "Path element",
+        "status": "implemented",
+        "elementKind": "path",
+        "placements": [
+          "path"
+        ],
+        "representations": [
+          "path_sweep"
+        ],
+        "typeFamilies": [
+          "railing"
+        ],
+        "operations": [
+          "create",
+          "update",
+          "move",
+          "reassign_storey",
+          "delete"
+        ],
+        "description": "Elements whose geometry follows a semantic polyline (railings): open or closed path, base offset, height; posts and rails are derived from the path and the type.",
+        "categories": [
+          "architecture.railing"
+        ]
+      },
+      {
+        "id": "mep_fitting",
+        "authoringLevel": 2,
+        "name": "MEP fitting",
+        "status": "implemented",
+        "elementKind": "mep_fitting",
+        "placements": [
+          "fitting_point"
+        ],
+        "representations": [
+          "fitting_sweep"
+        ],
+        "typeFamilies": [
+          "fitting"
+        ],
+        "operations": [
+          "create",
+          "update",
+          "move",
+          "reassign_storey",
+          "delete"
+        ],
+        "description": "Fitting products of MEP networks (elbow, tee, cross, reducer, transition, coupling): a point placement with yaw / pitch / roll in a system; connectors and swept / revolved geometry are derived from the type's parameters. Connectivity stays explicit (MepJunction).",
+        "categories": [
+          "mechanical.duct_fitting",
+          "electrical.cable_carrier_fitting",
+          "electrical.cable_fitting",
+          "plumbing.pipe_fitting"
+        ]
+      },
+      {
+        "id": "reinforcement",
+        "authoringLevel": 2,
+        "name": "Reinforcement",
+        "status": "implemented",
+        "elementKind": "reinforcement",
+        "placements": [
+          "host_layout"
+        ],
+        "representations": [
+          "bar_sweep"
+        ],
+        "typeFamilies": [
+          "rebar"
+        ],
+        "operations": [
+          "create",
+          "update",
+          "move",
+          "delete"
+        ],
+        "description": "Bar sets, meshes, tendons and tendon conduits bound to an explicit host (column, beam, wall, slab, footing, foundation slab): a bar path + count / spacing / direction per layer; every bar, its length and its volume are derived. The bars move with their host.",
+        "categories": [
+          "structure.rebar_mesh",
+          "structure.rebar_set",
+          "structure.tendon",
+          "structure.tendon_conduit"
+        ]
+      },
+      {
+        "id": "assembly",
+        "authoringLevel": 2,
+        "name": "Assembly",
+        "status": "implemented",
+        "elementKind": "assembly",
+        "placements": [
+          "aggregate"
+        ],
+        "representations": [
+          "aggregate"
+        ],
+        "typeFamilies": [],
+        "operations": [
+          "create",
+          "update",
+          "delete"
+        ],
+        "description": "Explicit aggregation of existing elements (IfcElementAssembly): trusses, frames, prefabricated and precast units, facade modules. Children keep their identity and lifecycle; one parent per child; acyclic; one storey. No geometry of its own.",
+        "categories": [
+          "architecture.ramp_assembly",
+          "architecture.stair_assembly",
+          "generic.element_assembly"
+        ]
+      },
+      {
+        "id": "ramp_flight",
+        "authoringLevel": 2,
+        "name": "Ramp flight",
+        "status": "implemented",
+        "elementKind": "ramp",
+        "placements": [
+          "ramp_run"
+        ],
+        "representations": [
+          "ramp_run"
+        ],
+        "typeFamilies": [
+          "ramp"
+        ],
+        "operations": [
+          "create",
+          "update",
+          "move",
+          "reassign_storey",
+          "delete"
+        ],
+        "description": "A straight sloped walking surface: walking line, width, rise, base elevation; slope limit and thickness from the RampType. Flights and landings are joined into a ramp by an assembly.",
+        "categories": [
+          "architecture.ramp_flight"
+        ]
+      },
+      {
+        "id": "curtain_wall",
+        "authoringLevel": 2,
+        "name": "Curtain wall",
+        "status": "implemented",
+        "elementKind": "curtain_wall",
+        "placements": [
+          "wall_axis"
+        ],
+        "representations": [
+          "curtain_grid"
+        ],
+        "typeFamilies": [
+          "curtain"
+        ],
+        "operations": [
+          "create",
+          "update",
+          "move",
+          "reassign_storey",
+          "delete"
+        ],
+        "description": "A curtain-wall assembly on a straight axis: base, height, grid; the type carries the maximum cell size, mullion / transom sections and panel thickness. Grid, mullions, transoms and panels are derived with stable ids; IFC decomposes the curtain wall into plates and members.",
+        "categories": [
+          "architecture.curtain_wall"
+        ]
+      },
+      {
+        "id": "pitched_roof",
+        "authoringLevel": 2,
+        "name": "Pitched roof",
+        "status": "implemented",
+        "elementKind": "pitched_roof",
+        "placements": [
+          "boundary"
+        ],
+        "representations": [
+          "roof_planes"
+        ],
+        "typeFamilies": [
+          "layered"
+        ],
+        "operations": [
+          "create",
+          "update",
+          "move",
+          "reassign_storey",
+          "delete"
+        ],
+        "description": "Gable and hip roofs on a rectangular footprint: form, pitch, ridge side, overhang, eave elevation; a layered roof type gives the thickness. Planes, ridge, hips and eaves are derived with stable plane ids; IFC aggregates IfcSlab ROOF planes into an IfcRoof. No valleys, openings or general footprints.",
+        "categories": [
+          "architecture.pitched_roof"
+        ]
+      },
+      {
+        "id": "void",
+        "authoringLevel": 0,
+        "name": "Opening (internal)",
+        "status": "internal",
+        "elementKind": "opening",
+        "placements": [
+          "host"
+        ],
+        "representations": [
+          "host_cut"
+        ],
+        "typeFamilies": [],
+        "operations": [
+          "create",
+          "update",
+          "delete",
+          "rehost"
+        ],
+        "description": "Internal host-cut primitive: a void in a wall that a hosted component may fill. Not an authorable BIM engine.",
+        "categories": [
+          "architecture.opening"
+        ]
+      },
+      {
+        "id": "mep_network",
+        "authoringLevel": 2,
+        "name": "MEP network",
+        "status": "implemented",
+        "elementKind": "mep_segment",
+        "placements": [
+          "mep_route"
+        ],
+        "representations": [
+          "mep_route_sweep"
+        ],
+        "typeFamilies": [
+          "mep"
+        ],
+        "operations": [
+          "create",
+          "update",
+          "move",
+          "reassign_storey",
+          "delete"
+        ],
+        "description": "Route elements of connected MEP networks (pipes, ducts, cable trays, conduits): a storey-aware 3D polyline in a system, with stable endpoint connectors. Connectivity is explicit (MepJunction resources): touching is never connected. No engineering analysis.",
+        "categories": [
+          "mechanical.duct",
+          "mechanical.flexible_duct",
+          "electrical.cable_segment",
+          "electrical.cable_tray",
+          "electrical.conduit",
+          "plumbing.flexible_pipe",
+          "plumbing.pipe"
+        ]
+      },
+      {
+        "id": "proxy",
+        "authoringLevel": 0,
+        "name": "Proxy (reserved)",
+        "status": "reserved",
+        "elementKind": null,
+        "placements": [],
+        "representations": [],
+        "typeFamilies": [],
+        "operations": [],
+        "description": "Reserved for imported proxies. Not implemented.",
+        "categories": []
+      }
+    ]
+  },
+  "status": "awaiting_human_approval",
+  "log": [
+    {
+      "tool": "bim_set_project",
+      "args": {
+        "name": "INSA Multi-Discipline BIM Capability Test",
+        "number": "QA-20261013",
+        "building": "12 × 8 m Test Building",
+        "site": "Isolated Test Site",
+        "project": "INSA_CAPABILITY_TEST_20261013_110354"
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n \"status\": \"proposed\",\n \"proposalId\": \"P-ad984bc8\",\n \"preview\": {\n  \"tool\": \"bim_set_project\",\n  \"summary\": {\n   \"name\": \"INSA Multi-Discipline BIM Capability Test\",\n   \"number\": \"QA-20261013\",\n   \"building\": \"12 × 8 m Test Building\",\n   \"site\": \"Isolated Test Site\"\n  },\n  \"events\": [\n   \"ProjectUpdated\"\n  ]\n },\n \"message\": \"Waiting for approval by a user with 'platform.approve' (proposal P-ad984bc8).\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "tool": "bim_create_storeys",
+      "args": {
+        "storeys": [
+          {
+            "name": "Ground Floor",
+            "elevation": 0
+          },
+          {
+            "name": "First Floor",
+            "elevation": 3.2
+          }
+        ],
+        "project": "INSA_CAPABILITY_TEST_20261013_110354"
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n \"status\": \"proposed\",\n \"proposalId\": \"P-d97af49e\",\n \"preview\": {\n  \"tool\": \"bim_create_storeys\",\n  \"summary\": {\n   \"created\": [\n    \"L-0001\",\n    \"L-0002\"\n   ]\n  },\n  \"events\": [\n   \"StoreyCreated\",\n   \"StoreyCreated\",\n   \"CountersSet\"\n  ]\n },\n \"message\": \"Waiting for approval by a user with 'platform.approve' (proposal P-d97af49e).\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "tool": "bim_create_grids",
+      "args": {
+        "grids": [
+          {
+            "name": "A",
+            "start": [
+              0,
+              0
+            ],
+            "end": [
+              0,
+              8
+            ]
+          },
+          {
+            "name": "B",
+            "start": [
+              6,
+              0
+            ],
+            "end": [
+              6,
+              8
+            ]
+          },
+          {
+            "name": "C",
+            "start": [
+              12,
+              0
+            ],
+            "end": [
+              12,
+              8
+            ]
+          },
+          {
+            "name": "1",
+            "start": [
+              0,
+              0
+            ],
+            "end": [
+              12,
+              0
+            ]
+          },
+          {
+            "name": "2",
+            "start": [
+              0,
+              4
+            ],
+            "end": [
+              12,
+              4
+            ]
+          },
+          {
+            "name": "3",
+            "start": [
+              0,
+              8
+            ],
+            "end": [
+              12,
+              8
+            ]
+          }
+        ],
+        "project": "INSA_CAPABILITY_TEST_20261013_110354"
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n \"status\": \"proposed\",\n \"proposalId\": \"P-8d9486bb\",\n \"preview\": {\n  \"tool\": \"bim_create_grids\",\n  \"summary\": {\n   \"created\": 6\n  },\n  \"events\": [\n   \"GridCreated\",\n   \"GridCreated\",\n   \"GridCreated\",\n   \"GridCreated\",\n   \"GridCreated\",\n   \"GridCreated\",\n   \"CountersSet\"\n  ]\n },\n \"message\": \"Waiting for approval by a user with 'platform.approve' (proposal P-8d9486bb).\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "tool": "bim_create_spatial_units",
+      "args": {
+        "units": [
+          {
+            "kind": "facility",
+            "name": "Test Facility",
+            "ifc_class": "IfcFacility"
+          }
+        ],
+        "project": "INSA_CAPABILITY_TEST_20261013_110354"
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n \"status\": \"proposed\",\n \"proposalId\": \"P-bb4cd4f1\",\n \"preview\": {\n  \"tool\": \"bim_create_spatial_units\",\n  \"summary\": {\n   \"created\": [\n    {\n     \"id\": \"SU-0001\",\n     \"name\": \"Test Facility\",\n     \"ifcClass\": \"IfcFacility\",\n     \"parent\": null\n    }\n   ]\n  },\n  \"events\": [\n   \"SpatialUnitCreated\",\n   \"CountersSet\"\n  ]\n },\n \"message\": \"Waiting for approval by a user with 'platform.approve' (proposal P-bb4cd4f1).\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "tool": "bim_set_georeference",
+      "args": {
+        "crs": {
+          "name": "EPSG:5254",
+          "description": "QA test mapping only"
+        },
+        "eastings": 500000,
+        "northings": 4500000,
+        "orthogonal_height": 100,
+        "rotation_degrees": 0,
+        "scale": 1,
+        "project": "INSA_CAPABILITY_TEST_20261013_110354"
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n \"status\": \"proposed\",\n \"proposalId\": \"P-b82ade4d\",\n \"preview\": {\n  \"tool\": \"bim_set_georeference\",\n  \"summary\": {\n   \"georef\": {\n    \"crs\": {\n     \"name\": \"EPSG:5254\",\n     \"description\": \"QA test mapping only\"\n    },\n    \"eastings\": 500000,\n    \"northings\": 4500000,\n    \"orthogonalHeight\": 100,\n    \"xAxisAbscissa\": 1,\n    \"xAxisOrdinate\": 0,\n    \"scale\": 1\n   }\n  },\n  \"events\": [\n   \"ProjectUpdated\"\n  ]\n },\n \"message\": \"Waiting for approval by a user with 'platform.approve' (proposal P-b82ade4d).\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "tool": "bim_create_materials",
+      "args": {
+        "materials": [
+          {
+            "name": "Concrete C30/37",
+            "category": "Concrete",
+            "color": "#999999"
+          },
+          {
+            "name": "Structural steel S355",
+            "category": "Steel",
+            "color": "#64748b"
+          },
+          {
+            "name": "Generic masonry",
+            "category": "Masonry",
+            "color": "#b77958"
+          },
+          {
+            "name": "Generic glazing",
+            "category": "Glass",
+            "color": "#93c5fd"
+          }
+        ],
+        "project": "INSA_CAPABILITY_TEST_20261013_110354"
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n \"status\": \"proposed\",\n \"proposalId\": \"P-684d6f6e\",\n \"preview\": {\n  \"tool\": \"bim_create_materials\",\n  \"summary\": {\n   \"created\": [\n    \"M-0001\",\n    \"M-0002\",\n    \"M-0003\",\n    \"M-0004\"\n   ]\n  },\n  \"events\": [\n   \"MaterialCreated\",\n   \"MaterialCreated\",\n   \"MaterialCreated\",\n   \"MaterialCreated\",\n   \"CountersSet\"\n  ]\n },\n \"message\": \"Waiting for approval by a user with 'platform.approve' (proposal P-684d6f6e).\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "tool": "bim_create_types",
+      "args": {
+        "types": [
+          {
+            "kind": "wall",
+            "name": "Masonry Wall 200",
+            "layers": [
+              {
+                "material": "Generic masonry",
+                "thickness": 0.2,
+                "function": "structure"
+              }
+            ]
+          },
+          {
+            "kind": "slab",
+            "name": "Concrete Slab 200",
+            "layers": [
+              {
+                "material": "Concrete C30/37",
+                "thickness": 0.2,
+                "function": "structure"
+              }
+            ]
+          },
+          {
+            "kind": "roof",
+            "name": "Concrete Roof 200",
+            "layers": [
+              {
+                "material": "Concrete C30/37",
+                "thickness": 0.2,
+                "function": "structure"
+              }
+            ]
+          },
+          {
+            "kind": "foundation_slab",
+            "name": "Raft 400",
+            "layers": [
+              {
+                "material": "Concrete C30/37",
+                "thickness": 0.4,
+                "function": "structure"
+              }
+            ]
+          },
+          {
+            "kind": "column",
+            "name": "Column 400",
+            "material": "Concrete C30/37",
+            "profile": {
+              "shape": "rect",
+              "b": 0.4,
+              "h": 0.4
+            }
+          },
+          {
+            "kind": "beam",
+            "name": "Beam 300x500",
+            "material": "Concrete C30/37",
+            "profile": {
+              "shape": "rect",
+              "b": 0.3,
+              "h": 0.5
+            }
+          },
+          {
+            "kind": "beam",
+            "name": "Steel RHS 200x100",
+            "material": "Structural steel S355",
+            "profile": {
+              "shape": "rhs",
+              "b": 0.1,
+              "h": 0.2,
+              "t": 0.006
+            }
+          },
+          {
+            "kind": "door",
+            "name": "Door 900x2100",
+            "width": 0.9,
+            "height": 2.1
+          },
+          {
+            "kind": "window",
+            "name": "Window 1200x1200",
+            "width": 1.2,
+            "height": 1.2
+          },
+          {
+            "kind": "pipe",
+            "name": "Pipe 50",
+            "diameter": 0.05,
+            "wall_thickness": 0.003,
+            "material": "Structural steel S355"
+          }
+        ],
+        "project": "INSA_CAPABILITY_TEST_20261013_110354"
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n \"status\": \"proposed\",\n \"proposalId\": \"P-d1f929e1\",\n \"preview\": {\n  \"tool\": \"bim_create_types\",\n  \"summary\": {\n   \"created\": [\n    \"WT-0001 Masonry Wall 200\",\n    \"ST-0001 Concrete Slab 200\",\n    \"RFT-0001 Concrete Roof 200\",\n    \"FST-0001 Raft 400\",\n    \"CT-0001 Column 400\",\n    \"BT-0001 Beam 300x500\",\n    \"BT-0002 Steel RHS 200x100\",\n    \"DT-0001 Door 900x2100\",\n    \"NT-0001 Window 1200x1200\",\n    \"PIT-0001 Pipe 50\"\n   ]\n  },\n  \"events\": [\n   \"MaterialCreated\",\n   \"TypeCreated\",\n   \"MaterialCreated\",\n   \"TypeCreated\",\n   \"TypeCreated\",\n   \"TypeCreated\",\n   \"TypeCreated\",\n   \"TypeCreated\",\n   \"MaterialCreated\",\n   \"TypeCreated\",\n   \"TypeCreated\",\n   \"TypeCreated\",\n   \"TypeCreated\",\n   \"CountersSet\"\n  ]\n },\n \"message\": \"Waiting for approval by a user with 'platform.approve' (proposal P-d1f929e1).\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "tool": "bim_create_mep_systems",
+      "args": {
+        "systems": [
+          {
+            "name": "QA Cold Water",
+            "domain": "piping",
+            "classification": "domestic_cold_water"
+          },
+          {
+            "name": "QA Supply Air",
+            "domain": "hvac",
+            "classification": "supply_air"
+          },
+          {
+            "name": "QA Cable Routing",
+            "domain": "electrical",
+            "classification": "power"
+          }
+        ],
+        "project": "INSA_CAPABILITY_TEST_20261013_110354"
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n \"status\": \"proposed\",\n \"proposalId\": \"P-bb57dae5\",\n \"preview\": {\n  \"tool\": \"bim_create_mep_systems\",\n  \"summary\": {\n   \"created\": [\n    {\n     \"id\": \"MS-0001\",\n     \"name\": \"QA Cold Water\",\n     \"domain\": \"piping\"\n    },\n    {\n     \"id\": \"MS-0002\",\n     \"name\": \"QA Supply Air\",\n     \"domain\": \"hvac\"\n    },\n    {\n     \"id\": \"MS-0003\",\n     \"name\": \"QA Cable Routing\",\n     \"domain\": \"electrical\"\n    }\n   ]\n  },\n  \"events\": [\n   \"MepSystemCreated\",\n   \"MepSystemCreated\",\n   \"MepSystemCreated\",\n   \"CountersSet\"\n  ]\n },\n \"message\": \"Waiting for approval by a user with 'platform.approve' (proposal P-bb57dae5).\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "tool": "bim_create_types",
+      "args": {
+        "types": [
+          {
+            "kind": "column",
+            "name": "Invalid Dimension Test",
+            "profile": {
+              "shape": "rect",
+              "b": -0.4,
+              "h": 0.4
+            }
+          }
+        ],
+        "project": "INSA_CAPABILITY_TEST_20261013_110354"
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "MCP error -32602: Input validation error: Invalid arguments for tool bim_create_types: Too small: expected number to be >0 at types[0].profile.b"
+          }
+        ],
+        "isError": true
+      }
+    },
+    {
+      "tool": "bim_create_columns",
+      "args": {
+        "columns": [
+          {
+            "storey": "MISSING_STOREY",
+            "type": "MISSING_TYPE",
+            "at": [
+              0,
+              0
+            ],
+            "height": 3.2
+          }
+        ],
+        "project": "INSA_CAPABILITY_TEST_20261013_110354"
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Error [RESOURCE_NOT_FOUND]: Storey 'MISSING_STOREY' not found. Available: none\ndetails: {\"ref\":\"MISSING_STOREY\"}"
+          }
+        ],
+        "isError": true
+      }
+    },
+    {
+      "tool": "bim_model_summary",
+      "args": {
+        "project": "INSA_CAPABILITY_TEST_20261013_110354"
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n \"project\": {\n  \"name\": \"Yeni Proje\",\n  \"building\": \"Bina\",\n  \"site\": \"Arsa\"\n },\n \"storeys\": [],\n \"grids\": [],\n \"types\": [],\n \"materials\": [],\n \"elements\": 0,\n \"by_storey\": {}\n}"
+          }
+        ]
+      }
+    },
+    {
+      "tool": "bim_validate",
+      "args": {
+        "project": "INSA_CAPABILITY_TEST_20261013_110354"
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n \"ok\": true,\n \"issues\": []\n}"
+          }
+        ]
+      }
+    },
+    {
+      "tool": "platform_list_proposals",
+      "args": {
+        "status": "pending",
+        "project": "INSA_CAPABILITY_TEST_20261013_110354"
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "[\n {\n  \"id\": \"P-ad984bc8\",\n  \"tool\": \"bim_set_project\",\n  \"input\": {\n   \"name\": \"INSA Multi-Discipline BIM Capability Test\",\n   \"number\": \"QA-20261013\",\n   \"building\": \"12 × 8 m Test Building\",\n   \"site\": \"Isolated Test Site\"\n  },\n  \"actor\": \"codex\",\n  \"createdAt\": \"2026-10-13T08:04:27.949Z\",\n  \"preview\": {\n   \"tool\": \"bim_set_project\",\n   \"summary\": {\n    \"name\": \"INSA Multi-Discipline BIM Capability Test\",\n    \"number\": \"QA-20261013\",\n    \"building\": \"12 × 8 m Test Building\",\n    \"site\": \"Isolated Test Site\"\n   },\n   \"events\": [\n    \"ProjectUpdated\"\n   ]\n  },\n  \"status\": \"pending\",\n  \"history\": [\n   {\n    \"status\": \"pending\",\n    \"at\": \"2026-10-13T08:04:27.949Z\",\n    \"by\": \"codex\"\n   }\n  ]\n },\n {\n  \"id\": \"P-d97af49e\",\n  \"tool\": \"bim_create_storeys\",\n  \"input\": {\n   \"storeys\": [\n    {\n     \"name\": \"Ground Floor\",\n     \"elevation\": 0\n    },\n    {\n     \"name\": \"First Floor\",\n     \"elevation\": 3.2\n    }\n   ]\n  },\n  \"actor\": \"codex\",\n  \"createdAt\": \"2026-10-13T08:04:27.992Z\",\n  \"preview\": {\n   \"tool\": \"bim_create_storeys\",\n   \"summary\": {\n    \"created\": [\n     \"L-0001\",\n     \"L-0002\"\n    ]\n   },\n   \"events\": [\n    \"StoreyCreated\",\n    \"StoreyCreated\",\n    \"CountersSet\"\n   ]\n  },\n  \"status\": \"pending\",\n  \"history\": [\n   {\n    \"status\": \"pending\",\n    \"at\": \"2026-10-13T08:04:27.992Z\",\n    \"by\": \"codex\"\n   }\n  ]\n },\n {\n  \"id\": \"P-8d9486bb\",\n  \"tool\": \"bim_create_grids\",\n  \"input\": {\n   \"grids\": [\n    {\n     \"name\": \"A\",\n     \"start\": [\n      0,\n      0\n     ],\n     \"end\": [\n      0,\n      8\n     ]\n    },\n    {\n     \"name\": \"B\",\n     \"start\": [\n      6,\n      0\n     ],\n     \"end\": [\n      6,\n      8\n     ]\n    },\n    {\n     \"name\": \"C\",\n     \"start\": [\n      12,\n      0\n     ],\n     \"end\": [\n      12,\n      8\n     ]\n    },\n    {\n     \"name\": \"1\",\n     \"start\": [\n      0,\n      0\n     ],\n     \"end\": [\n      12,\n      0\n     ]\n    },\n    {\n     \"name\": \"2\",\n     \"start\": [\n      0,\n      4\n     ],\n     \"end\": [\n      12,\n      4\n     ]\n    },\n    {\n     \"name\": \"3\",\n     \"start\": [\n      0,\n      8\n     ],\n     \"end\": [\n      12,\n      8\n     ]\n    }\n   ]\n  },\n  \"actor\": \"codex\",\n  \"createdAt\": \"2026-10-13T08:04:28.039Z\",\n  \"preview\": {\n   \"tool\": \"bim_create_grids\",\n   \"summary\": {\n    \"created\": 6\n   },\n   \"events\": [\n    \"GridCreated\",\n    \"GridCreated\",\n    \"GridCreated\",\n    \"GridCreated\",\n    \"GridCreated\",\n    \"GridCreated\",\n    \"CountersSet\"\n   ]\n  },\n  \"status\": \"pending\",\n  \"history\": [\n   {\n    \"status\": \"pending\",\n    \"at\": \"2026-10-13T08:04:28.039Z\",\n    \"by\": \"codex\"\n   }\n  ]\n },\n {\n  \"id\": \"P-bb4cd4f1\",\n  \"tool\": \"bim_create_spatial_units\",\n  \"input\": {\n   \"units\": [\n    {\n     \"name\": \"Test Facility\",\n     \"kind\": \"facility\",\n     \"ifc_class\": \"IfcFacility\",\n     \"composition\": \"ELEMENT\"\n    }\n   ]\n  },\n  \"actor\": \"codex\",\n  \"createdAt\": \"2026-10-13T08:04:28.086Z\",\n  \"preview\": {\n   \"tool\": \"bim_create_spatial_units\",\n   \"summary\": {\n    \"created\": [\n     {\n      \"id\": \"SU-0001\",\n      \"name\": \"Test Facility\",\n      \"ifcClass\": \"IfcFacility\",\n      \"parent\": null\n     }\n    ]\n   },\n   \"events\": [\n    \"SpatialUnitCreated\",\n    \"CountersSet\"\n   ]\n  },\n  \"status\": \"pending\",\n  \"history\": [\n   {\n    \"status\": \"pending\",\n    \"at\": \"2026-10-13T08:04:28.086Z\",\n    \"by\": \"codex\"\n   }\n  ]\n },\n {\n  \"id\": \"P-b82ade4d\",\n  \"tool\": \"bim_set_georeference\",\n  \"input\": {\n   \"crs\": {\n    \"name\": \"EPSG:5254\",\n    \"description\": \"QA test mapping only\"\n   },\n   \"eastings\": 500000,\n   \"northings\": 4500000,\n   \"orthogonal_height\": 100,\n   \"rotation_degrees\": 0,\n   \"scale\": 1\n  },\n  \"actor\": \"codex\",\n  \"createdAt\": \"2026-10-13T08:04:28.135Z\",\n  \"preview\": {\n   \"tool\": \"bim_set_georeference\",\n   \"summary\": {\n    \"georef\": {\n     \"crs\": {\n      \"name\": \"EPSG:5254\",\n      \"description\": \"QA test mapping only\"\n     },\n     \"eastings\": 500000,\n     \"northings\": 4500000,\n     \"orthogonalHeight\": 100,\n     \"xAxisAbscissa\": 1,\n     \"xAxisOrdinate\": 0,\n     \"scale\": 1\n    }\n   },\n   \"events\": [\n    \"ProjectUpdated\"\n   ]\n  },\n  \"status\": \"pending\",\n  \"history\": [\n   {\n    \"status\": \"pending\",\n    \"at\": \"2026-10-13T08:04:28.135Z\",\n    \"by\": \"codex\"\n   }\n  ]\n },\n {\n  \"id\": \"P-684d6f6e\",\n  \"tool\": \"bim_create_materials\",\n  \"input\": {\n   \"materials\": [\n    {\n     \"name\": \"Concrete C30/37\",\n     \"color\": \"#999999\",\n     \"category\": \"Concrete\"\n    },\n    {\n     \"name\": \"Structural steel S355\",\n     \"color\": \"#64748b\",\n     \"category\": \"Steel\"\n    },\n    {\n     \"name\": \"Generic masonry\",\n     \"color\": \"#b77958\",\n     \"category\": \"Masonry\"\n    },\n    {\n     \"name\": \"Generic glazing\",\n     \"color\": \"#93c5fd\",\n     \"category\": \"Glass\"\n    }\n   ]\n  },\n  \"actor\": \"codex\",\n  \"createdAt\": \"2026-10-13T08:04:28.182Z\",\n  \"preview\": {\n   \"tool\": \"bim_create_materials\",\n   \"summary\": {\n    \"created\": [\n     \"M-0001\",\n     \"M-0002\",\n     \"M-0003\",\n     \"M-0004\"\n    ]\n   },\n   \"events\": [\n    \"MaterialCreated\",\n    \"MaterialCreated\",\n    \"MaterialCreated\",\n    \"MaterialCreated\",\n    \"CountersSet\"\n   ]\n  },\n  \"status\": \"pending\",\n  \"history\": [\n   {\n    \"status\": \"pending\",\n    \"at\": \"2026-10-13T08:04:28.182Z\",\n    \"by\": \"codex\"\n   }\n  ]\n },\n {\n  \"id\": \"P-d1f929e1\",\n  \"tool\": \"bim_create_types\",\n  \"input\": {\n   \"types\": [\n    {\n     \"kind\": \"wall\",\n     \"name\": \"Masonry Wall 200\",\n     \"layers\": [\n      {\n       \"material\": \"Generic masonry\",\n       \"thickness\": 0.2,\n       \"function\": \"structure\"\n      }\n     ]\n    },\n    {\n     \"kind\": \"slab\",\n     \"name\": \"Concrete Slab 200\",\n     \"layers\": [\n      {\n       \"material\": \"Concrete C30/37\",\n       \"thickness\": 0.2,\n       \"function\": \"structure\"\n      }\n     ]\n    },\n    {\n     \"kind\": \"roof\",\n     \"name\": \"Concrete Roof 200\",\n     \"layers\": [\n      {\n       \"material\": \"Concrete C30/37\",\n       \"thickness\": 0.2,\n       \"function\": \"structure\"\n      }\n     ]\n    },\n    {\n     \"kind\": \"foundation_slab\",\n     \"name\": \"Raft 400\",\n     \"layers\": [\n      {\n       \"material\": \"Concrete C30/37\",\n       \"thickness\": 0.4,\n       \"function\": \"structure\"\n      }\n     ]\n    },\n    {\n     \"kind\": \"column\",\n     \"name\": \"Column 400\",\n     \"material\": \"Concrete C30/37\",\n     \"profile\": {\n      \"shape\": \"rect\",\n      \"b\": 0.4,\n      \"h\": 0.4\n     }\n    },\n    {\n     \"kind\": \"beam\",\n     \"name\": \"Beam 300x500\",\n     \"material\": \"Concrete C30/37\",\n     \"profile\": {\n      \"shape\": \"rect\",\n      \"b\": 0.3,\n      \"h\": 0.5\n     }\n    },\n    {\n     \"kind\": \"beam\",\n     \"name\": \"Steel RHS 200x100\",\n     \"material\": \"Structural steel S355\",\n     \"profile\": {\n      \"shape\": \"rhs\",\n      \"b\": 0.1,\n      \"h\": 0.2,\n      \"t\": 0.006\n     }\n    },\n    {\n     \"kind\": \"door\",\n     \"name\": \"Door 900x2100\",\n     \"width\": 0.9,\n     \"height\": 2.1\n    },\n    {\n     \"kind\": \"window\",\n     \"name\": \"Window 1200x1200\",\n     \"width\": 1.2,\n     \"height\": 1.2\n    },\n    {\n     \"kind\": \"pipe\",\n     \"name\": \"Pipe 50\",\n     \"diameter\": 0.05,\n     \"wall_thickness\": 0.003,\n     \"material\": \"Structural steel S355\"\n    }\n   ]\n  },\n  \"actor\": \"codex\",\n  \"createdAt\": \"2026-10-13T08:04:49.585Z\",\n  \"preview\": {\n   \"tool\": \"bim_create_types\",\n   \"summary\": {\n    \"created\": [\n     \"WT-0001 Masonry Wall 200\",\n     \"ST-0001 Concrete Slab 200\",\n     \"RFT-0001 Concrete Roof 200\",\n     \"FST-0001 Raft 400\",\n     \"CT-0001 Column 400\",\n     \"BT-0001 Beam 300x500\",\n     \"BT-0002 Steel RHS 200x100\",\n     \"DT-0001 Door 900x2100\",\n     \"NT-0001 Window 1200x1200\",\n     \"PIT-0001 Pipe 50\"\n    ]\n   },\n   \"events\": [\n    \"MaterialCreated\",\n    \"TypeCreated\",\n    \"MaterialCreated\",\n    \"TypeCreated\",\n    \"TypeCreated\",\n    \"TypeCreated\",\n    \"TypeCreated\",\n    \"TypeCreated\",\n    \"MaterialCreated\",\n    \"TypeCreated\",\n    \"TypeCreated\",\n    \"TypeCreated\",\n    \"TypeCreated\",\n    \"CountersSet\"\n   ]\n  },\n  \"status\": \"pending\",\n  \"history\": [\n   {\n    \"status\": \"pending\",\n    \"at\": \"2026-10-13T08:04:49.585Z\",\n    \"by\": \"codex\"\n   }\n  ]\n },\n {\n  \"id\": \"P-bb57dae5\",\n  \"tool\": \"bim_create_mep_systems\",\n  \"input\": {\n   \"systems\": [\n    {\n     \"name\": \"QA Cold Water\",\n     \"domain\": \"piping\",\n     \"classification\": \"domestic_cold_water\"\n    },\n    {\n     \"name\": \"QA Supply Air\",\n     \"domain\": \"hvac\",\n     \"classification\": \"supply_air\"\n    },\n    {\n     \"name\": \"QA Cable Routing\",\n     \"domain\": \"electrical\",\n     \"classification\": \"power\"\n    }\n   ]\n  },\n  \"actor\": \"codex\",\n  \"createdAt\": \"2026-10-13T08:04:49.632Z\",\n  \"preview\": {\n   \"tool\": \"bim_create_mep_systems\",\n   \"summary\": {\n    \"created\": [\n     {\n      \"id\": \"MS-0001\",\n      \"name\": \"QA Cold Water\",\n      \"domain\": \"piping\"\n     },\n     {\n      \"id\": \"MS-0002\",\n      \"name\": \"QA Supply Air\",\n      \"domain\": \"hvac\"\n     },\n     {\n      \"id\": \"MS-0003\",\n      \"name\": \"QA Cable Routing\",\n      \"domain\": \"electrical\"\n     }\n    ]\n   },\n   \"events\": [\n    \"MepSystemCreated\",\n    \"MepSystemCreated\",\n    \"MepSystemCreated\",\n    \"CountersSet\"\n   ]\n  },\n  \"status\": \"pending\",\n  \"history\": [\n   {\n    \"status\": \"pending\",\n    \"at\": \"2026-10-13T08:04:49.632Z\",\n    \"by\": \"codex\"\n   }\n  ]\n }\n]"
+          }
+        ]
+      }
+    },
+    {
+      "tool": "bim_get_category_capabilities",
+      "args": {
+        "project": "INSA_CAPABILITY_TEST_20261013_110354",
+        "category": "architecture.wall"
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n \"category\": \"architecture.wall\",\n \"name\": \"Walls\",\n \"discipline\": \"architecture\",\n \"engine\": {\n  \"id\": \"wall\",\n  \"status\": \"implemented\",\n  \"authoring_level\": 3,\n  \"operations\": [\n   \"create\",\n   \"update\",\n   \"move\",\n   \"reassign_storey\",\n   \"delete\",\n   \"join\"\n  ],\n  \"representations\": [\n   \"wall_extrusion\"\n  ]\n },\n \"placements\": [\n  \"wall_axis\"\n ],\n \"type_kinds\": [\n  \"wall\"\n ],\n \"capabilities\": [\n  \"curveBased\",\n  \"hasMaterial\",\n  \"hasType\",\n  \"hostsOpenings\",\n  \"joinable\",\n  \"levelBased\",\n  \"movable\",\n  \"roomBounding\"\n ],\n \"mep_domain\": null,\n \"ifc\": {\n  \"class\": \"IfcWall\",\n  \"predefined_type\": null,\n  \"valid_predefined_types\": [\n   \"ELEMENTEDWALL\",\n   \"MOVABLE\",\n   \"PARAPET\",\n   \"PARTITIONING\",\n   \"PLUMBINGWALL\",\n   \"POLYGONAL\",\n   \"RETAININGWALL\",\n   \"SHEAR\",\n   \"SOLIDWALL\",\n   \"STANDARD\",\n   \"WAVEWALL\",\n   \"USERDEFINED\",\n   \"NOTDEFINED\"\n  ],\n  \"schemas\": [\n   \"IFC4\",\n   \"IFC4X3_ADD2\"\n  ],\n  \"written_natively\": true\n },\n \"creation_tool\": \"bim_create_walls\",\n \"supplies\": [\n  \"a type of kind wall\",\n  \"a storey and a wall_axis placement\"\n ],\n \"limits\": []\n}"
+          }
+        ]
+      }
+    },
+    {
+      "tool": "bim_get_category_capabilities",
+      "args": {
+        "project": "INSA_CAPABILITY_TEST_20261013_110354",
+        "category": "structure.framing"
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n \"category\": \"structure.framing\",\n \"name\": \"Structural Framing\",\n \"discipline\": \"structure\",\n \"engine\": {\n  \"id\": \"profile_member\",\n  \"status\": \"implemented\",\n  \"authoring_level\": 2,\n  \"operations\": [\n   \"create\",\n   \"update\",\n   \"move\",\n   \"reassign_storey\",\n   \"delete\"\n  ],\n  \"representations\": [\n   \"profile_sweep\"\n  ]\n },\n \"placements\": [\n  \"member_axis\"\n ],\n \"type_kinds\": [\n  \"beam\"\n ],\n \"capabilities\": [\n  \"curveBased\",\n  \"hasMaterial\",\n  \"hasType\",\n  \"levelBased\",\n  \"movable\",\n  \"profileBased\"\n ],\n \"mep_domain\": null,\n \"ifc\": {\n  \"class\": \"IfcBeam\",\n  \"predefined_type\": null,\n  \"valid_predefined_types\": [\n   \"BEAM\",\n   \"CORNICE\",\n   \"DIAPHRAGM\",\n   \"EDGEBEAM\",\n   \"GIRDER_SEGMENT\",\n   \"HATSTONE\",\n   \"HOLLOWCORE\",\n   \"JOIST\",\n   \"LINTEL\",\n   \"PIERCAP\",\n   \"SPANDREL\",\n   \"T_BEAM\",\n   \"USERDEFINED\",\n   \"NOTDEFINED\"\n  ],\n  \"schemas\": [\n   \"IFC4\",\n   \"IFC4X3_ADD2\"\n  ],\n  \"written_natively\": true\n },\n \"creation_tool\": \"bim_create_profile_members\",\n \"supplies\": [\n  \"a type of kind beam\",\n  \"a storey and a member_axis placement\"\n ],\n \"limits\": []\n}"
+          }
+        ]
+      }
+    },
+    {
+      "tool": "bim_get_category_capabilities",
+      "args": {
+        "project": "INSA_CAPABILITY_TEST_20261013_110354",
+        "category": "plumbing.pipe_fitting"
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n \"category\": \"plumbing.pipe_fitting\",\n \"name\": \"Pipe Fittings\",\n \"discipline\": \"plumbing\",\n \"engine\": {\n  \"id\": \"mep_fitting\",\n  \"status\": \"implemented\",\n  \"authoring_level\": 2,\n  \"operations\": [\n   \"create\",\n   \"update\",\n   \"move\",\n   \"reassign_storey\",\n   \"delete\"\n  ],\n  \"representations\": [\n   \"fitting_sweep\"\n  ]\n },\n \"placements\": [\n  \"fitting_point\"\n ],\n \"type_kinds\": [\n  \"mep_fitting\"\n ],\n \"capabilities\": [\n  \"hasMaterial\",\n  \"hasType\",\n  \"levelBased\",\n  \"movable\",\n  \"pointPlaced\",\n  \"rotatable\",\n  \"systemConnectable\"\n ],\n \"mep_domain\": \"piping\",\n \"ifc\": {\n  \"class\": \"IfcPipeFitting\",\n  \"predefined_type\": null,\n  \"valid_predefined_types\": [\n   \"BEND\",\n   \"CONNECTOR\",\n   \"ENTRY\",\n   \"EXIT\",\n   \"JUNCTION\",\n   \"OBSTRUCTION\",\n   \"TRANSITION\",\n   \"USERDEFINED\",\n   \"NOTDEFINED\"\n  ],\n  \"schemas\": [\n   \"IFC4\",\n   \"IFC4X3_ADD2\"\n  ],\n  \"written_natively\": true\n },\n \"creation_tool\": \"bim_create_mep_fittings (fitting type + system + point placement)\",\n \"supplies\": [\n  \"a type of kind mep_fitting\",\n  \"a storey and a fitting_point placement\"\n ],\n \"limits\": []\n}"
+          }
+        ]
+      }
+    }
+  ]
+}

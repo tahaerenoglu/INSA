@@ -1,0 +1,22 @@
+node_modules/
+dist/
+data/
+*.tsbuildinfo
+.gstack/
+.env.google.local
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+
+# Local runtime data, generated artifacts and investigation snapshots
+output/
+outputs/
+tmp/
+logs/
+ErrorReports/
+test-results/
+*.log
+*.pid
+.DS_Store

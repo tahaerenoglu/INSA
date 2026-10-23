@@ -1,0 +1,76 @@
+import * as THREE from 'three';
+import {AppearanceResources} from './appearance-resources';
+import type {Appearance} from './material-appearance';
+/** UV seam copies share side normals; cap groups stay separate and retain their hard edge. */
+export function smoothSeamNormals(g:THREE.BufferGeometry,groups:number[]){const normals=g.getAttribute('normal'),sums=new Map<number,THREE.Vector3>();for(let i=0;i<groups.length;i++){const v=sums.get(groups[i])??new THREE.Vector3();v.add(new THREE.Vector3().fromBufferAttribute(normals,i));sums.set(groups[i],v);}for(const v of sums.values())v.normalize();for(let i=0;i<groups.length;i++){const v=sums.get(groups[i])!;normals.setXYZ(i,v.x,v.y,v.z);}normals.needsUpdate=true;}
+export interface InfraScene {civilNavigation?:import('./civil-navigation-view').CivilNavigationData|null;project?:string;key:string;appearanceKey?:string;materials?:Record<string,any>;status:string;diagnostic?:string|null;resources:{id:string;parent?:string;label:string;kind:string;properties:any}[];objects:{id:string;parent?:string;kind:string;opacity?:number;positions:number[];materialGroups?:{start:number;count:number;resourceId:string;color:string;materialId?:string}[];parts?:{id:string;parent:string;materialIndex?:number;sourceSegment?:number;start:number;count:number}[];indices?:number[];uvMetres?:number[];normalGroups?:number[];materialId?:string;geometryKey?:string;instances?:{id:string;matrix:number[]}[];prototypeKey?:string;color:string}[];}
+/** Derived geometry only. Uses the existing world, stable resource ids and shared camera. */
+export class InfrastructureView {
+ private parents=new Map<string,string>();private familyRoots=new Set<string>();
+ readonly group=new THREE.Group();private key='';private project:string|undefined;private hidden=new Set<string>();private wireframes=new Set<string>();private selected:string|null=null;private materials=new Map<string,THREE.Material>();
+ private prototypes=new Map<string,{geometry:THREE.BufferGeometry;refs:number}>();
+ private appearances=new Map<string,THREE.MeshStandardMaterial>();private assets?:AppearanceResources;private revision=0;warnings:string[]=[];
+ update(data:InfraScene,projectToModel=new THREE.Matrix4()){
+  if(this.project!==data.project){++this.revision;this.clear();this.key='';this.hidden.clear();this.wireframes.clear();this.selected=null;this.assets?.dispose();this.assets=undefined;for(const m of this.appearances.values())m.dispose();this.appearances.clear();this.project=data.project;}
+  this.parents=new Map(data.resources.filter(r=>r.parent).map(r=>[r.id,r.parent!]));this.familyRoots=new Set(data.resources.filter(r=>r.kind==='structure_family').map(r=>r.id));for(const o of data.objects){if(o.parent&&!this.parents.has(o.id))this.parents.set(o.id,o.parent);for(const part of o.parts??[])if(part.parent&&!this.parents.has(part.id))this.parents.set(part.id,part.parent);}
+  const key=`${data.key}:${projectToModel.elements.join(',')}`;
+  if(this.key===key){this.visibility();this.select(this.selected);return;}this.key=key;
+  const wanted=new Set(data.objects.map(o=>o.id));for(const object of [...this.group.children])if(!wanted.has(object.userData.infraId))this.removeObject(object);
+  for(const o of data.objects){const objectKey=`${o.geometryKey??data.key}:${projectToModel.elements.join(',')}`,existing=this.group.children.find(x=>x.userData.infraId===o.id);if(existing?.userData.geometryKey===objectKey)continue;if(existing)this.removeObject(existing);const g=new THREE.BufferGeometry(),positions=new Float32Array(o.positions.length),point=new THREE.Vector3();
+   for(let i=0;i<o.positions.length;i+=3){point.set(o.positions[i],o.positions[i+1],o.positions[i+2]);if(!o.instances)point.applyMatrix4(projectToModel);positions[i]=point.x;positions[i+1]=point.y;positions[i+2]=point.z;}
+   g.setAttribute('position',new THREE.BufferAttribute(positions,3));
+   if(o.uvMetres)g.setAttribute('uv',new THREE.BufferAttribute(new Float32Array(o.uvMetres.map(x=>x/2)),2));
+   let material=this.materials.get(`${o.kind}:${o.color}:${o.opacity??1}`);if(!material){material=o.kind.startsWith('line')?new THREE.LineBasicMaterial({color:o.color}):new THREE.MeshStandardMaterial({color:o.color,roughness:.85,side:THREE.DoubleSide,opacity:o.opacity??1,transparent:(o.opacity??1)<1,depthWrite:(o.opacity??1)>=1});this.materials.set(`${o.kind}:${o.color}:${o.opacity??1}`,material);}
+   const batchMaterials=o.materialGroups?.map(group=>{const key=`mesh:${group.color}`;let m=this.materials.get(key);if(!m){m=new THREE.MeshStandardMaterial({color:group.color,roughness:.85,side:THREE.DoubleSide});this.materials.set(key,m);}return m;});
+   if(o.materialGroups)for(const [i,group]of o.materialGroups.entries())g.addGroup(group.start,group.count,i);
+   let object:THREE.Object3D;if(o.instances){const prototype=o.prototypeKey??o.id;let entry=this.prototypes.get(prototype);if(!entry){if(o.indices)g.setIndex(o.indices);g.computeVertexNormals();entry={geometry:g,refs:0};this.prototypes.set(prototype,entry);}else g.dispose();entry.refs++;const mesh=new THREE.InstancedMesh(entry.geometry,material,o.instances.length),matrix=new THREE.Matrix4();for(const [i,instance]of o.instances.entries()){matrix.fromArray(instance.matrix).premultiply(projectToModel);mesh.setMatrixAt(i,matrix);}mesh.instanceMatrix.needsUpdate=true;mesh.computeBoundingSphere();mesh.userData.prototypeKey=prototype;object=mesh;}else if(o.kind==='line-batch')object=new THREE.LineSegments(g,material);else if(o.kind==='line')object=new THREE.Line(g,material);else{if(o.indices)g.setIndex(o.indices);g.computeVertexNormals();if(o.normalGroups)smoothSeamNormals(g,o.normalGroups);object=new THREE.Mesh(g,batchMaterials??material);}object.userData={...object.userData,referenceOpacity:o.opacity,batch:Boolean(o.materialGroups),materialGroups:o.materialGroups,parts:o.parts,infraId:o.id,parentId:o.parent,baseColor:o.color,uvMetres:o.uvMetres,fallbackMaterial:batchMaterials??material,geometryKey:objectKey};this.group.add(object);
+  }
+  const used=new Set(this.group.children.flatMap(o=>o.userData.fallbackMaterial));for(const [key,m]of this.materials)if(!used.has(m)){m.dispose();this.materials.delete(key);}
+  this.visibility();this.select(this.selected);
+ }
+ async applyMaterials(data:InfraScene){
+  const revision=++this.revision;if(!data.project)return;this.assets??=new AppearanceResources(data.project);this.assets.warnings=[];const used=new Set<string>();
+  this.assets.retain(Object.values(data.materials??{}).flatMap((m:any)=>m.appearance?[m.appearance]:[]));
+  for(const o of data.objects){const object=this.group.children.find(x=>x.userData.infraId===o.id) as THREE.Mesh|undefined;if(!object||o.kind.startsWith('line'))continue;
+   if(o.materialGroups){const bases:THREE.Material[]=[];for(const [i,group]of o.materialGroups.entries()){
+    const resource=group.materialId?data.materials?.[group.materialId]:undefined,a:Appearance|undefined=resource?.appearance??(resource?{baseColor:resource.color??group.color,opacity:1,metallic:0,roughness:.85,textureSize:[2,2],normalConvention:'OpenGL'}:undefined);
+    let base=object.userData.fallbackMaterial[i];if(a){const key=JSON.stringify(a);used.add(key);let m=this.appearances.get(key);if(!m){m=await this.assets.material(a);if(revision!==this.revision){m.dispose();return;}this.appearances.set(key,m);}base=m;const uv=object.geometry.getAttribute('uv');if(uv&&o.uvMetres)for(let v=group.start;v<group.start+group.count;v++)uv.setXY(v,o.uvMetres[v*2]/a.textureSize[0],o.uvMetres[v*2+1]/a.textureSize[1]);if(uv)uv.needsUpdate=true;}
+    bases.push(base);
+   }this.restoreBase(object);object.userData.baseMaterial=bases;object.material=bases;continue;}
+   const resource=o.materialId?data.materials?.[o.materialId]:undefined;
+   const a:Appearance|undefined=resource?.appearance??(resource?{baseColor:resource.color??'#b8c1ca',opacity:1,metallic:0,roughness:.85,textureSize:[2,2],normalConvention:'OpenGL'}:undefined);
+   let base=object.userData.fallbackMaterial;
+   if(a){const key=JSON.stringify(a);used.add(key);let m=this.appearances.get(key);if(!m){m=await this.assets.material(a);if(revision!==this.revision){m.dispose();return;}this.appearances.set(key,m);}base=m;
+    const uv=object.userData.uvMetres as number[]|undefined;if(uv&&object.userData.appearanceSignature!==key){const current=object.geometry.getAttribute('uv');if(current instanceof THREE.BufferAttribute&&current.array instanceof Float32Array&&current.array.length===uv.length){for(let i=0;i<uv.length;i++)current.array[i]=uv[i]/a.textureSize[i%2];current.needsUpdate=true;}else object.geometry.setAttribute('uv',new THREE.BufferAttribute(new Float32Array(uv.map((v,i)=>v/a.textureSize[i%2])),2));}object.userData.appearanceSignature=key;
+   }
+   if(revision!==this.revision)return;
+   if(object.userData.baseMaterial&&object.material!==object.userData.baseMaterial)(object.material as THREE.Material).dispose();
+   object.userData.baseMaterial=base;object.material=base;
+  }
+  for(const [key,m]of this.appearances)if(!used.has(key)){m.dispose();this.appearances.delete(key);}this.assets.prune();this.warnings=[...new Set([...this.assets.warnings,...[...this.appearances.values()].flatMap(m=>m.userData.warnings??[])])];this.select(this.selected);
+ }
+ select(id:string|null){for(const o of [...this.group.children])if(o.userData.sourceHighlight)this.removeObject(o);this.selected=id;for(const object of this.group.children){const selected=Boolean(id)&&(this.belongs(object.userData.infraId,id!)||this.belongs(object.userData.parentId,id!));
+   // Per-selection clone avoids changing another object's shared fallback material.
+   const obj=object as THREE.Mesh;const base=obj.userData.baseMaterial??obj.material;obj.userData.baseMaterial=base;
+   this.restoreBase(obj);obj.material=base;
+   if(selected||this.wireframes.has(object.userData.infraId)){const clones=(Array.isArray(base)?base:[base]).map((base:THREE.Material)=>{const m=base.clone();if(selected&&'color' in m)(m as THREE.MeshStandardMaterial).color.set('#a9e000');if(m instanceof THREE.MeshStandardMaterial)m.wireframe=this.wireframes.has(object.userData.infraId);if(selected&&m instanceof THREE.MeshStandardMaterial){m.map=null;m.normalMap=null;m.roughnessMap=null;m.metalness=0;m.opacity=object.userData.referenceOpacity??1;m.transparent=m.opacity<1;m.depthWrite=!m.transparent;}return m;});obj.material=Array.isArray(base)?clones:clones[0];}
+  }
+  this.highlightSourceParts(id);
+ }
+ /** Raycast primitive index retains the source handle even when geometry is batched. */
+ private belongs(id:string|undefined,ancestor:string){const seen=new Set<string>();while(id&&!seen.has(id)){if(id===ancestor)return true;seen.add(id);id=this.parents.get(id);}return false;}
+ private familyOwner(id:string){let current:string|undefined=id;const seen=new Set<string>();while(current&&!seen.has(current)){if(this.familyRoots.has(current))return current;seen.add(current);current=this.parents.get(current);}return id;}
+ private isHidden(id:string|undefined){for(const hidden of this.hidden)if(this.belongs(id,hidden))return true;return false;}
+ pick(hit:THREE.Intersection){const parts=hit.object.userData.parts as {id:string;start:number;count:number}[]|undefined;const index=hit.index??-1;const id=!parts||hit.object.userData.batch?hit.object.userData.infraId:parts.find(p=>index>=p.start&&index<p.start+p.count)?.id;return id?this.familyOwner(id):null;} private highlightSourceParts(id:string|null){if(!id)return;for(const object of [...this.group.children]){const parts=object.userData.parts as any[]|undefined;if(!parts)continue;const ranges=parts.filter(p=>this.belongs(p.id,id)||this.belongs(p.parent,id));if(!ranges.length)continue;const base=(object as THREE.LineSegments).geometry.getAttribute('position'),positions:number[]=[];for(const p of ranges)for(let i=p.start;i<p.start+p.count;i++)positions.push(base.getX(i),base.getY(i),base.getZ(i));const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));const highlight=object.userData.batch?new THREE.Mesh(g,new THREE.MeshBasicMaterial({color:'#a9e000',side:THREE.DoubleSide,depthTest:false})):new THREE.LineSegments(g,new THREE.LineBasicMaterial({color:'#a9e000',depthTest:false}));highlight.userData.sourceHighlight=true;highlight.renderOrder=5;this.group.add(highlight);}}
+ setWireframe(id:string,enabled:boolean){if(enabled)this.wireframes.add(id);else this.wireframes.delete(id);this.select(this.selected);}
+ setVisible(id:string,visible:boolean){if(visible)this.hidden.delete(id);else this.hidden.add(id);this.visibility();}
+ private visibility(){for(const o of this.group.children){o.visible=!this.isHidden(o.userData.infraId)&&!this.isHidden(o.userData.parentId);if(o.userData.batch){const g=(o as THREE.Mesh).geometry;g.clearGroups();for(const part of o.userData.parts){if(this.isHidden(part.id)||this.isHidden(part.parent))continue;const last=g.groups.at(-1);if(last&&last.materialIndex===part.materialIndex&&last.start+last.count===part.start)last.count+=part.count;else g.addGroup(part.start,part.count,part.materialIndex);}o.visible&&=g.groups.length>0;}}}
+ bounds(id?:string){const box=new THREE.Box3(),point=new THREE.Vector3();for(const o of this.group.children){if(!o.visible||o.userData.sourceHighlight)continue;if(!id||this.belongs(o.userData.infraId,id)||this.belongs(o.userData.parentId,id)){box.expandByObject(o);continue;}const parts=o.userData.parts as any[]|undefined;if(parts){o.updateWorldMatrix(true,false);const positions=(o as THREE.LineSegments).geometry.getAttribute('position');for(const p of parts.filter(p=>this.belongs(p.id,id)||this.belongs(p.parent,id)))for(let i=p.start;i<p.start+p.count;i++)box.expandByPoint(point.fromBufferAttribute(positions,i).applyMatrix4(o.matrixWorld));}}return box;}
+ private restoreBase(obj:THREE.Mesh){const base=obj.userData.baseMaterial??obj.userData.fallbackMaterial;if(!base||obj.material===base)return;const retained=new Set(Array.isArray(base)?base:[base]);for(const m of Array.isArray(obj.material)?obj.material:[obj.material])if(!retained.has(m))m.dispose();obj.material=base;}
+ private releaseGeometry(object:THREE.Mesh){const key=object.userData.prototypeKey,entry=key?this.prototypes.get(key):undefined;if(entry){if(--entry.refs===0){entry.geometry.dispose();this.prototypes.delete(key);}}else object.geometry.dispose();}
+ private removeObject(o:THREE.Object3D){const mesh=o as THREE.Mesh;this.releaseGeometry(mesh);if(o instanceof THREE.InstancedMesh)o.dispose();if(o.userData.sourceHighlight)(mesh.material as THREE.Material).dispose();this.restoreBase(mesh);this.group.remove(o);}
+ clear(){for(const o of this.group.children){const obj=o as THREE.Mesh;this.releaseGeometry(obj);if(o instanceof THREE.InstancedMesh)o.dispose();if(o.userData.sourceHighlight)(obj.material as THREE.Material).dispose();this.restoreBase(obj);}for(const m of this.materials.values())m.dispose();this.materials.clear();this.group.clear();}
+ dispose(){++this.revision;this.clear();for(const m of this.appearances.values())m.dispose();this.appearances.clear();this.assets?.dispose();this.assets=undefined;this.hidden.clear();this.wireframes.clear();this.key='';}
+ get stats(){return {materials:this.appearances.size,textures:this.assets?.textureCount??0,warnings:this.warnings};}
+}
+

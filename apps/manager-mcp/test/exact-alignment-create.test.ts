@@ -1,0 +1,8 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';import {MemoryStores,canonicalJson} from '@insa/core';import {createPlatform} from '../src/runtime.js';import {evalElement,align3d,hLength} from '@insa/infra';
+test('create exact partial-curve alignment in one governed command, preserve legacy create and reject ambiguous geometry',async()=>{
+ const p=createPlatform(new MemoryStores()),actor:any={id:'fixture',kind:'human',name:'Isolated fixture',roles:['bim_manager']},run=(i:any)=>p.execute(actor,'isolated','infra_create_alignment',i);
+ await run({name:'Legacy',horizontal:[{x:0,y:0},{x:100,y:0}],vertical:[{station:0,z:10},{station:100,z:10}]});const old=canonicalJson((await p.state<any>('isolated','infra')).alignments['AL-001']);
+ const arc:any={id:'arc',kind:'arc',s0:0,length:10,start:[0,0],az0:.2,k0:.001,k1:.001},q=evalElement(arc,10),cl:any={id:'clothoid',kind:'clothoid',s0:10,length:5,start:[q.x,q.y],az0:q.az,k0:.001,k1:0},r=evalElement(cl,5),line:any={id:'line',kind:'line',s0:15,length:10,start:[r.x,r.y],az0:r.az,k0:0,k1:0},input={name:'Exact',elements:[arc,cl,line],vertical:[{station:0,z:10},{station:12.5,z:9,curve:5},{station:25,z:10}]};
+ await run(input);const s=await p.state<any>('isolated','infra'),d=s.alignments['AL-002'];assert.deepEqual(d.elements,input.elements);assert.equal(hLength(align3d(d).h),25);assert.equal(canonicalJson(s.alignments['AL-001']),old);
+ await assert.rejects(run({...input,horizontal:[{x:0,y:0},{x:100,y:0}]}));await assert.rejects(run({...input,elements:[arc,{...cl,start:[99,99]}]}));assert.equal(Object.keys((await p.state<any>('isolated','infra')).alignments).length,2);
+});

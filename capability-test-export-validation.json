@@ -1,0 +1,51 @@
+{
+  "schema": "IFC4X3",
+  "entities": 1561,
+  "validation_issues": [],
+  "counts": {
+    "IfcWall": 12,
+    "IfcDoor": 2,
+    "IfcWindow": 2,
+    "IfcColumn": 8,
+    "IfcBeam": 8,
+    "IfcMember": 20,
+    "IfcSlab": 3,
+    "IfcRoof": 1,
+    "IfcStair": 1,
+    "IfcRailing": 1,
+    "IfcRampFlight": 1,
+    "IfcCurtainWall": 1,
+    "IfcSpace": 1,
+    "IfcPipeSegment": 2,
+    "IfcDuctSegment": 1,
+    "IfcCableCarrierSegment": 1,
+    "IfcPipeFitting": 1,
+    "IfcDistributionPort": 10,
+    "IfcRelVoidsElement": 4,
+    "IfcRelFillsElement": 4,
+    "IfcRelAssociatesMaterial": 29,
+    "IfcRelDefinesByType": 12
+  },
+  "storeys": [
+    [
+      "Ground Floor",
+      0.0
+    ],
+    [
+      "First Floor",
+      3.2
+    ]
+  ],
+  "files": [
+    {
+      "name": "INSA_Capability_Test_Final.ifc",
+      "bytes": 80077,
+      "sha256": "b9f0474d40dffbc5ff569c39164c640b3a34d623626e7f5b141f12d8d7a47729"
+    },
+    {
+      "name": "INSA_Capability_Test_Final.frag",
+      "bytes": 20994,
+      "sha256": "778dd50afa7bd8f5549cf7fdcf1a091ea851cccefaa6ab9b81c9e28db7c687f0"
+    }
+  ]
+}

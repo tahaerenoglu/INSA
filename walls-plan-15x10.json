@@ -1,0 +1,157 @@
+{
+  "project": "temiz-proje-20261013",
+  "walls": [
+    {
+      "storey": "Zemin Kat",
+      "type": "WT-0001",
+      "name": "Dış çevre 15 × 10 m",
+      "closed": true,
+      "location_line": "exterior_face",
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          15,
+          0
+        ],
+        [
+          15,
+          10
+        ],
+        [
+          0,
+          10
+        ]
+      ],
+      "height": 3
+    },
+    {
+      "storey": "Zemin Kat",
+      "type": "WT-0002",
+      "name": "Sol alt yatak odası doğu",
+      "start": [
+        5,
+        0.13
+      ],
+      "end": [
+        5,
+        4
+      ],
+      "height": 3
+    },
+    {
+      "storey": "Zemin Kat",
+      "type": "WT-0002",
+      "name": "Sol üst yatak odası doğu",
+      "start": [
+        5,
+        6
+      ],
+      "end": [
+        5,
+        9.87
+      ],
+      "height": 3
+    },
+    {
+      "storey": "Zemin Kat",
+      "type": "WT-0002",
+      "name": "Sol alt yatak odası kuzey",
+      "start": [
+        0.13,
+        4
+      ],
+      "end": [
+        5,
+        4
+      ],
+      "height": 3
+    },
+    {
+      "storey": "Zemin Kat",
+      "type": "WT-0002",
+      "name": "Sol üst yatak odası güney",
+      "start": [
+        0.13,
+        6
+      ],
+      "end": [
+        5,
+        6
+      ],
+      "height": 3
+    },
+    {
+      "storey": "Zemin Kat",
+      "type": "WT-0002",
+      "name": "Sol WC doğu",
+      "start": [
+        3,
+        4
+      ],
+      "end": [
+        3,
+        6
+      ],
+      "height": 3
+    },
+    {
+      "storey": "Zemin Kat",
+      "type": "WT-0002",
+      "name": "Sağ odalar ve salon bölmesi",
+      "start": [
+        11,
+        0.13
+      ],
+      "end": [
+        11,
+        9.87
+      ],
+      "height": 3
+    },
+    {
+      "storey": "Zemin Kat",
+      "type": "WT-0002",
+      "name": "Makine odası kuzey",
+      "start": [
+        11,
+        3
+      ],
+      "end": [
+        14.87,
+        3
+      ],
+      "height": 3
+    },
+    {
+      "storey": "Zemin Kat",
+      "type": "WT-0002",
+      "name": "Sağ yatak odası güney",
+      "start": [
+        11,
+        6
+      ],
+      "end": [
+        14.87,
+        6
+      ],
+      "height": 3
+    },
+    {
+      "storey": "Zemin Kat",
+      "type": "WT-0002",
+      "name": "WC duş ve sauna bölmesi",
+      "start": [
+        13,
+        3
+      ],
+      "end": [
+        13,
+        6
+      ],
+      "height": 3
+    }
+  ]
+}

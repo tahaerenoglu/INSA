@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import {createPlatform} from '../apps/manager-mcp/src/runtime.ts';
+import {toIfc} from '../packages/bim/src/ifc.ts';
+import {checkType} from '../packages/bim/src/invariants.ts';
+process.env.INSA_APPROVAL='ai';
+const p=createPlatform(),project='temiz-proje-20261015';
+const state=await p.state(project,'bim');
+const frame={width:.07,depth:.08,glassThickness:.024,sashCount:2};
+const type={...state.types['NT-0001'],windowFrame:frame};checkType(type);
+assert.throws(()=>checkType({...type,windowFrame:{...frame,sashCount:3}}));
+const candidate=structuredClone(state);candidate.types[type.id]=type;
+const ifc=toIfc(candidate,{name:'Double sash check'});
+assert.equal((ifc.match(/\.DOUBLE_PANEL_VERTICAL\./g)||[]).length,33);
+assert.equal((ifc.match(/IFCWINDOW\(/g)||[]).length,33);
+console.log('PASS: 33 single-identity double-panel windows; invalid sash count rejected.');
+console.log(JSON.stringify(await p.execute({id:'codex',name:'Codex',kind:'ai',roles:['ai_agent']},project,'bim_update_types',{items:[{type:'NT-0001',kind:'window',set:{name:'Çift Kanat Alüminyum Pencere 150x140',window_frame:frame}}]})));

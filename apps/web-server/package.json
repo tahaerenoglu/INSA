@@ -1,0 +1,9 @@
+{
+  "name": "@insa/web-server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@insa/files": "0.1.0"
+  }
+}

@@ -1,0 +1,3 @@
+import {z} from 'zod';
+const extent=z.union([z.enum(['pavement','full']),z.number().min(.1).max(70)]);
+export const roadLayerSchema=z.object({id:z.string().regex(/^[a-zA-Z0-9_-]{1,80}$/).optional(),name:z.string().min(1).max(120),role:z.string().min(1).max(80),thickness:z.number().min(.001).max(3),leftExtent:extent,rightExtent:extent,componentType:z.string().optional(),materialId:z.string().regex(/^M-\d+$/),profile:z.array(z.tuple([z.number().min(-70).max(70),z.number().min(-20).max(20)])).min(3).max(128).optional(),repeat:z.object({anchor:z.number(),spacing:z.number().min(.05).max(100),length:z.number().min(.01).max(100)}).optional()});

@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "insa": {
+      "command": "npx.cmd",
+      "args": [
+        "tsx",
+        "C:\\Projeler\\insa\\apps\\manager-mcp\\src\\index.ts"
+      ],
+      "env": {
+        "INSA_DATA": "C:\\Projeler\\insa\\data",
+        "INSA_PROJECT": "ornek-ofis",
+        "INSA_APPROVAL": "ai",
+        "INSA_ACTOR_ID": "claude",
+        "INSA_ACTOR_ROLES": "ai_agent",
+        "INSA_PG_URL": "postgres://insa:insa@localhost:5432/insa"
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+import {createPlatform} from '../../../manager-mcp/src/runtime.js';
+const actor:any={id:'fixture',name:'Isolated integration fixture',kind:'human',roles:['bim_manager']};
+export async function buildDemo(p:ReturnType<typeof createPlatform>,project:string){
+ const run=(t:string,i:any)=>p.execute(actor,project,t,i);
+ await run('bim_set_project',{name:'Infra 01B — Coordinate Demonstration'});await run('bim_set_georeference',{crs:{name:'EPSG:5254'},eastings:412000,northings:4561000,orthogonal_height:62});await run('bim_create_storeys',{storeys:[{name:'Reference',elevation:0}]});await run('bim_create_types',{types:[{kind:'column',name:'Reference Column',profile:{shape:'rect',b:1,h:1},material:'Reference Concrete'}]});await run('bim_create_columns',{columns:[{storey:'Reference',type:'Reference Column',at:[20,10],height:5}]});
+ await run('infra_set_crs',{crs:'EPSG:5254'});await run('infra_create_alignment',{name:'Synthetic curve',horizontal:[{x:412000,y:4561000},{x:412250,y:4561000,radius:300,spiral:30},{x:412500,y:4561120}],vertical:[{station:0,z:62},{station:250,z:65,curve:100},{station:600,z:62}]});
+ await run('infra_create_section_types',{types:[{name:'Two-layer circle',profile:{shape:'circle',radius:3,center_y:0},layers:[{name:'Inner lining',thickness:.3,material:'Legacy Concrete'},{name:'Outer lining',thickness:.2,material:'Legacy Shotcrete'}]}]});await run('infra_create_tunnel',{name:'Demo Tunnel',alignment:'AL-001',ranges:[{from:20,to:450,section:'TS-001'}]});
+}

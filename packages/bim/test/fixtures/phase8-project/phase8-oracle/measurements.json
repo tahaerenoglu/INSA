@@ -1,0 +1,511 @@
+{
+ "quantities": {
+  "B-0001": {
+   "length": 4,
+   "section_area": 0.15,
+   "volume": 0.6
+  },
+  "B-0002": {
+   "length": 8.200609733428362,
+   "section_area": 0.15,
+   "volume": 1.2300914600142543
+  },
+  "C-0001": {
+   "height": 3.4,
+   "section_area": 0.2,
+   "volume": 0.68
+  },
+  "C-0002": {
+   "height": 2.5,
+   "section_area": 0.07068583470577035,
+   "volume": 0.17671458676442586
+  },
+  "D-0001": {},
+  "N-0001": {},
+  "O-0001": {
+   "width": 1,
+   "height": 2.1,
+   "area": 2.1
+  },
+  "O-0002": {
+   "width": 1,
+   "height": 1.2,
+   "area": 1.2
+  },
+  "O-0003": {
+   "width": 1.5,
+   "height": 2,
+   "area": 3
+  },
+  "W-0001": {
+   "length": 12,
+   "thickness": 0.2,
+   "height": 3.4,
+   "gross_volume": 8.16,
+   "net_volume": 8.16,
+   "side_area_net": 40.8
+  },
+  "W-0002": {
+   "length": 8,
+   "thickness": 0.2,
+   "height": 3.4,
+   "gross_volume": 5.439999999999966,
+   "net_volume": 5.1999999999999655,
+   "side_area_net": 26
+  },
+  "W-0003": {
+   "length": 12,
+   "thickness": 0.2,
+   "height": 3.4,
+   "gross_volume": 8.15999999999997,
+   "net_volume": 7.55999999999997,
+   "side_area_net": 37.8
+  },
+  "W-0004": {
+   "length": 8,
+   "thickness": 0.2,
+   "height": 3.4,
+   "gross_volume": 5.44,
+   "net_volume": 5.44,
+   "side_area_net": 27.2
+  },
+  "W-0005": {
+   "length": 8,
+   "thickness": 0.2,
+   "height": 2.9,
+   "gross_volume": 4.639999999999984,
+   "net_volume": 4.219999999999984,
+   "side_area_net": 21.099999999999998
+  },
+  "W-0006": {
+   "length": 4,
+   "thickness": 0.2,
+   "height": 2.9,
+   "gross_volume": 2.319999999999992,
+   "net_volume": 2.319999999999992,
+   "side_area_net": 11.6
+  },
+  "S-0001": {
+   "area": 93,
+   "thickness": 0.2,
+   "volume": 18.6
+  },
+  "S-0002": {
+   "area": 6,
+   "thickness": 0.2,
+   "volume": 1.2000000000000002
+  },
+  "CO-0001": {},
+  "CO-0002": {},
+  "SP-0001": {},
+  "SP-0002": {},
+  "SP-0003": {}
+ },
+ "spatial": {
+  "SP-0001": {
+   "status": "bounded",
+   "area": 40,
+   "perimeter": 26,
+   "volume": 136,
+   "signature": "R-66cc009ea958aaa5"
+  },
+  "SP-0002": {
+   "status": "bounded",
+   "area": 56,
+   "perimeter": 30,
+   "volume": 190.4,
+   "signature": "R-ca14e399ab00e86d"
+  },
+  "SP-0003": {
+   "status": "bounded",
+   "area": 56,
+   "perimeter": 30,
+   "volume": 190.4,
+   "signature": "R-ca14e399ab00e86d"
+  }
+ },
+ "usage": {
+  "B-0001": {
+   "elementId": "B-0001",
+   "elementKind": "beam",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "B-0002": {
+   "elementId": "B-0002",
+   "elementKind": "beam",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "C-0001": {
+   "elementId": "C-0001",
+   "elementKind": "column",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "C-0002": {
+   "elementId": "C-0002",
+   "elementKind": "column",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "D-0001": {
+   "elementId": "D-0001",
+   "elementKind": "door",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {
+    "host": "W-0005",
+    "opening": "O-0001"
+   }
+  },
+  "N-0001": {
+   "elementId": "N-0001",
+   "elementKind": "window",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {
+    "host": "W-0002",
+    "opening": "O-0002"
+   }
+  },
+  "O-0001": {
+   "elementId": "O-0001",
+   "elementKind": "opening",
+   "usageCount": 1,
+   "hostedOpenings": [],
+   "fills": [
+    "D-0001"
+   ],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {
+    "host": "W-0005",
+    "filledBy": "D-0001"
+   }
+  },
+  "O-0002": {
+   "elementId": "O-0002",
+   "elementKind": "opening",
+   "usageCount": 1,
+   "hostedOpenings": [],
+   "fills": [
+    "N-0001"
+   ],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {
+    "host": "W-0002",
+    "filledBy": "N-0001"
+   }
+  },
+  "O-0003": {
+   "elementId": "O-0003",
+   "elementKind": "opening",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {
+    "host": "W-0003"
+   }
+  },
+  "W-0001": {
+   "elementId": "W-0001",
+   "elementKind": "wall",
+   "usageCount": 4,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [
+    {
+     "joinId": "J-0001",
+     "kind": "endpoint_endpoint",
+     "walls": [
+      "W-0001",
+      "W-0002"
+     ]
+    },
+    {
+     "joinId": "J-0004",
+     "kind": "endpoint_endpoint",
+     "walls": [
+      "W-0001",
+      "W-0004"
+     ]
+    },
+    {
+     "joinId": "J-0005",
+     "kind": "endpoint_segment",
+     "walls": [
+      "W-0001",
+      "W-0005"
+     ]
+    },
+    {
+     "joinId": "J-0007",
+     "kind": "endpoint_segment",
+     "walls": [
+      "W-0001",
+      "W-0006"
+     ]
+    }
+   ],
+   "connectedWalls": [
+    "W-0002",
+    "W-0004",
+    "W-0005",
+    "W-0006"
+   ],
+   "references": {}
+  },
+  "W-0002": {
+   "elementId": "W-0002",
+   "elementKind": "wall",
+   "usageCount": 3,
+   "hostedOpenings": [
+    "O-0002"
+   ],
+   "fills": [],
+   "joins": [
+    {
+     "joinId": "J-0001",
+     "kind": "endpoint_endpoint",
+     "walls": [
+      "W-0001",
+      "W-0002"
+     ]
+    },
+    {
+     "joinId": "J-0002",
+     "kind": "endpoint_endpoint",
+     "walls": [
+      "W-0002",
+      "W-0003"
+     ]
+    }
+   ],
+   "connectedWalls": [
+    "W-0001",
+    "W-0003"
+   ],
+   "references": {}
+  },
+  "W-0003": {
+   "elementId": "W-0003",
+   "elementKind": "wall",
+   "usageCount": 4,
+   "hostedOpenings": [
+    "O-0003"
+   ],
+   "fills": [],
+   "joins": [
+    {
+     "joinId": "J-0002",
+     "kind": "endpoint_endpoint",
+     "walls": [
+      "W-0002",
+      "W-0003"
+     ]
+    },
+    {
+     "joinId": "J-0003",
+     "kind": "endpoint_endpoint",
+     "walls": [
+      "W-0003",
+      "W-0004"
+     ]
+    },
+    {
+     "joinId": "J-0006",
+     "kind": "endpoint_segment",
+     "walls": [
+      "W-0003",
+      "W-0005"
+     ]
+    }
+   ],
+   "connectedWalls": [
+    "W-0002",
+    "W-0004",
+    "W-0005"
+   ],
+   "references": {}
+  },
+  "W-0004": {
+   "elementId": "W-0004",
+   "elementKind": "wall",
+   "usageCount": 2,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [
+    {
+     "joinId": "J-0003",
+     "kind": "endpoint_endpoint",
+     "walls": [
+      "W-0003",
+      "W-0004"
+     ]
+    },
+    {
+     "joinId": "J-0004",
+     "kind": "endpoint_endpoint",
+     "walls": [
+      "W-0001",
+      "W-0004"
+     ]
+    }
+   ],
+   "connectedWalls": [
+    "W-0001",
+    "W-0003"
+   ],
+   "references": {}
+  },
+  "W-0005": {
+   "elementId": "W-0005",
+   "elementKind": "wall",
+   "usageCount": 3,
+   "hostedOpenings": [
+    "O-0001"
+   ],
+   "fills": [],
+   "joins": [
+    {
+     "joinId": "J-0005",
+     "kind": "endpoint_segment",
+     "walls": [
+      "W-0001",
+      "W-0005"
+     ]
+    },
+    {
+     "joinId": "J-0006",
+     "kind": "endpoint_segment",
+     "walls": [
+      "W-0003",
+      "W-0005"
+     ]
+    }
+   ],
+   "connectedWalls": [
+    "W-0001",
+    "W-0003"
+   ],
+   "references": {}
+  },
+  "W-0006": {
+   "elementId": "W-0006",
+   "elementKind": "wall",
+   "usageCount": 1,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [
+    {
+     "joinId": "J-0007",
+     "kind": "endpoint_segment",
+     "walls": [
+      "W-0001",
+      "W-0006"
+     ]
+    }
+   ],
+   "connectedWalls": [
+    "W-0001"
+   ],
+   "references": {}
+  },
+  "S-0001": {
+   "elementId": "S-0001",
+   "elementKind": "slab",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "S-0002": {
+   "elementId": "S-0002",
+   "elementKind": "slab",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "CO-0001": {
+   "elementId": "CO-0001",
+   "elementKind": "component",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "CO-0002": {
+   "elementId": "CO-0002",
+   "elementKind": "component",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "SP-0001": {
+   "elementId": "SP-0001",
+   "elementKind": "spatial",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "SP-0002": {
+   "elementId": "SP-0002",
+   "elementKind": "spatial",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "SP-0003": {
+   "elementId": "SP-0003",
+   "elementKind": "spatial",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  }
+ }
+}

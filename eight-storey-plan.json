@@ -1,0 +1,3206 @@
+{
+  "project": "yeni-proje-20261013-01",
+  "assumptions": {
+    "width": 12.5,
+    "depth": 8.9,
+    "storeyHeight": 3.2
+  },
+  "boundaries": {
+    "boundaries": [
+      {
+        "category": "structure.foundation_slab",
+        "storey": "Temel",
+        "type": "Radye Temel 500 mm",
+        "name": "Radye temel",
+        "offset": 0.3,
+        "outline": [
+          [
+            -0.4,
+            -0.4
+          ],
+          [
+            12.9,
+            -0.4
+          ],
+          [
+            12.9,
+            9.3
+          ],
+          [
+            7.7,
+            9.3
+          ],
+          [
+            7.7,
+            14.7
+          ],
+          [
+            4.1,
+            14.7
+          ],
+          [
+            4.1,
+            9.3
+          ],
+          [
+            -0.4,
+            9.3
+          ]
+        ]
+      },
+      {
+        "category": "architecture.floor",
+        "storey": "Zemin Kat",
+        "type": "Betonarme Döşeme 200 mm",
+        "name": "Zemin Kat döşemesi",
+        "outline": [
+          [
+            0,
+            0
+          ],
+          [
+            12.5,
+            0
+          ],
+          [
+            12.5,
+            8.9
+          ],
+          [
+            7.3,
+            8.9
+          ],
+          [
+            7.3,
+            14.3
+          ],
+          [
+            4.5,
+            14.3
+          ],
+          [
+            4.5,
+            8.9
+          ],
+          [
+            0,
+            8.9
+          ]
+        ],
+        "holes": []
+      },
+      {
+        "category": "architecture.floor",
+        "storey": "1. Kat",
+        "type": "Betonarme Döşeme 200 mm",
+        "name": "1. Kat döşemesi",
+        "outline": [
+          [
+            0,
+            0
+          ],
+          [
+            12.5,
+            0
+          ],
+          [
+            12.5,
+            8.9
+          ],
+          [
+            7.3,
+            8.9
+          ],
+          [
+            7.3,
+            14.3
+          ],
+          [
+            4.5,
+            14.3
+          ],
+          [
+            4.5,
+            8.9
+          ],
+          [
+            0,
+            8.9
+          ]
+        ],
+        "holes": [
+          [
+            [
+              4.7,
+              10.1
+            ],
+            [
+              7.1,
+              10.1
+            ],
+            [
+              7.1,
+              12.4
+            ],
+            [
+              4.7,
+              12.4
+            ]
+          ]
+        ]
+      },
+      {
+        "category": "architecture.floor",
+        "storey": "2. Kat",
+        "type": "Betonarme Döşeme 200 mm",
+        "name": "2. Kat döşemesi",
+        "outline": [
+          [
+            0,
+            0
+          ],
+          [
+            12.5,
+            0
+          ],
+          [
+            12.5,
+            8.9
+          ],
+          [
+            7.3,
+            8.9
+          ],
+          [
+            7.3,
+            14.3
+          ],
+          [
+            4.5,
+            14.3
+          ],
+          [
+            4.5,
+            8.9
+          ],
+          [
+            0,
+            8.9
+          ]
+        ],
+        "holes": [
+          [
+            [
+              4.7,
+              10.1
+            ],
+            [
+              7.1,
+              10.1
+            ],
+            [
+              7.1,
+              12.4
+            ],
+            [
+              4.7,
+              12.4
+            ]
+          ]
+        ]
+      },
+      {
+        "category": "architecture.floor",
+        "storey": "3. Kat",
+        "type": "Betonarme Döşeme 200 mm",
+        "name": "3. Kat döşemesi",
+        "outline": [
+          [
+            0,
+            0
+          ],
+          [
+            12.5,
+            0
+          ],
+          [
+            12.5,
+            8.9
+          ],
+          [
+            7.3,
+            8.9
+          ],
+          [
+            7.3,
+            14.3
+          ],
+          [
+            4.5,
+            14.3
+          ],
+          [
+            4.5,
+            8.9
+          ],
+          [
+            0,
+            8.9
+          ]
+        ],
+        "holes": [
+          [
+            [
+              4.7,
+              10.1
+            ],
+            [
+              7.1,
+              10.1
+            ],
+            [
+              7.1,
+              12.4
+            ],
+            [
+              4.7,
+              12.4
+            ]
+          ]
+        ]
+      },
+      {
+        "category": "architecture.floor",
+        "storey": "4. Kat",
+        "type": "Betonarme Döşeme 200 mm",
+        "name": "4. Kat döşemesi",
+        "outline": [
+          [
+            0,
+            0
+          ],
+          [
+            12.5,
+            0
+          ],
+          [
+            12.5,
+            8.9
+          ],
+          [
+            7.3,
+            8.9
+          ],
+          [
+            7.3,
+            14.3
+          ],
+          [
+            4.5,
+            14.3
+          ],
+          [
+            4.5,
+            8.9
+          ],
+          [
+            0,
+            8.9
+          ]
+        ],
+        "holes": [
+          [
+            [
+              4.7,
+              10.1
+            ],
+            [
+              7.1,
+              10.1
+            ],
+            [
+              7.1,
+              12.4
+            ],
+            [
+              4.7,
+              12.4
+            ]
+          ]
+        ]
+      },
+      {
+        "category": "architecture.floor",
+        "storey": "5. Kat",
+        "type": "Betonarme Döşeme 200 mm",
+        "name": "5. Kat döşemesi",
+        "outline": [
+          [
+            0,
+            0
+          ],
+          [
+            12.5,
+            0
+          ],
+          [
+            12.5,
+            8.9
+          ],
+          [
+            7.3,
+            8.9
+          ],
+          [
+            7.3,
+            14.3
+          ],
+          [
+            4.5,
+            14.3
+          ],
+          [
+            4.5,
+            8.9
+          ],
+          [
+            0,
+            8.9
+          ]
+        ],
+        "holes": [
+          [
+            [
+              4.7,
+              10.1
+            ],
+            [
+              7.1,
+              10.1
+            ],
+            [
+              7.1,
+              12.4
+            ],
+            [
+              4.7,
+              12.4
+            ]
+          ]
+        ]
+      },
+      {
+        "category": "architecture.floor",
+        "storey": "6. Kat",
+        "type": "Betonarme Döşeme 200 mm",
+        "name": "6. Kat döşemesi",
+        "outline": [
+          [
+            0,
+            0
+          ],
+          [
+            12.5,
+            0
+          ],
+          [
+            12.5,
+            8.9
+          ],
+          [
+            7.3,
+            8.9
+          ],
+          [
+            7.3,
+            14.3
+          ],
+          [
+            4.5,
+            14.3
+          ],
+          [
+            4.5,
+            8.9
+          ],
+          [
+            0,
+            8.9
+          ]
+        ],
+        "holes": [
+          [
+            [
+              4.7,
+              10.1
+            ],
+            [
+              7.1,
+              10.1
+            ],
+            [
+              7.1,
+              12.4
+            ],
+            [
+              4.7,
+              12.4
+            ]
+          ]
+        ]
+      },
+      {
+        "category": "architecture.floor",
+        "storey": "7. Kat",
+        "type": "Betonarme Döşeme 200 mm",
+        "name": "7. Kat döşemesi",
+        "outline": [
+          [
+            0,
+            0
+          ],
+          [
+            12.5,
+            0
+          ],
+          [
+            12.5,
+            8.9
+          ],
+          [
+            7.3,
+            8.9
+          ],
+          [
+            7.3,
+            14.3
+          ],
+          [
+            4.5,
+            14.3
+          ],
+          [
+            4.5,
+            8.9
+          ],
+          [
+            0,
+            8.9
+          ]
+        ],
+        "holes": [
+          [
+            [
+              4.7,
+              10.1
+            ],
+            [
+              7.1,
+              10.1
+            ],
+            [
+              7.1,
+              12.4
+            ],
+            [
+              4.7,
+              12.4
+            ]
+          ]
+        ]
+      },
+      {
+        "category": "architecture.roof",
+        "storey": "Çatı",
+        "type": "Düz Çatı 200 mm",
+        "name": "Bina ve merdiven üstü düz çatı",
+        "outline": [
+          [
+            0,
+            0
+          ],
+          [
+            12.5,
+            0
+          ],
+          [
+            12.5,
+            8.9
+          ],
+          [
+            7.3,
+            8.9
+          ],
+          [
+            7.3,
+            14.3
+          ],
+          [
+            4.5,
+            14.3
+          ],
+          [
+            4.5,
+            8.9
+          ],
+          [
+            0,
+            8.9
+          ]
+        ]
+      },
+      {
+        "category": "architecture.landing",
+        "storey": "Zemin Kat",
+        "type": "Betonarme Döşeme 200 mm",
+        "name": "Zemin Kat ara sahanlık",
+        "offset": 1.6,
+        "outline": [
+          [
+            4.7,
+            12.34
+          ],
+          [
+            7.1,
+            12.34
+          ],
+          [
+            7.1,
+            13.64
+          ],
+          [
+            4.7,
+            13.64
+          ]
+        ]
+      },
+      {
+        "category": "architecture.landing",
+        "storey": "1. Kat",
+        "type": "Betonarme Döşeme 200 mm",
+        "name": "1. Kat ara sahanlık",
+        "offset": 1.6,
+        "outline": [
+          [
+            4.7,
+            12.34
+          ],
+          [
+            7.1,
+            12.34
+          ],
+          [
+            7.1,
+            13.64
+          ],
+          [
+            4.7,
+            13.64
+          ]
+        ]
+      },
+      {
+        "category": "architecture.landing",
+        "storey": "2. Kat",
+        "type": "Betonarme Döşeme 200 mm",
+        "name": "2. Kat ara sahanlık",
+        "offset": 1.6,
+        "outline": [
+          [
+            4.7,
+            12.34
+          ],
+          [
+            7.1,
+            12.34
+          ],
+          [
+            7.1,
+            13.64
+          ],
+          [
+            4.7,
+            13.64
+          ]
+        ]
+      },
+      {
+        "category": "architecture.landing",
+        "storey": "3. Kat",
+        "type": "Betonarme Döşeme 200 mm",
+        "name": "3. Kat ara sahanlık",
+        "offset": 1.6,
+        "outline": [
+          [
+            4.7,
+            12.34
+          ],
+          [
+            7.1,
+            12.34
+          ],
+          [
+            7.1,
+            13.64
+          ],
+          [
+            4.7,
+            13.64
+          ]
+        ]
+      },
+      {
+        "category": "architecture.landing",
+        "storey": "4. Kat",
+        "type": "Betonarme Döşeme 200 mm",
+        "name": "4. Kat ara sahanlık",
+        "offset": 1.6,
+        "outline": [
+          [
+            4.7,
+            12.34
+          ],
+          [
+            7.1,
+            12.34
+          ],
+          [
+            7.1,
+            13.64
+          ],
+          [
+            4.7,
+            13.64
+          ]
+        ]
+      },
+      {
+        "category": "architecture.landing",
+        "storey": "5. Kat",
+        "type": "Betonarme Döşeme 200 mm",
+        "name": "5. Kat ara sahanlık",
+        "offset": 1.6,
+        "outline": [
+          [
+            4.7,
+            12.34
+          ],
+          [
+            7.1,
+            12.34
+          ],
+          [
+            7.1,
+            13.64
+          ],
+          [
+            4.7,
+            13.64
+          ]
+        ]
+      },
+      {
+        "category": "architecture.landing",
+        "storey": "6. Kat",
+        "type": "Betonarme Döşeme 200 mm",
+        "name": "6. Kat ara sahanlık",
+        "offset": 1.6,
+        "outline": [
+          [
+            4.7,
+            12.34
+          ],
+          [
+            7.1,
+            12.34
+          ],
+          [
+            7.1,
+            13.64
+          ],
+          [
+            4.7,
+            13.64
+          ]
+        ]
+      }
+    ]
+  },
+  "walls": {
+    "walls": [
+      {
+        "storey": "Zemin Kat",
+        "top_storey": "1. Kat",
+        "type": "Dış Duvar 200 mm",
+        "name": "Zemin Kat | Dış çevre",
+        "closed": true,
+        "location_line": "exterior_face",
+        "points": [
+          [
+            0,
+            0
+          ],
+          [
+            12.5,
+            0
+          ],
+          [
+            12.5,
+            8.9
+          ],
+          [
+            0,
+            8.9
+          ]
+        ]
+      },
+      {
+        "storey": "Zemin Kat",
+        "top_storey": "1. Kat",
+        "type": "Dış Duvar 200 mm",
+        "name": "Zemin Kat | Merdiven çekirdeği 1",
+        "start": [
+          4.6,
+          8.8
+        ],
+        "end": [
+          4.6,
+          14.2
+        ]
+      },
+      {
+        "storey": "Zemin Kat",
+        "top_storey": "1. Kat",
+        "type": "Dış Duvar 200 mm",
+        "name": "Zemin Kat | Merdiven çekirdeği 2",
+        "start": [
+          4.6,
+          14.2
+        ],
+        "end": [
+          7.2,
+          14.2
+        ]
+      },
+      {
+        "storey": "Zemin Kat",
+        "top_storey": "1. Kat",
+        "type": "Dış Duvar 200 mm",
+        "name": "Zemin Kat | Merdiven çekirdeği 3",
+        "start": [
+          7.2,
+          14.2
+        ],
+        "end": [
+          7.2,
+          8.8
+        ]
+      },
+      {
+        "storey": "Zemin Kat",
+        "top_storey": "1. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "Zemin Kat | Ana yatak odası",
+        "start": [
+          4.5,
+          0.1
+        ],
+        "end": [
+          4.5,
+          8.8
+        ]
+      },
+      {
+        "storey": "Zemin Kat",
+        "top_storey": "1. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "Zemin Kat | Ebeveyn banyosu alt duvar",
+        "start": [
+          0.1,
+          5.7
+        ],
+        "end": [
+          4.5,
+          5.7
+        ]
+      },
+      {
+        "storey": "Zemin Kat",
+        "top_storey": "1. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "Zemin Kat | Ebeveyn banyosu yan duvar",
+        "start": [
+          2.6,
+          5.7
+        ],
+        "end": [
+          2.6,
+          8.8
+        ]
+      },
+      {
+        "storey": "Zemin Kat",
+        "top_storey": "1. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "Zemin Kat | Sağ oda koridor duvarı",
+        "start": [
+          9,
+          0.1
+        ],
+        "end": [
+          9,
+          8.8
+        ]
+      },
+      {
+        "storey": "Zemin Kat",
+        "top_storey": "1. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "Zemin Kat | Yatak odası 3 üst duvar",
+        "start": [
+          9,
+          3.2
+        ],
+        "end": [
+          12.4,
+          3.2
+        ]
+      },
+      {
+        "storey": "Zemin Kat",
+        "top_storey": "1. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "Zemin Kat | Ortak banyo üst duvar",
+        "start": [
+          9,
+          5.7
+        ],
+        "end": [
+          12.4,
+          5.7
+        ]
+      },
+      {
+        "storey": "1. Kat",
+        "top_storey": "2. Kat",
+        "type": "Dış Duvar 200 mm",
+        "name": "1. Kat | Dış çevre",
+        "closed": true,
+        "location_line": "exterior_face",
+        "points": [
+          [
+            0,
+            0
+          ],
+          [
+            12.5,
+            0
+          ],
+          [
+            12.5,
+            8.9
+          ],
+          [
+            0,
+            8.9
+          ]
+        ]
+      },
+      {
+        "storey": "1. Kat",
+        "top_storey": "2. Kat",
+        "type": "Dış Duvar 200 mm",
+        "name": "1. Kat | Merdiven çekirdeği 1",
+        "start": [
+          4.6,
+          8.8
+        ],
+        "end": [
+          4.6,
+          14.2
+        ]
+      },
+      {
+        "storey": "1. Kat",
+        "top_storey": "2. Kat",
+        "type": "Dış Duvar 200 mm",
+        "name": "1. Kat | Merdiven çekirdeği 2",
+        "start": [
+          4.6,
+          14.2
+        ],
+        "end": [
+          7.2,
+          14.2
+        ]
+      },
+      {
+        "storey": "1. Kat",
+        "top_storey": "2. Kat",
+        "type": "Dış Duvar 200 mm",
+        "name": "1. Kat | Merdiven çekirdeği 3",
+        "start": [
+          7.2,
+          14.2
+        ],
+        "end": [
+          7.2,
+          8.8
+        ]
+      },
+      {
+        "storey": "1. Kat",
+        "top_storey": "2. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "1. Kat | Ana yatak odası",
+        "start": [
+          4.5,
+          0.1
+        ],
+        "end": [
+          4.5,
+          8.8
+        ]
+      },
+      {
+        "storey": "1. Kat",
+        "top_storey": "2. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "1. Kat | Ebeveyn banyosu alt duvar",
+        "start": [
+          0.1,
+          5.7
+        ],
+        "end": [
+          4.5,
+          5.7
+        ]
+      },
+      {
+        "storey": "1. Kat",
+        "top_storey": "2. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "1. Kat | Ebeveyn banyosu yan duvar",
+        "start": [
+          2.6,
+          5.7
+        ],
+        "end": [
+          2.6,
+          8.8
+        ]
+      },
+      {
+        "storey": "1. Kat",
+        "top_storey": "2. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "1. Kat | Sağ oda koridor duvarı",
+        "start": [
+          9,
+          0.1
+        ],
+        "end": [
+          9,
+          8.8
+        ]
+      },
+      {
+        "storey": "1. Kat",
+        "top_storey": "2. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "1. Kat | Yatak odası 3 üst duvar",
+        "start": [
+          9,
+          3.2
+        ],
+        "end": [
+          12.4,
+          3.2
+        ]
+      },
+      {
+        "storey": "1. Kat",
+        "top_storey": "2. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "1. Kat | Ortak banyo üst duvar",
+        "start": [
+          9,
+          5.7
+        ],
+        "end": [
+          12.4,
+          5.7
+        ]
+      },
+      {
+        "storey": "2. Kat",
+        "top_storey": "3. Kat",
+        "type": "Dış Duvar 200 mm",
+        "name": "2. Kat | Dış çevre",
+        "closed": true,
+        "location_line": "exterior_face",
+        "points": [
+          [
+            0,
+            0
+          ],
+          [
+            12.5,
+            0
+          ],
+          [
+            12.5,
+            8.9
+          ],
+          [
+            0,
+            8.9
+          ]
+        ]
+      },
+      {
+        "storey": "2. Kat",
+        "top_storey": "3. Kat",
+        "type": "Dış Duvar 200 mm",
+        "name": "2. Kat | Merdiven çekirdeği 1",
+        "start": [
+          4.6,
+          8.8
+        ],
+        "end": [
+          4.6,
+          14.2
+        ]
+      },
+      {
+        "storey": "2. Kat",
+        "top_storey": "3. Kat",
+        "type": "Dış Duvar 200 mm",
+        "name": "2. Kat | Merdiven çekirdeği 2",
+        "start": [
+          4.6,
+          14.2
+        ],
+        "end": [
+          7.2,
+          14.2
+        ]
+      },
+      {
+        "storey": "2. Kat",
+        "top_storey": "3. Kat",
+        "type": "Dış Duvar 200 mm",
+        "name": "2. Kat | Merdiven çekirdeği 3",
+        "start": [
+          7.2,
+          14.2
+        ],
+        "end": [
+          7.2,
+          8.8
+        ]
+      },
+      {
+        "storey": "2. Kat",
+        "top_storey": "3. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "2. Kat | Ana yatak odası",
+        "start": [
+          4.5,
+          0.1
+        ],
+        "end": [
+          4.5,
+          8.8
+        ]
+      },
+      {
+        "storey": "2. Kat",
+        "top_storey": "3. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "2. Kat | Ebeveyn banyosu alt duvar",
+        "start": [
+          0.1,
+          5.7
+        ],
+        "end": [
+          4.5,
+          5.7
+        ]
+      },
+      {
+        "storey": "2. Kat",
+        "top_storey": "3. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "2. Kat | Ebeveyn banyosu yan duvar",
+        "start": [
+          2.6,
+          5.7
+        ],
+        "end": [
+          2.6,
+          8.8
+        ]
+      },
+      {
+        "storey": "2. Kat",
+        "top_storey": "3. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "2. Kat | Sağ oda koridor duvarı",
+        "start": [
+          9,
+          0.1
+        ],
+        "end": [
+          9,
+          8.8
+        ]
+      },
+      {
+        "storey": "2. Kat",
+        "top_storey": "3. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "2. Kat | Yatak odası 3 üst duvar",
+        "start": [
+          9,
+          3.2
+        ],
+        "end": [
+          12.4,
+          3.2
+        ]
+      },
+      {
+        "storey": "2. Kat",
+        "top_storey": "3. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "2. Kat | Ortak banyo üst duvar",
+        "start": [
+          9,
+          5.7
+        ],
+        "end": [
+          12.4,
+          5.7
+        ]
+      },
+      {
+        "storey": "3. Kat",
+        "top_storey": "4. Kat",
+        "type": "Dış Duvar 200 mm",
+        "name": "3. Kat | Dış çevre",
+        "closed": true,
+        "location_line": "exterior_face",
+        "points": [
+          [
+            0,
+            0
+          ],
+          [
+            12.5,
+            0
+          ],
+          [
+            12.5,
+            8.9
+          ],
+          [
+            0,
+            8.9
+          ]
+        ]
+      },
+      {
+        "storey": "3. Kat",
+        "top_storey": "4. Kat",
+        "type": "Dış Duvar 200 mm",
+        "name": "3. Kat | Merdiven çekirdeği 1",
+        "start": [
+          4.6,
+          8.8
+        ],
+        "end": [
+          4.6,
+          14.2
+        ]
+      },
+      {
+        "storey": "3. Kat",
+        "top_storey": "4. Kat",
+        "type": "Dış Duvar 200 mm",
+        "name": "3. Kat | Merdiven çekirdeği 2",
+        "start": [
+          4.6,
+          14.2
+        ],
+        "end": [
+          7.2,
+          14.2
+        ]
+      },
+      {
+        "storey": "3. Kat",
+        "top_storey": "4. Kat",
+        "type": "Dış Duvar 200 mm",
+        "name": "3. Kat | Merdiven çekirdeği 3",
+        "start": [
+          7.2,
+          14.2
+        ],
+        "end": [
+          7.2,
+          8.8
+        ]
+      },
+      {
+        "storey": "3. Kat",
+        "top_storey": "4. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "3. Kat | Ana yatak odası",
+        "start": [
+          4.5,
+          0.1
+        ],
+        "end": [
+          4.5,
+          8.8
+        ]
+      },
+      {
+        "storey": "3. Kat",
+        "top_storey": "4. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "3. Kat | Ebeveyn banyosu alt duvar",
+        "start": [
+          0.1,
+          5.7
+        ],
+        "end": [
+          4.5,
+          5.7
+        ]
+      },
+      {
+        "storey": "3. Kat",
+        "top_storey": "4. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "3. Kat | Ebeveyn banyosu yan duvar",
+        "start": [
+          2.6,
+          5.7
+        ],
+        "end": [
+          2.6,
+          8.8
+        ]
+      },
+      {
+        "storey": "3. Kat",
+        "top_storey": "4. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "3. Kat | Sağ oda koridor duvarı",
+        "start": [
+          9,
+          0.1
+        ],
+        "end": [
+          9,
+          8.8
+        ]
+      },
+      {
+        "storey": "3. Kat",
+        "top_storey": "4. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "3. Kat | Yatak odası 3 üst duvar",
+        "start": [
+          9,
+          3.2
+        ],
+        "end": [
+          12.4,
+          3.2
+        ]
+      },
+      {
+        "storey": "3. Kat",
+        "top_storey": "4. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "3. Kat | Ortak banyo üst duvar",
+        "start": [
+          9,
+          5.7
+        ],
+        "end": [
+          12.4,
+          5.7
+        ]
+      },
+      {
+        "storey": "4. Kat",
+        "top_storey": "5. Kat",
+        "type": "Dış Duvar 200 mm",
+        "name": "4. Kat | Dış çevre",
+        "closed": true,
+        "location_line": "exterior_face",
+        "points": [
+          [
+            0,
+            0
+          ],
+          [
+            12.5,
+            0
+          ],
+          [
+            12.5,
+            8.9
+          ],
+          [
+            0,
+            8.9
+          ]
+        ]
+      },
+      {
+        "storey": "4. Kat",
+        "top_storey": "5. Kat",
+        "type": "Dış Duvar 200 mm",
+        "name": "4. Kat | Merdiven çekirdeği 1",
+        "start": [
+          4.6,
+          8.8
+        ],
+        "end": [
+          4.6,
+          14.2
+        ]
+      },
+      {
+        "storey": "4. Kat",
+        "top_storey": "5. Kat",
+        "type": "Dış Duvar 200 mm",
+        "name": "4. Kat | Merdiven çekirdeği 2",
+        "start": [
+          4.6,
+          14.2
+        ],
+        "end": [
+          7.2,
+          14.2
+        ]
+      },
+      {
+        "storey": "4. Kat",
+        "top_storey": "5. Kat",
+        "type": "Dış Duvar 200 mm",
+        "name": "4. Kat | Merdiven çekirdeği 3",
+        "start": [
+          7.2,
+          14.2
+        ],
+        "end": [
+          7.2,
+          8.8
+        ]
+      },
+      {
+        "storey": "4. Kat",
+        "top_storey": "5. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "4. Kat | Ana yatak odası",
+        "start": [
+          4.5,
+          0.1
+        ],
+        "end": [
+          4.5,
+          8.8
+        ]
+      },
+      {
+        "storey": "4. Kat",
+        "top_storey": "5. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "4. Kat | Ebeveyn banyosu alt duvar",
+        "start": [
+          0.1,
+          5.7
+        ],
+        "end": [
+          4.5,
+          5.7
+        ]
+      },
+      {
+        "storey": "4. Kat",
+        "top_storey": "5. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "4. Kat | Ebeveyn banyosu yan duvar",
+        "start": [
+          2.6,
+          5.7
+        ],
+        "end": [
+          2.6,
+          8.8
+        ]
+      },
+      {
+        "storey": "4. Kat",
+        "top_storey": "5. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "4. Kat | Sağ oda koridor duvarı",
+        "start": [
+          9,
+          0.1
+        ],
+        "end": [
+          9,
+          8.8
+        ]
+      },
+      {
+        "storey": "4. Kat",
+        "top_storey": "5. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "4. Kat | Yatak odası 3 üst duvar",
+        "start": [
+          9,
+          3.2
+        ],
+        "end": [
+          12.4,
+          3.2
+        ]
+      },
+      {
+        "storey": "4. Kat",
+        "top_storey": "5. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "4. Kat | Ortak banyo üst duvar",
+        "start": [
+          9,
+          5.7
+        ],
+        "end": [
+          12.4,
+          5.7
+        ]
+      },
+      {
+        "storey": "5. Kat",
+        "top_storey": "6. Kat",
+        "type": "Dış Duvar 200 mm",
+        "name": "5. Kat | Dış çevre",
+        "closed": true,
+        "location_line": "exterior_face",
+        "points": [
+          [
+            0,
+            0
+          ],
+          [
+            12.5,
+            0
+          ],
+          [
+            12.5,
+            8.9
+          ],
+          [
+            0,
+            8.9
+          ]
+        ]
+      },
+      {
+        "storey": "5. Kat",
+        "top_storey": "6. Kat",
+        "type": "Dış Duvar 200 mm",
+        "name": "5. Kat | Merdiven çekirdeği 1",
+        "start": [
+          4.6,
+          8.8
+        ],
+        "end": [
+          4.6,
+          14.2
+        ]
+      },
+      {
+        "storey": "5. Kat",
+        "top_storey": "6. Kat",
+        "type": "Dış Duvar 200 mm",
+        "name": "5. Kat | Merdiven çekirdeği 2",
+        "start": [
+          4.6,
+          14.2
+        ],
+        "end": [
+          7.2,
+          14.2
+        ]
+      },
+      {
+        "storey": "5. Kat",
+        "top_storey": "6. Kat",
+        "type": "Dış Duvar 200 mm",
+        "name": "5. Kat | Merdiven çekirdeği 3",
+        "start": [
+          7.2,
+          14.2
+        ],
+        "end": [
+          7.2,
+          8.8
+        ]
+      },
+      {
+        "storey": "5. Kat",
+        "top_storey": "6. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "5. Kat | Ana yatak odası",
+        "start": [
+          4.5,
+          0.1
+        ],
+        "end": [
+          4.5,
+          8.8
+        ]
+      },
+      {
+        "storey": "5. Kat",
+        "top_storey": "6. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "5. Kat | Ebeveyn banyosu alt duvar",
+        "start": [
+          0.1,
+          5.7
+        ],
+        "end": [
+          4.5,
+          5.7
+        ]
+      },
+      {
+        "storey": "5. Kat",
+        "top_storey": "6. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "5. Kat | Ebeveyn banyosu yan duvar",
+        "start": [
+          2.6,
+          5.7
+        ],
+        "end": [
+          2.6,
+          8.8
+        ]
+      },
+      {
+        "storey": "5. Kat",
+        "top_storey": "6. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "5. Kat | Sağ oda koridor duvarı",
+        "start": [
+          9,
+          0.1
+        ],
+        "end": [
+          9,
+          8.8
+        ]
+      },
+      {
+        "storey": "5. Kat",
+        "top_storey": "6. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "5. Kat | Yatak odası 3 üst duvar",
+        "start": [
+          9,
+          3.2
+        ],
+        "end": [
+          12.4,
+          3.2
+        ]
+      },
+      {
+        "storey": "5. Kat",
+        "top_storey": "6. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "5. Kat | Ortak banyo üst duvar",
+        "start": [
+          9,
+          5.7
+        ],
+        "end": [
+          12.4,
+          5.7
+        ]
+      },
+      {
+        "storey": "6. Kat",
+        "top_storey": "7. Kat",
+        "type": "Dış Duvar 200 mm",
+        "name": "6. Kat | Dış çevre",
+        "closed": true,
+        "location_line": "exterior_face",
+        "points": [
+          [
+            0,
+            0
+          ],
+          [
+            12.5,
+            0
+          ],
+          [
+            12.5,
+            8.9
+          ],
+          [
+            0,
+            8.9
+          ]
+        ]
+      },
+      {
+        "storey": "6. Kat",
+        "top_storey": "7. Kat",
+        "type": "Dış Duvar 200 mm",
+        "name": "6. Kat | Merdiven çekirdeği 1",
+        "start": [
+          4.6,
+          8.8
+        ],
+        "end": [
+          4.6,
+          14.2
+        ]
+      },
+      {
+        "storey": "6. Kat",
+        "top_storey": "7. Kat",
+        "type": "Dış Duvar 200 mm",
+        "name": "6. Kat | Merdiven çekirdeği 2",
+        "start": [
+          4.6,
+          14.2
+        ],
+        "end": [
+          7.2,
+          14.2
+        ]
+      },
+      {
+        "storey": "6. Kat",
+        "top_storey": "7. Kat",
+        "type": "Dış Duvar 200 mm",
+        "name": "6. Kat | Merdiven çekirdeği 3",
+        "start": [
+          7.2,
+          14.2
+        ],
+        "end": [
+          7.2,
+          8.8
+        ]
+      },
+      {
+        "storey": "6. Kat",
+        "top_storey": "7. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "6. Kat | Ana yatak odası",
+        "start": [
+          4.5,
+          0.1
+        ],
+        "end": [
+          4.5,
+          8.8
+        ]
+      },
+      {
+        "storey": "6. Kat",
+        "top_storey": "7. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "6. Kat | Ebeveyn banyosu alt duvar",
+        "start": [
+          0.1,
+          5.7
+        ],
+        "end": [
+          4.5,
+          5.7
+        ]
+      },
+      {
+        "storey": "6. Kat",
+        "top_storey": "7. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "6. Kat | Ebeveyn banyosu yan duvar",
+        "start": [
+          2.6,
+          5.7
+        ],
+        "end": [
+          2.6,
+          8.8
+        ]
+      },
+      {
+        "storey": "6. Kat",
+        "top_storey": "7. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "6. Kat | Sağ oda koridor duvarı",
+        "start": [
+          9,
+          0.1
+        ],
+        "end": [
+          9,
+          8.8
+        ]
+      },
+      {
+        "storey": "6. Kat",
+        "top_storey": "7. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "6. Kat | Yatak odası 3 üst duvar",
+        "start": [
+          9,
+          3.2
+        ],
+        "end": [
+          12.4,
+          3.2
+        ]
+      },
+      {
+        "storey": "6. Kat",
+        "top_storey": "7. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "6. Kat | Ortak banyo üst duvar",
+        "start": [
+          9,
+          5.7
+        ],
+        "end": [
+          12.4,
+          5.7
+        ]
+      },
+      {
+        "storey": "7. Kat",
+        "type": "Dış Duvar 200 mm",
+        "name": "7. Kat | Dış çevre",
+        "closed": true,
+        "location_line": "exterior_face",
+        "points": [
+          [
+            0,
+            0
+          ],
+          [
+            12.5,
+            0
+          ],
+          [
+            12.5,
+            8.9
+          ],
+          [
+            0,
+            8.9
+          ]
+        ],
+        "height": 3
+      },
+      {
+        "storey": "7. Kat",
+        "type": "Dış Duvar 200 mm",
+        "name": "7. Kat | Merdiven çekirdeği 1",
+        "start": [
+          4.6,
+          8.8
+        ],
+        "end": [
+          4.6,
+          14.2
+        ],
+        "height": 3
+      },
+      {
+        "storey": "7. Kat",
+        "type": "Dış Duvar 200 mm",
+        "name": "7. Kat | Merdiven çekirdeği 2",
+        "start": [
+          4.6,
+          14.2
+        ],
+        "end": [
+          7.2,
+          14.2
+        ],
+        "height": 3
+      },
+      {
+        "storey": "7. Kat",
+        "type": "Dış Duvar 200 mm",
+        "name": "7. Kat | Merdiven çekirdeği 3",
+        "start": [
+          7.2,
+          14.2
+        ],
+        "end": [
+          7.2,
+          8.8
+        ],
+        "height": 3
+      },
+      {
+        "storey": "7. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "7. Kat | Ana yatak odası",
+        "start": [
+          4.5,
+          0.1
+        ],
+        "end": [
+          4.5,
+          8.8
+        ],
+        "height": 3
+      },
+      {
+        "storey": "7. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "7. Kat | Ebeveyn banyosu alt duvar",
+        "start": [
+          0.1,
+          5.7
+        ],
+        "end": [
+          4.5,
+          5.7
+        ],
+        "height": 3
+      },
+      {
+        "storey": "7. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "7. Kat | Ebeveyn banyosu yan duvar",
+        "start": [
+          2.6,
+          5.7
+        ],
+        "end": [
+          2.6,
+          8.8
+        ],
+        "height": 3
+      },
+      {
+        "storey": "7. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "7. Kat | Sağ oda koridor duvarı",
+        "start": [
+          9,
+          0.1
+        ],
+        "end": [
+          9,
+          8.8
+        ],
+        "height": 3
+      },
+      {
+        "storey": "7. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "7. Kat | Yatak odası 3 üst duvar",
+        "start": [
+          9,
+          3.2
+        ],
+        "end": [
+          12.4,
+          3.2
+        ],
+        "height": 3
+      },
+      {
+        "storey": "7. Kat",
+        "type": "İç Duvar 150 mm",
+        "name": "7. Kat | Ortak banyo üst duvar",
+        "start": [
+          9,
+          5.7
+        ],
+        "end": [
+          12.4,
+          5.7
+        ],
+        "height": 3
+      }
+    ]
+  },
+  "stairs": {
+    "stairs": [
+      {
+        "storey": "Zemin Kat",
+        "type": "Ortak Merdiven 1200 mm",
+        "name": "Zemin Kat alt merdiven kolu",
+        "start": [
+          5.3,
+          10.1
+        ],
+        "end": [
+          5.3,
+          12.34
+        ],
+        "width": 1.2,
+        "riser_count": 9,
+        "height": 1.6
+      },
+      {
+        "storey": "Zemin Kat",
+        "type": "Ortak Merdiven 1200 mm",
+        "name": "Zemin Kat üst merdiven kolu",
+        "start": [
+          6.6,
+          12.34
+        ],
+        "end": [
+          6.6,
+          10.1
+        ],
+        "width": 1.2,
+        "riser_count": 9,
+        "height": 1.6,
+        "base_offset": 1.6
+      },
+      {
+        "storey": "1. Kat",
+        "type": "Ortak Merdiven 1200 mm",
+        "name": "1. Kat alt merdiven kolu",
+        "start": [
+          5.3,
+          10.1
+        ],
+        "end": [
+          5.3,
+          12.34
+        ],
+        "width": 1.2,
+        "riser_count": 9,
+        "height": 1.6
+      },
+      {
+        "storey": "1. Kat",
+        "type": "Ortak Merdiven 1200 mm",
+        "name": "1. Kat üst merdiven kolu",
+        "start": [
+          6.6,
+          12.34
+        ],
+        "end": [
+          6.6,
+          10.1
+        ],
+        "width": 1.2,
+        "riser_count": 9,
+        "height": 1.6,
+        "base_offset": 1.6
+      },
+      {
+        "storey": "2. Kat",
+        "type": "Ortak Merdiven 1200 mm",
+        "name": "2. Kat alt merdiven kolu",
+        "start": [
+          5.3,
+          10.1
+        ],
+        "end": [
+          5.3,
+          12.34
+        ],
+        "width": 1.2,
+        "riser_count": 9,
+        "height": 1.6
+      },
+      {
+        "storey": "2. Kat",
+        "type": "Ortak Merdiven 1200 mm",
+        "name": "2. Kat üst merdiven kolu",
+        "start": [
+          6.6,
+          12.34
+        ],
+        "end": [
+          6.6,
+          10.1
+        ],
+        "width": 1.2,
+        "riser_count": 9,
+        "height": 1.6,
+        "base_offset": 1.6
+      },
+      {
+        "storey": "3. Kat",
+        "type": "Ortak Merdiven 1200 mm",
+        "name": "3. Kat alt merdiven kolu",
+        "start": [
+          5.3,
+          10.1
+        ],
+        "end": [
+          5.3,
+          12.34
+        ],
+        "width": 1.2,
+        "riser_count": 9,
+        "height": 1.6
+      },
+      {
+        "storey": "3. Kat",
+        "type": "Ortak Merdiven 1200 mm",
+        "name": "3. Kat üst merdiven kolu",
+        "start": [
+          6.6,
+          12.34
+        ],
+        "end": [
+          6.6,
+          10.1
+        ],
+        "width": 1.2,
+        "riser_count": 9,
+        "height": 1.6,
+        "base_offset": 1.6
+      },
+      {
+        "storey": "4. Kat",
+        "type": "Ortak Merdiven 1200 mm",
+        "name": "4. Kat alt merdiven kolu",
+        "start": [
+          5.3,
+          10.1
+        ],
+        "end": [
+          5.3,
+          12.34
+        ],
+        "width": 1.2,
+        "riser_count": 9,
+        "height": 1.6
+      },
+      {
+        "storey": "4. Kat",
+        "type": "Ortak Merdiven 1200 mm",
+        "name": "4. Kat üst merdiven kolu",
+        "start": [
+          6.6,
+          12.34
+        ],
+        "end": [
+          6.6,
+          10.1
+        ],
+        "width": 1.2,
+        "riser_count": 9,
+        "height": 1.6,
+        "base_offset": 1.6
+      },
+      {
+        "storey": "5. Kat",
+        "type": "Ortak Merdiven 1200 mm",
+        "name": "5. Kat alt merdiven kolu",
+        "start": [
+          5.3,
+          10.1
+        ],
+        "end": [
+          5.3,
+          12.34
+        ],
+        "width": 1.2,
+        "riser_count": 9,
+        "height": 1.6
+      },
+      {
+        "storey": "5. Kat",
+        "type": "Ortak Merdiven 1200 mm",
+        "name": "5. Kat üst merdiven kolu",
+        "start": [
+          6.6,
+          12.34
+        ],
+        "end": [
+          6.6,
+          10.1
+        ],
+        "width": 1.2,
+        "riser_count": 9,
+        "height": 1.6,
+        "base_offset": 1.6
+      },
+      {
+        "storey": "6. Kat",
+        "type": "Ortak Merdiven 1200 mm",
+        "name": "6. Kat alt merdiven kolu",
+        "start": [
+          5.3,
+          10.1
+        ],
+        "end": [
+          5.3,
+          12.34
+        ],
+        "width": 1.2,
+        "riser_count": 9,
+        "height": 1.6
+      },
+      {
+        "storey": "6. Kat",
+        "type": "Ortak Merdiven 1200 mm",
+        "name": "6. Kat üst merdiven kolu",
+        "start": [
+          6.6,
+          12.34
+        ],
+        "end": [
+          6.6,
+          10.1
+        ],
+        "width": 1.2,
+        "riser_count": 9,
+        "height": 1.6,
+        "base_offset": 1.6
+      }
+    ]
+  },
+  "openings": {
+    "items": [
+      {
+        "kind": "door",
+        "host": "W-0003",
+        "at": [
+          5.8,
+          8.8
+        ],
+        "type": "Giriş Kapısı 1000x2100",
+        "name": "Zemin Kat | Daire girişi"
+      },
+      {
+        "kind": "door",
+        "host": "W-0008",
+        "at": [
+          4.5,
+          4.5
+        ],
+        "type": "Oda Kapısı 900x2100",
+        "name": "Zemin Kat | Oda kapısı"
+      },
+      {
+        "kind": "door",
+        "host": "W-0009",
+        "at": [
+          1.2,
+          5.7
+        ],
+        "type": "Banyo Kapısı 800x2100",
+        "name": "Zemin Kat | Oda kapısı"
+      },
+      {
+        "kind": "door",
+        "host": "W-0011",
+        "at": [
+          9,
+          1.9
+        ],
+        "type": "Oda Kapısı 900x2100",
+        "name": "Zemin Kat | Oda kapısı"
+      },
+      {
+        "kind": "door",
+        "host": "W-0011",
+        "at": [
+          9,
+          4.4
+        ],
+        "type": "Banyo Kapısı 800x2100",
+        "name": "Zemin Kat | Oda kapısı"
+      },
+      {
+        "kind": "door",
+        "host": "W-0011",
+        "at": [
+          9,
+          6.8
+        ],
+        "type": "Oda Kapısı 900x2100",
+        "name": "Zemin Kat | Oda kapısı"
+      },
+      {
+        "kind": "window",
+        "host": "W-0001",
+        "at": [
+          2.2,
+          0.1
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "Zemin Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0001",
+        "at": [
+          6.8,
+          0.1
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "Zemin Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0001",
+        "at": [
+          10.7,
+          0.1
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "Zemin Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0002",
+        "at": [
+          12.4,
+          7.3
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "Zemin Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0003",
+        "at": [
+          7.8,
+          8.8
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "Zemin Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0004",
+        "at": [
+          0.1,
+          3
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "Zemin Kat | Pencere"
+      },
+      {
+        "kind": "door",
+        "host": "W-0006",
+        "at": [
+          5.9,
+          14.2
+        ],
+        "type": "Giriş Kapısı 1000x2100",
+        "name": "Zemin Kat | Bina girişi"
+      },
+      {
+        "kind": "door",
+        "host": "W-0016",
+        "at": [
+          5.8,
+          8.8
+        ],
+        "type": "Giriş Kapısı 1000x2100",
+        "name": "1. Kat | Daire girişi"
+      },
+      {
+        "kind": "door",
+        "host": "W-0021",
+        "at": [
+          4.5,
+          4.5
+        ],
+        "type": "Oda Kapısı 900x2100",
+        "name": "1. Kat | Oda kapısı"
+      },
+      {
+        "kind": "door",
+        "host": "W-0022",
+        "at": [
+          1.2,
+          5.7
+        ],
+        "type": "Banyo Kapısı 800x2100",
+        "name": "1. Kat | Oda kapısı"
+      },
+      {
+        "kind": "door",
+        "host": "W-0024",
+        "at": [
+          9,
+          1.9
+        ],
+        "type": "Oda Kapısı 900x2100",
+        "name": "1. Kat | Oda kapısı"
+      },
+      {
+        "kind": "door",
+        "host": "W-0024",
+        "at": [
+          9,
+          4.4
+        ],
+        "type": "Banyo Kapısı 800x2100",
+        "name": "1. Kat | Oda kapısı"
+      },
+      {
+        "kind": "door",
+        "host": "W-0024",
+        "at": [
+          9,
+          6.8
+        ],
+        "type": "Oda Kapısı 900x2100",
+        "name": "1. Kat | Oda kapısı"
+      },
+      {
+        "kind": "window",
+        "host": "W-0014",
+        "at": [
+          2.2,
+          0.1
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "1. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0014",
+        "at": [
+          6.8,
+          0.1
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "1. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0014",
+        "at": [
+          10.7,
+          0.1
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "1. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0015",
+        "at": [
+          12.4,
+          7.3
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "1. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0016",
+        "at": [
+          7.8,
+          8.8
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "1. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0017",
+        "at": [
+          0.1,
+          3
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "1. Kat | Pencere"
+      },
+      {
+        "kind": "door",
+        "host": "W-0029",
+        "at": [
+          5.8,
+          8.8
+        ],
+        "type": "Giriş Kapısı 1000x2100",
+        "name": "2. Kat | Daire girişi"
+      },
+      {
+        "kind": "door",
+        "host": "W-0034",
+        "at": [
+          4.5,
+          4.5
+        ],
+        "type": "Oda Kapısı 900x2100",
+        "name": "2. Kat | Oda kapısı"
+      },
+      {
+        "kind": "door",
+        "host": "W-0035",
+        "at": [
+          1.2,
+          5.7
+        ],
+        "type": "Banyo Kapısı 800x2100",
+        "name": "2. Kat | Oda kapısı"
+      },
+      {
+        "kind": "door",
+        "host": "W-0037",
+        "at": [
+          9,
+          1.9
+        ],
+        "type": "Oda Kapısı 900x2100",
+        "name": "2. Kat | Oda kapısı"
+      },
+      {
+        "kind": "door",
+        "host": "W-0037",
+        "at": [
+          9,
+          4.4
+        ],
+        "type": "Banyo Kapısı 800x2100",
+        "name": "2. Kat | Oda kapısı"
+      },
+      {
+        "kind": "door",
+        "host": "W-0037",
+        "at": [
+          9,
+          6.8
+        ],
+        "type": "Oda Kapısı 900x2100",
+        "name": "2. Kat | Oda kapısı"
+      },
+      {
+        "kind": "window",
+        "host": "W-0027",
+        "at": [
+          2.2,
+          0.1
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "2. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0027",
+        "at": [
+          6.8,
+          0.1
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "2. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0027",
+        "at": [
+          10.7,
+          0.1
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "2. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0028",
+        "at": [
+          12.4,
+          7.3
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "2. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0029",
+        "at": [
+          7.8,
+          8.8
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "2. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0030",
+        "at": [
+          0.1,
+          3
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "2. Kat | Pencere"
+      },
+      {
+        "kind": "door",
+        "host": "W-0042",
+        "at": [
+          5.8,
+          8.8
+        ],
+        "type": "Giriş Kapısı 1000x2100",
+        "name": "3. Kat | Daire girişi"
+      },
+      {
+        "kind": "door",
+        "host": "W-0047",
+        "at": [
+          4.5,
+          4.5
+        ],
+        "type": "Oda Kapısı 900x2100",
+        "name": "3. Kat | Oda kapısı"
+      },
+      {
+        "kind": "door",
+        "host": "W-0048",
+        "at": [
+          1.2,
+          5.7
+        ],
+        "type": "Banyo Kapısı 800x2100",
+        "name": "3. Kat | Oda kapısı"
+      },
+      {
+        "kind": "door",
+        "host": "W-0050",
+        "at": [
+          9,
+          1.9
+        ],
+        "type": "Oda Kapısı 900x2100",
+        "name": "3. Kat | Oda kapısı"
+      },
+      {
+        "kind": "door",
+        "host": "W-0050",
+        "at": [
+          9,
+          4.4
+        ],
+        "type": "Banyo Kapısı 800x2100",
+        "name": "3. Kat | Oda kapısı"
+      },
+      {
+        "kind": "door",
+        "host": "W-0050",
+        "at": [
+          9,
+          6.8
+        ],
+        "type": "Oda Kapısı 900x2100",
+        "name": "3. Kat | Oda kapısı"
+      },
+      {
+        "kind": "window",
+        "host": "W-0040",
+        "at": [
+          2.2,
+          0.1
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "3. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0040",
+        "at": [
+          6.8,
+          0.1
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "3. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0040",
+        "at": [
+          10.7,
+          0.1
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "3. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0041",
+        "at": [
+          12.4,
+          7.3
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "3. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0042",
+        "at": [
+          7.8,
+          8.8
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "3. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0043",
+        "at": [
+          0.1,
+          3
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "3. Kat | Pencere"
+      },
+      {
+        "kind": "door",
+        "host": "W-0055",
+        "at": [
+          5.8,
+          8.8
+        ],
+        "type": "Giriş Kapısı 1000x2100",
+        "name": "4. Kat | Daire girişi"
+      },
+      {
+        "kind": "door",
+        "host": "W-0060",
+        "at": [
+          4.5,
+          4.5
+        ],
+        "type": "Oda Kapısı 900x2100",
+        "name": "4. Kat | Oda kapısı"
+      },
+      {
+        "kind": "door",
+        "host": "W-0061",
+        "at": [
+          1.2,
+          5.7
+        ],
+        "type": "Banyo Kapısı 800x2100",
+        "name": "4. Kat | Oda kapısı"
+      },
+      {
+        "kind": "door",
+        "host": "W-0063",
+        "at": [
+          9,
+          1.9
+        ],
+        "type": "Oda Kapısı 900x2100",
+        "name": "4. Kat | Oda kapısı"
+      },
+      {
+        "kind": "door",
+        "host": "W-0063",
+        "at": [
+          9,
+          4.4
+        ],
+        "type": "Banyo Kapısı 800x2100",
+        "name": "4. Kat | Oda kapısı"
+      },
+      {
+        "kind": "door",
+        "host": "W-0063",
+        "at": [
+          9,
+          6.8
+        ],
+        "type": "Oda Kapısı 900x2100",
+        "name": "4. Kat | Oda kapısı"
+      },
+      {
+        "kind": "window",
+        "host": "W-0053",
+        "at": [
+          2.2,
+          0.1
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "4. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0053",
+        "at": [
+          6.8,
+          0.1
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "4. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0053",
+        "at": [
+          10.7,
+          0.1
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "4. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0054",
+        "at": [
+          12.4,
+          7.3
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "4. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0055",
+        "at": [
+          7.8,
+          8.8
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "4. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0056",
+        "at": [
+          0.1,
+          3
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "4. Kat | Pencere"
+      },
+      {
+        "kind": "door",
+        "host": "W-0068",
+        "at": [
+          5.8,
+          8.8
+        ],
+        "type": "Giriş Kapısı 1000x2100",
+        "name": "5. Kat | Daire girişi"
+      },
+      {
+        "kind": "door",
+        "host": "W-0073",
+        "at": [
+          4.5,
+          4.5
+        ],
+        "type": "Oda Kapısı 900x2100",
+        "name": "5. Kat | Oda kapısı"
+      },
+      {
+        "kind": "door",
+        "host": "W-0074",
+        "at": [
+          1.2,
+          5.7
+        ],
+        "type": "Banyo Kapısı 800x2100",
+        "name": "5. Kat | Oda kapısı"
+      },
+      {
+        "kind": "door",
+        "host": "W-0076",
+        "at": [
+          9,
+          1.9
+        ],
+        "type": "Oda Kapısı 900x2100",
+        "name": "5. Kat | Oda kapısı"
+      },
+      {
+        "kind": "door",
+        "host": "W-0076",
+        "at": [
+          9,
+          4.4
+        ],
+        "type": "Banyo Kapısı 800x2100",
+        "name": "5. Kat | Oda kapısı"
+      },
+      {
+        "kind": "door",
+        "host": "W-0076",
+        "at": [
+          9,
+          6.8
+        ],
+        "type": "Oda Kapısı 900x2100",
+        "name": "5. Kat | Oda kapısı"
+      },
+      {
+        "kind": "window",
+        "host": "W-0066",
+        "at": [
+          2.2,
+          0.1
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "5. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0066",
+        "at": [
+          6.8,
+          0.1
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "5. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0066",
+        "at": [
+          10.7,
+          0.1
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "5. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0067",
+        "at": [
+          12.4,
+          7.3
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "5. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0068",
+        "at": [
+          7.8,
+          8.8
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "5. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0069",
+        "at": [
+          0.1,
+          3
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "5. Kat | Pencere"
+      },
+      {
+        "kind": "door",
+        "host": "W-0081",
+        "at": [
+          5.8,
+          8.8
+        ],
+        "type": "Giriş Kapısı 1000x2100",
+        "name": "6. Kat | Daire girişi"
+      },
+      {
+        "kind": "door",
+        "host": "W-0086",
+        "at": [
+          4.5,
+          4.5
+        ],
+        "type": "Oda Kapısı 900x2100",
+        "name": "6. Kat | Oda kapısı"
+      },
+      {
+        "kind": "door",
+        "host": "W-0087",
+        "at": [
+          1.2,
+          5.7
+        ],
+        "type": "Banyo Kapısı 800x2100",
+        "name": "6. Kat | Oda kapısı"
+      },
+      {
+        "kind": "door",
+        "host": "W-0089",
+        "at": [
+          9,
+          1.9
+        ],
+        "type": "Oda Kapısı 900x2100",
+        "name": "6. Kat | Oda kapısı"
+      },
+      {
+        "kind": "door",
+        "host": "W-0089",
+        "at": [
+          9,
+          4.4
+        ],
+        "type": "Banyo Kapısı 800x2100",
+        "name": "6. Kat | Oda kapısı"
+      },
+      {
+        "kind": "door",
+        "host": "W-0089",
+        "at": [
+          9,
+          6.8
+        ],
+        "type": "Oda Kapısı 900x2100",
+        "name": "6. Kat | Oda kapısı"
+      },
+      {
+        "kind": "window",
+        "host": "W-0079",
+        "at": [
+          2.2,
+          0.1
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "6. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0079",
+        "at": [
+          6.8,
+          0.1
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "6. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0079",
+        "at": [
+          10.7,
+          0.1
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "6. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0080",
+        "at": [
+          12.4,
+          7.3
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "6. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0081",
+        "at": [
+          7.8,
+          8.8
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "6. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0082",
+        "at": [
+          0.1,
+          3
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "6. Kat | Pencere"
+      },
+      {
+        "kind": "door",
+        "host": "W-0094",
+        "at": [
+          5.8,
+          8.8
+        ],
+        "type": "Giriş Kapısı 1000x2100",
+        "name": "7. Kat | Daire girişi"
+      },
+      {
+        "kind": "door",
+        "host": "W-0099",
+        "at": [
+          4.5,
+          4.5
+        ],
+        "type": "Oda Kapısı 900x2100",
+        "name": "7. Kat | Oda kapısı"
+      },
+      {
+        "kind": "door",
+        "host": "W-0100",
+        "at": [
+          1.2,
+          5.7
+        ],
+        "type": "Banyo Kapısı 800x2100",
+        "name": "7. Kat | Oda kapısı"
+      },
+      {
+        "kind": "door",
+        "host": "W-0102",
+        "at": [
+          9,
+          1.9
+        ],
+        "type": "Oda Kapısı 900x2100",
+        "name": "7. Kat | Oda kapısı"
+      },
+      {
+        "kind": "door",
+        "host": "W-0102",
+        "at": [
+          9,
+          4.4
+        ],
+        "type": "Banyo Kapısı 800x2100",
+        "name": "7. Kat | Oda kapısı"
+      },
+      {
+        "kind": "door",
+        "host": "W-0102",
+        "at": [
+          9,
+          6.8
+        ],
+        "type": "Oda Kapısı 900x2100",
+        "name": "7. Kat | Oda kapısı"
+      },
+      {
+        "kind": "window",
+        "host": "W-0092",
+        "at": [
+          2.2,
+          0.1
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "7. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0092",
+        "at": [
+          6.8,
+          0.1
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "7. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0092",
+        "at": [
+          10.7,
+          0.1
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "7. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0093",
+        "at": [
+          12.4,
+          7.3
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "7. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0094",
+        "at": [
+          7.8,
+          8.8
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "7. Kat | Pencere"
+      },
+      {
+        "kind": "window",
+        "host": "W-0095",
+        "at": [
+          0.1,
+          3
+        ],
+        "type": "Pencere 1500x1200",
+        "sill": 1,
+        "name": "7. Kat | Pencere"
+      }
+    ]
+  }
+}

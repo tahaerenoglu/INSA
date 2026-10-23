@@ -1,0 +1,12 @@
+{
+  "name": "@insa/manager-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "insa-mcp": "src/index.ts"
+  },
+  "dependencies": {
+    "@insa/files": "0.1.0"
+  }
+}

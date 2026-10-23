@@ -1,0 +1,25 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';
+import {MemoryStores} from '@insa/core';import {createPlatform} from '../../manager-mcp/src/runtime.js';import {buildApp} from '../src/app.js';
+test('project creation uses Core permissions, refuses duplicate IDs and isolates each model',async t=>{
+ const stores=new MemoryStores(),platform=createPlatform(stores),app=buildApp({platform,model:null});t.after(()=>app.close());
+ const token=(user:string)=>app.inject({method:'POST',url:'/api/auth/login',payload:{user}}).then(r=>r.json().token);
+ const headers={authorization:`Bearer ${await token('taha')}`},viewer={authorization:`Bearer ${await token('viewer')}`};
+ const create=(id:string,name:string,auth=headers,projectType:'infrastructure'|'superstructure'='superstructure')=>app.inject({method:'POST',url:'/api/projects',headers:auth,payload:{id,name,description:'Test project',projectType}});
+ assert.equal((await create('a','Proje A')).statusCode,200);
+ assert.equal((await create('a','Changed')).statusCode,409);
+ assert.equal((await create('b','Proje B',headers,'infrastructure')).statusCode,200);
+ assert.equal((await create('forbidden','No access',viewer)).statusCode,403);
+ assert.equal((await platform.state<any>('a','bim')).project.name,'Proje A');
+ assert.equal((await platform.state<any>('a','bim')).project.projectType,'superstructure');
+ assert.equal((await platform.state<any>('b','bim')).project.projectType,'infrastructure');
+ assert.equal((await platform.state<any>('b','bim')).project.name,'Proje B');
+ assert.deepEqual((await platform.state<any>('b','infra')).roads,undefined);
+ const superstructureTools=await app.inject({method:'GET',url:'/api/tools?project=a',headers});
+ const infrastructureTools=await app.inject({method:'GET',url:'/api/tools?project=b',headers});
+ assert.ok(superstructureTools.json().some((t:any)=>t.name==='bim_create_walls'));
+ assert.ok(!superstructureTools.json().some((t:any)=>t.module==='infra'));
+ assert.ok(infrastructureTools.json().some((t:any)=>t.name==='infra_create_alignment'));
+ assert.ok(!infrastructureTools.json().some((t:any)=>t.name==='bim_create_walls'));
+ assert.equal((await app.inject({method:'POST',url:'/api/projects/b/tools/bim_create_walls',headers,payload:{input:{walls:[]}}})).statusCode,400);
+ assert.equal((await app.inject({method:'POST',url:'/api/projects',payload:{id:'x',name:'X'}})).statusCode,401);
+});

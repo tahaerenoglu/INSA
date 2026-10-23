@@ -1,0 +1,27 @@
+import * as THREE from 'three';import * as OBC from '@thatopen/components';
+import {trainProgress} from '@insa/infra/train-motion';import type {CivilNavigationData} from './civil-navigation-view';
+import {trainCameraPose} from './train-camera';import {formatCivilStation} from './civil-station';
+/** Uses existing world/camera/render tick; no second viewer or per-frame model updates. */
+export class TrainView {
+ private key='';private removeTick=()=>{};private hud?:HTMLDivElement;private revision=0;
+ private previous?:{eye:THREE.Vector3;target:THREE.Vector3;enabled:boolean;projection:'Perspective'|'Orthographic';fov:number;mode:string;minDistance:number;maxDistance:number;far:number;gridVisible?:boolean;};
+ constructor(private components:OBC.Components,private world:OBC.SimpleWorld<OBC.SimpleScene,OBC.OrthoPerspectiveCamera,OBC.SimpleRenderer>){}
+ async update(project:string|undefined,data:CivilNavigationData|null|undefined,transform:THREE.Matrix4){
+  const {serverTime,...stable}=data??{},key=JSON.stringify([project,stable,transform.elements]);if(key===this.key)return;this.key=key;const revision=++this.revision;this.removeTick();this.removeTick=()=>{};
+  if(!data?.enabled||!data.train||data.train.status==='stopped'||!data.positions||!data.distances||!data.elevations||!data.stations){await this.release();return;}
+  const camera=this.world.camera,controls=camera.controls,grid=this.components.get(OBC.Grids).list.get(this.world.uuid);if(!this.previous)this.previous={eye:controls.getPosition(new THREE.Vector3()),target:controls.getTarget(new THREE.Vector3()),enabled:controls.enabled,projection:camera.projection.current,fov:camera.threePersp.fov,mode:camera.mode.id,minDistance:controls.minDistance,maxDistance:controls.maxDistance,far:camera.threePersp.far,gridVisible:grid?.visible};
+  await camera.projection.set('Perspective');if(revision!==this.revision)return;camera.set('FirstPerson');controls.enabled=false;if(grid)grid.visible=false;camera.threePersp.fov=65;camera.threePersp.far=Math.max(camera.threePersp.far,5000);camera.threePersp.updateProjectionMatrix();
+  const positions:number[]=[];for(let i=0;i<data.positions.length;i+=3)positions.push(...new THREE.Vector3().fromArray(data.positions,i).applyMatrix4(transform).toArray());
+  const scale=(data.metresToViewer??1)*transform.getMaxScaleOnAxis(),received=performance.now(),serverNow=data.serverTime??Date.now();let lastHud=0;
+  if(!this.hud){this.hud=document.createElement('div');this.hud.setAttribute('role','status');this.hud.setAttribute('aria-label','Tren FPS durumu');this.hud.style.cssText='position:absolute;left:12px;bottom:42px;z-index:10;background:#152536e8;color:white;padding:10px 14px;border-radius:6px;font:13px monospace;pointer-events:none;white-space:pre-line';this.world.renderer!.three.domElement.parentElement!.appendChild(this.hud);}
+  const tick=()=>{const now=performance.now(),progress=trainProgress(data.train!,{stations:data.stations!,distances:data.distances!},serverNow+now-received),pose=trainCameraPose(data,positions,progress.distance,scale);const target=pose.target.clone().sub(pose.eye).normalize().add(pose.eye);void controls.setLookAt(...pose.eye.toArray(),...target.toArray(),false);controls.update(0);
+   if(!lastHud||now-lastHud>100||progress.complete||data.train!.status==='paused'){lastHud=now;const status=progress.complete?'Tamamlandı':data.train!.status==='paused'?'Duraklatıldı':'Oynatılıyor';this.hud!.textContent=`TREN FPS · ${status}\nKm ${formatCivilStation(pose.station)} · ${data.train!.speed_kmh} km/sa\nRay üst kotu ${pose.elevation.toFixed(3)} m · Eğim ${(pose.grade*1000).toFixed(3)}‰`;
+    (window as any).__insaTrain={project,alignment:data.alignment,status:progress.status,mode:camera.mode.id,station:pose.station,speed_kmh:data.train!.speed_kmh,railElevation:pose.elevation,grade:pose.grade,eye:pose.eye.toArray(),target:pose.target.toArray(),distance:progress.distance,total:progress.total};}
+   if(progress.complete||data.train!.status==='paused')this.removeTick();
+  };
+  this.world.renderer!.onBeforeUpdate.add(tick);this.removeTick=()=>{this.world.renderer?.onBeforeUpdate.remove(tick);};tick();
+ }
+ private async release(){const revision=this.revision;this.hud?.remove();this.hud=undefined;const previous=this.previous;this.previous=undefined;if(previous){const grid=this.components.get(OBC.Grids).list.get(this.world.uuid);if(grid&&previous.gridVisible!==undefined)grid.visible=previous.gridVisible;const camera=this.world.camera;camera.set(previous.mode);camera.controls.minDistance=previous.minDistance;camera.controls.maxDistance=previous.maxDistance;camera.controls.enabled=previous.enabled;camera.threePersp.far=previous.far;camera.threePersp.fov=previous.fov;camera.threePersp.updateProjectionMatrix();await camera.projection.set(previous.projection);if(this.previous||revision!==this.revision)return;await camera.controls.setLookAt(...previous.eye.toArray(),...previous.target.toArray(),false);}if(typeof window!=='undefined')(window as any).__insaTrain=null;}
+ dispose(){++this.revision;this.removeTick();this.removeTick=()=>{};this.hud?.remove();this.hud=undefined;if(this.previous){this.world.camera.controls.enabled=this.previous.enabled;const grid=this.components.get(OBC.Grids).list.get(this.world.uuid);if(grid&&this.previous.gridVisible!==undefined)grid.visible=this.previous.gridVisible;}this.previous=undefined;this.key='';if(typeof window!=='undefined')(window as any).__insaTrain=null;}
+}
+

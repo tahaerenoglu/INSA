@@ -1,0 +1,40 @@
+{
+  "name": "insa-platform",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "tsc -b",
+    "test": "node scripts/run-tests.mjs",
+    "mcp": "tsx apps/manager-mcp/src/index.ts",
+    "web": "tsx apps/web-server/src/index.ts",
+    "web:dev": "npm run dev -w @insa/web",
+    "build:web": "npm run build -w @insa/web",
+    "typecheck": "tsc -b && tsc --noEmit -p apps/web",
+    "approve": "tsx apps/manager-mcp/src/cli.ts",
+    "bim:inventory": "python3 scripts/ifc-inventory.py",
+    "bim:coverage": "tsx scripts/bim-coverage.mts"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.4",
+    "@types/pg": "^8.23.1",
+    "ajv": "^8.20.0",
+    "fast-check": "^4.10.2",
+    "tsx": "^4.23.15",
+    "typescript": "5.9"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.131.0",
+    "@fastify/static": "^10.1.5",
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "@resvg/resvg-js": "^2.6.2",
+    "@thatopen/fragments": "^3.4.7",
+    "fastify": "^5.12.5",
+    "three": "^0.186.1",
+    "web-ifc": "^0.0.78",
+    "zod": "^4.6.5"
+  }
+}

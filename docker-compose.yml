@@ -1,0 +1,12 @@
+# PostgreSQL for INSA (development). Start: docker compose up -d
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: insa
+      POSTGRES_PASSWORD: insa
+      POSTGRES_DB: insa
+    ports: ["5432:5432"]
+    volumes: ["insa-pg:/var/lib/postgresql/data"]
+volumes:
+  insa-pg:

@@ -1,0 +1,3128 @@
+{
+ "quantities": {
+  "B-0001": {
+   "length": 4,
+   "section_area": 0.15,
+   "volume": 0.6
+  },
+  "B-0002": {
+   "length": 7.810249675906656,
+   "section_area": 0.15,
+   "volume": 1.1715374513859984
+  },
+  "B-0003": {
+   "length": 8,
+   "section_area": 0.005245999999999999,
+   "volume": 0.04196799999999999
+  },
+  "BR-0001": {
+   "length": 5.883026432033091,
+   "section_area": 0.009599999999999997,
+   "cross_section_area": 0.009599999999999997,
+   "volume": 0.05647705374751766
+  },
+  "C-0001": {
+   "height": 3.1,
+   "section_area": 0.2,
+   "volume": 0.6200000000000001
+  },
+  "C-0002": {
+   "height": 2.6,
+   "section_area": 0.07068583470577035,
+   "volume": 0.1837831702350029
+  },
+  "CE-0001": {
+   "area": 96,
+   "thickness": 0.0125,
+   "volume": 1.2000000000000002
+  },
+  "CO-0001": {},
+  "CO-0002": {},
+  "D-0001": {},
+  "FS-0001": {
+   "area": 140,
+   "thickness": 0.6,
+   "volume": 84
+  },
+  "FT-0001": {
+   "area": 1.96,
+   "thickness": 0.5,
+   "volume": 0.98
+  },
+  "ME-0001": {
+   "length": 4,
+   "diameter": 0.025,
+   "cross_section_area": 0.0004908738521234052
+  },
+  "ME-0002": {
+   "length": 3,
+   "diameter": 0.025,
+   "cross_section_area": 0.0004908738521234052
+  },
+  "ME-0003": {
+   "length": 4.5,
+   "diameter": 0.025,
+   "cross_section_area": 0.0004908738521234052
+  },
+  "ME-0004": {
+   "length": 4,
+   "diameter": 0.025,
+   "cross_section_area": 0.0004908738521234052
+  },
+  "ME-0005": {
+   "length": 3.6055512754639896,
+   "diameter": 0.025,
+   "cross_section_area": 0.0004908738521234052
+  },
+  "ME-0006": {
+   "length": 3.6055512754639896,
+   "diameter": 0.025,
+   "cross_section_area": 0.0004908738521234052
+  },
+  "ME-0007": {
+   "length": 4.5,
+   "diameter": 0.025,
+   "cross_section_area": 0.0004908738521234052
+  },
+  "ME-0008": {
+   "length": 3.1,
+   "diameter": 0.025,
+   "cross_section_area": 0.0004908738521234052
+  },
+  "ME-0009": {
+   "length": 6.5,
+   "diameter": 0.02,
+   "cross_section_area": 0.0003141592653589793
+  },
+  "ME-0010": {
+   "length": 4,
+   "diameter": 0.02,
+   "cross_section_area": 0.0003141592653589793
+  },
+  "ME-0011": {
+   "length": 6,
+   "width": 0.4,
+   "height": 0.2,
+   "cross_section_area": 0.08000000000000002
+  },
+  "ME-0012": {
+   "length": 5,
+   "width": 0.3,
+   "height": 0.1,
+   "cross_section_area": 0.03
+  },
+  "N-0001": {},
+  "N-0002": {},
+  "O-0001": {
+   "width": 1,
+   "height": 1.2,
+   "area": 1.2
+  },
+  "O-0002": {
+   "width": 1,
+   "height": 1.2,
+   "area": 1.2
+  },
+  "O-0003": {
+   "width": 1,
+   "height": 2.1,
+   "area": 2.1
+  },
+  "PL-0001": {
+   "length": 12,
+   "section_area": 0.12566370614359174,
+   "cross_section_area": 0.12566370614359174,
+   "volume": 1.5079644737231008
+  },
+  "RF-0001": {
+   "projected_area": 96,
+   "surface_area": 96,
+   "thickness": 0.19999999999999998,
+   "volume": 19.2,
+   "pitch": 0
+  },
+  "RF-0002": {
+   "projected_area": 24,
+   "surface_area": 26.481070055099803,
+   "thickness": 0.19999999999999998,
+   "volume": 5.29621401101996,
+   "pitch": 25
+  },
+  "RL-0001": {
+   "path_length": 20,
+   "height": 1,
+   "post_count": 18
+  },
+  "S-0001": {
+   "area": 93,
+   "thickness": 0.2,
+   "volume": 18.6
+  },
+  "SP-0001": {},
+  "SP-0002": {},
+  "SSL-0001": {
+   "area": 32,
+   "thickness": 0.2,
+   "volume": 6.4
+  },
+  "STR-0001": {
+   "total_rise": 3.1,
+   "run": 4,
+   "width": 1.2,
+   "riser_count": 16,
+   "riser_height": 0.19375,
+   "tread_depth": 0.26666666666666666,
+   "slope_angle": 36.00074895416071,
+   "footprint_area": 4.8
+  },
+  "W-0001": {
+   "length": 12,
+   "thickness": 0.2,
+   "height": 3,
+   "gross_volume": 7.200000000000001,
+   "net_volume": 6.720000000000001,
+   "side_area_net": 33.6
+  },
+  "W-0002": {
+   "length": 8,
+   "thickness": 0.2,
+   "height": 3,
+   "gross_volume": 4.79999999999997,
+   "net_volume": 4.79999999999997,
+   "side_area_net": 24
+  },
+  "W-0003": {
+   "length": 12,
+   "thickness": 0.2,
+   "height": 3,
+   "gross_volume": 7.199999999999974,
+   "net_volume": 7.199999999999974,
+   "side_area_net": 36
+  },
+  "W-0004": {
+   "length": 8,
+   "thickness": 0.2,
+   "height": 3,
+   "gross_volume": 4.800000000000001,
+   "net_volume": 4.800000000000001,
+   "side_area_net": 24
+  },
+  "W-0005": {
+   "length": 8,
+   "thickness": 0.2,
+   "height": 3,
+   "gross_volume": 4.679999999999979,
+   "net_volume": 4.259999999999979,
+   "side_area_net": 21.9
+  },
+  "W-0007": {
+   "length": 6,
+   "thickness": 0.2,
+   "height": 3,
+   "gross_volume": 3.539999999999978,
+   "net_volume": 3.539999999999978,
+   "side_area_net": 18
+  },
+  "W-0008": {
+   "length": 3.5,
+   "thickness": 0.2,
+   "height": 3,
+   "gross_volume": 2.099999999999966,
+   "net_volume": 2.099999999999966,
+   "side_area_net": 10.5
+  },
+  "W-0009": {
+   "length": 12,
+   "thickness": 0.2,
+   "height": 3,
+   "gross_volume": 7.200000000000001,
+   "net_volume": 7.200000000000001,
+   "side_area_net": 36
+  },
+  "W-0010": {
+   "length": 8,
+   "thickness": 0.2,
+   "height": 3,
+   "gross_volume": 4.79999999999997,
+   "net_volume": 4.79999999999997,
+   "side_area_net": 24
+  },
+  "W-0011": {
+   "length": 12,
+   "thickness": 0.2,
+   "height": 3,
+   "gross_volume": 7.199999999999974,
+   "net_volume": 7.199999999999974,
+   "side_area_net": 36
+  },
+  "W-0012": {
+   "length": 4,
+   "thickness": 0.2,
+   "height": 3,
+   "gross_volume": 2.4000000000000004,
+   "net_volume": 2.4000000000000004,
+   "side_area_net": 12
+  },
+  "W-0013": {
+   "length": 8,
+   "thickness": 0.25,
+   "height": 3,
+   "gross_volume": 6,
+   "net_volume": 6,
+   "side_area_net": 24
+  },
+  "W-0014": {
+   "length": 4,
+   "thickness": 0.2,
+   "height": 3,
+   "gross_volume": 2.4000000000000004,
+   "net_volume": 2.4000000000000004,
+   "side_area_net": 12
+  }
+ },
+ "spatial": {
+  "SP-0001": {
+   "status": "bounded",
+   "area": 40,
+   "perimeter": 26,
+   "volume": 124,
+   "signature": "R-66cc009ea958aaa5"
+  },
+  "SP-0002": {
+   "status": "bounded",
+   "area": 56,
+   "perimeter": 30,
+   "volume": 173.6,
+   "signature": "R-ca14e399ab00e86d"
+  }
+ },
+ "usage": {
+  "B-0001": {
+   "elementId": "B-0001",
+   "elementKind": "beam",
+   "category": "structure.framing",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "B-0002": {
+   "elementId": "B-0002",
+   "elementKind": "beam",
+   "category": "structure.framing",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "B-0003": {
+   "elementId": "B-0003",
+   "elementKind": "beam",
+   "category": "structure.framing",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "BR-0001": {
+   "elementId": "BR-0001",
+   "elementKind": "structure.brace",
+   "category": "structure.brace",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "C-0001": {
+   "elementId": "C-0001",
+   "elementKind": "column",
+   "category": "structure.column",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "C-0002": {
+   "elementId": "C-0002",
+   "elementKind": "column",
+   "category": "structure.column",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "CE-0001": {
+   "elementId": "CE-0001",
+   "elementKind": "ceiling",
+   "category": "architecture.ceiling",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "CO-0001": {
+   "elementId": "CO-0001",
+   "elementKind": "component",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "CO-0002": {
+   "elementId": "CO-0002",
+   "elementKind": "component",
+   "usageCount": 3,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "D-0001": {
+   "elementId": "D-0001",
+   "elementKind": "door",
+   "category": "architecture.door",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {
+    "host": "W-0005",
+    "opening": "O-0003"
+   }
+  },
+  "FS-0001": {
+   "elementId": "FS-0001",
+   "elementKind": "structure.foundation_slab",
+   "category": "structure.foundation_slab",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "FT-0001": {
+   "elementId": "FT-0001",
+   "elementKind": "structure.footing",
+   "category": "structure.footing",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "ME-0001": {
+   "elementId": "ME-0001",
+   "elementKind": "plumbing.pipe",
+   "category": "plumbing.pipe",
+   "usageCount": 2,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "ME-0002": {
+   "elementId": "ME-0002",
+   "elementKind": "plumbing.pipe",
+   "category": "plumbing.pipe",
+   "usageCount": 1,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "ME-0003": {
+   "elementId": "ME-0003",
+   "elementKind": "plumbing.pipe",
+   "category": "plumbing.pipe",
+   "usageCount": 2,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "ME-0004": {
+   "elementId": "ME-0004",
+   "elementKind": "plumbing.pipe",
+   "category": "plumbing.pipe",
+   "usageCount": 2,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "ME-0005": {
+   "elementId": "ME-0005",
+   "elementKind": "plumbing.pipe",
+   "category": "plumbing.pipe",
+   "usageCount": 2,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "ME-0006": {
+   "elementId": "ME-0006",
+   "elementKind": "plumbing.pipe",
+   "category": "plumbing.pipe",
+   "usageCount": 2,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "ME-0007": {
+   "elementId": "ME-0007",
+   "elementKind": "plumbing.pipe",
+   "category": "plumbing.pipe",
+   "usageCount": 1,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "ME-0008": {
+   "elementId": "ME-0008",
+   "elementKind": "plumbing.pipe",
+   "category": "plumbing.pipe",
+   "usageCount": 1,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "ME-0009": {
+   "elementId": "ME-0009",
+   "elementKind": "electrical.conduit",
+   "category": "electrical.conduit",
+   "usageCount": 2,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "ME-0010": {
+   "elementId": "ME-0010",
+   "elementKind": "electrical.conduit",
+   "category": "electrical.conduit",
+   "usageCount": 1,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "ME-0011": {
+   "elementId": "ME-0011",
+   "elementKind": "mechanical.duct",
+   "category": "mechanical.duct",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "ME-0012": {
+   "elementId": "ME-0012",
+   "elementKind": "electrical.cable_tray",
+   "category": "electrical.cable_tray",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "N-0001": {
+   "elementId": "N-0001",
+   "elementKind": "window",
+   "category": "architecture.window",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {
+    "host": "W-0001",
+    "opening": "O-0001"
+   }
+  },
+  "N-0002": {
+   "elementId": "N-0002",
+   "elementKind": "window",
+   "category": "architecture.window",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {
+    "host": "W-0001",
+    "opening": "O-0002"
+   }
+  },
+  "O-0001": {
+   "elementId": "O-0001",
+   "elementKind": "opening",
+   "usageCount": 1,
+   "hostedOpenings": [],
+   "fills": [
+    "N-0001"
+   ],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {
+    "host": "W-0001",
+    "filledBy": "N-0001"
+   }
+  },
+  "O-0002": {
+   "elementId": "O-0002",
+   "elementKind": "opening",
+   "usageCount": 1,
+   "hostedOpenings": [],
+   "fills": [
+    "N-0002"
+   ],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {
+    "host": "W-0001",
+    "filledBy": "N-0002"
+   }
+  },
+  "O-0003": {
+   "elementId": "O-0003",
+   "elementKind": "opening",
+   "usageCount": 1,
+   "hostedOpenings": [],
+   "fills": [
+    "D-0001"
+   ],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {
+    "host": "W-0005",
+    "filledBy": "D-0001"
+   }
+  },
+  "PL-0001": {
+   "elementId": "PL-0001",
+   "elementKind": "structure.pile",
+   "category": "structure.pile",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "RF-0001": {
+   "elementId": "RF-0001",
+   "elementKind": "roof",
+   "category": "architecture.roof",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "RF-0002": {
+   "elementId": "RF-0002",
+   "elementKind": "roof",
+   "category": "architecture.roof",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "RL-0001": {
+   "elementId": "RL-0001",
+   "elementKind": "railing",
+   "category": "architecture.railing",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "S-0001": {
+   "elementId": "S-0001",
+   "elementKind": "slab",
+   "category": "architecture.floor",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "SP-0001": {
+   "elementId": "SP-0001",
+   "elementKind": "spatial",
+   "category": "architecture.room",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "SP-0002": {
+   "elementId": "SP-0002",
+   "elementKind": "spatial",
+   "category": "mechanical.space",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "SSL-0001": {
+   "elementId": "SSL-0001",
+   "elementKind": "structure.slab",
+   "category": "structure.slab",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "STR-0001": {
+   "elementId": "STR-0001",
+   "elementKind": "stair",
+   "category": "architecture.stair",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "W-0001": {
+   "elementId": "W-0001",
+   "elementKind": "wall",
+   "usageCount": 5,
+   "hostedOpenings": [
+    "O-0001",
+    "O-0002"
+   ],
+   "fills": [],
+   "joins": [
+    {
+     "joinId": "J-0001",
+     "kind": "endpoint_endpoint",
+     "walls": [
+      "W-0001",
+      "W-0002"
+     ]
+    },
+    {
+     "joinId": "J-0004",
+     "kind": "endpoint_endpoint",
+     "walls": [
+      "W-0001",
+      "W-0004"
+     ]
+    },
+    {
+     "joinId": "J-0006",
+     "kind": "endpoint_segment",
+     "walls": [
+      "W-0001",
+      "W-0005"
+     ]
+    }
+   ],
+   "connectedWalls": [
+    "W-0002",
+    "W-0004",
+    "W-0005"
+   ],
+   "references": {}
+  },
+  "W-0002": {
+   "elementId": "W-0002",
+   "elementKind": "wall",
+   "usageCount": 2,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [
+    {
+     "joinId": "J-0001",
+     "kind": "endpoint_endpoint",
+     "walls": [
+      "W-0001",
+      "W-0002"
+     ]
+    },
+    {
+     "joinId": "J-0002",
+     "kind": "endpoint_endpoint",
+     "walls": [
+      "W-0002",
+      "W-0003"
+     ]
+    }
+   ],
+   "connectedWalls": [
+    "W-0001",
+    "W-0003"
+   ],
+   "references": {}
+  },
+  "W-0003": {
+   "elementId": "W-0003",
+   "elementKind": "wall",
+   "usageCount": 3,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [
+    {
+     "joinId": "J-0002",
+     "kind": "endpoint_endpoint",
+     "walls": [
+      "W-0002",
+      "W-0003"
+     ]
+    },
+    {
+     "joinId": "J-0003",
+     "kind": "endpoint_endpoint",
+     "walls": [
+      "W-0003",
+      "W-0004"
+     ]
+    },
+    {
+     "joinId": "J-0005",
+     "kind": "endpoint_segment",
+     "walls": [
+      "W-0003",
+      "W-0005"
+     ]
+    }
+   ],
+   "connectedWalls": [
+    "W-0002",
+    "W-0004",
+    "W-0005"
+   ],
+   "references": {}
+  },
+  "W-0004": {
+   "elementId": "W-0004",
+   "elementKind": "wall",
+   "usageCount": 2,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [
+    {
+     "joinId": "J-0003",
+     "kind": "endpoint_endpoint",
+     "walls": [
+      "W-0003",
+      "W-0004"
+     ]
+    },
+    {
+     "joinId": "J-0004",
+     "kind": "endpoint_endpoint",
+     "walls": [
+      "W-0001",
+      "W-0004"
+     ]
+    }
+   ],
+   "connectedWalls": [
+    "W-0001",
+    "W-0003"
+   ],
+   "references": {}
+  },
+  "W-0005": {
+   "elementId": "W-0005",
+   "elementKind": "wall",
+   "usageCount": 3,
+   "hostedOpenings": [
+    "O-0003"
+   ],
+   "fills": [],
+   "joins": [
+    {
+     "joinId": "J-0005",
+     "kind": "endpoint_segment",
+     "walls": [
+      "W-0003",
+      "W-0005"
+     ]
+    },
+    {
+     "joinId": "J-0006",
+     "kind": "endpoint_segment",
+     "walls": [
+      "W-0001",
+      "W-0005"
+     ]
+    }
+   ],
+   "connectedWalls": [
+    "W-0001",
+    "W-0003"
+   ],
+   "references": {}
+  },
+  "W-0007": {
+   "elementId": "W-0007",
+   "elementKind": "wall",
+   "usageCount": 1,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [
+    {
+     "joinId": "J-0008",
+     "kind": "endpoint_segment",
+     "walls": [
+      "W-0007",
+      "W-0008"
+     ]
+    }
+   ],
+   "connectedWalls": [
+    "W-0008"
+   ],
+   "references": {}
+  },
+  "W-0008": {
+   "elementId": "W-0008",
+   "elementKind": "wall",
+   "usageCount": 1,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [
+    {
+     "joinId": "J-0008",
+     "kind": "endpoint_segment",
+     "walls": [
+      "W-0007",
+      "W-0008"
+     ]
+    }
+   ],
+   "connectedWalls": [
+    "W-0007"
+   ],
+   "references": {}
+  },
+  "W-0009": {
+   "elementId": "W-0009",
+   "elementKind": "wall",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "W-0010": {
+   "elementId": "W-0010",
+   "elementKind": "wall",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "W-0011": {
+   "elementId": "W-0011",
+   "elementKind": "wall",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "W-0012": {
+   "elementId": "W-0012",
+   "elementKind": "wall",
+   "usageCount": 1,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [
+    {
+     "joinId": "J-0009",
+     "kind": "endpoint_endpoint",
+     "walls": [
+      "W-0012",
+      "W-0014"
+     ]
+    }
+   ],
+   "connectedWalls": [
+    "W-0014"
+   ],
+   "references": {}
+  },
+  "W-0013": {
+   "elementId": "W-0013",
+   "elementKind": "structure.shear_wall",
+   "category": "structure.shear_wall",
+   "usageCount": 0,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [],
+   "connectedWalls": [],
+   "references": {}
+  },
+  "W-0014": {
+   "elementId": "W-0014",
+   "elementKind": "wall",
+   "usageCount": 1,
+   "hostedOpenings": [],
+   "fills": [],
+   "joins": [
+    {
+     "joinId": "J-0009",
+     "kind": "endpoint_endpoint",
+     "walls": [
+      "W-0012",
+      "W-0014"
+     ]
+    }
+   ],
+   "connectedWalls": [
+    "W-0012"
+   ],
+   "references": {}
+  }
+ },
+ "versions": {
+  "state": 6,
+  "ProjectUpdated": 1,
+  "StoreyCreated": 1,
+  "GridCreated": 1,
+  "MaterialCreated": 1,
+  "TypeCreated": 1,
+  "ElementCreated": 3,
+  "ElementUpdated": 2,
+  "ElementDeleted": 1,
+  "PropertiesSet": 1,
+  "CountersSet": 1,
+  "StoreyUpdated": 1,
+  "StoreyDeleted": 1,
+  "GridUpdated": 1,
+  "GridDeleted": 1,
+  "WallJoinCreated": 1,
+  "WallJoinUpdated": 1,
+  "WallJoinDeleted": 1,
+  "FamilyCreated": 1,
+  "FamilyUpdated": 1,
+  "FamilyDeleted": 1,
+  "MepSystemCreated": 1,
+  "MepSystemUpdated": 1,
+  "MepSystemDeleted": 1,
+  "MepJunctionCreated": 1,
+  "MepJunctionUpdated": 1,
+  "MepJunctionDeleted": 1,
+  "MaterialUpdated": 1,
+  "MaterialDeleted": 1,
+  "TypeUpdated": 1,
+  "TypeDeleted": 1
+ },
+ "connectivity": {
+  "derived": true,
+  "basis": "geometric contact within the join tolerance",
+  "note": "NOT a structural connection design and NOT stored: moving an element changes this answer without any event.",
+  "count": 4,
+  "relations": [
+   {
+    "source": "B-0001",
+    "sourceCategory": "structure.framing",
+    "target": "B-0003",
+    "targetCategory": "structure.framing",
+    "relation": "endpoint_on_member",
+    "endpoint": "end",
+    "point": [
+     4.5,
+     4,
+     3.1
+    ]
+   },
+   {
+    "source": "B-0001",
+    "sourceCategory": "structure.framing",
+    "target": "B-0003",
+    "targetCategory": "structure.framing",
+    "relation": "endpoint_on_member",
+    "endpoint": "start",
+    "point": [
+     0.5,
+     4,
+     3.1
+    ]
+   },
+   {
+    "source": "PL-0001",
+    "sourceCategory": "structure.pile",
+    "target": "FS-0001",
+    "targetCategory": "structure.foundation_slab",
+    "relation": "endpoint_in_boundary",
+    "endpoint": "start",
+    "point": [
+     1,
+     1,
+     -0.7
+    ]
+   },
+   {
+    "source": "PL-0001",
+    "sourceCategory": "structure.pile",
+    "target": "FT-0001",
+    "targetCategory": "structure.footing",
+    "relation": "endpoint_in_boundary",
+    "endpoint": "start",
+    "point": [
+     1,
+     1,
+     -0.7
+    ]
+   }
+  ]
+ },
+ "mep": {
+  "systems": {
+   "WATER": {
+    "summary": {
+     "element_count": 7,
+     "total_route_length": 25.811102550927977,
+     "junction_count": 6,
+     "open_connector_count": 2,
+     "connected_component_count": 2
+    },
+    "network": {
+     "mode": "system",
+     "elements": [
+      {
+       "id": "CO-0002",
+       "kind": "component",
+       "category": null
+      },
+      {
+       "id": "ME-0001",
+       "kind": "mep_segment",
+       "category": "plumbing.pipe",
+       "system": "MS-0001"
+      },
+      {
+       "id": "ME-0002",
+       "kind": "mep_segment",
+       "category": "plumbing.pipe",
+       "system": "MS-0001"
+      },
+      {
+       "id": "ME-0003",
+       "kind": "mep_segment",
+       "category": "plumbing.pipe",
+       "system": "MS-0001"
+      },
+      {
+       "id": "ME-0004",
+       "kind": "mep_segment",
+       "category": "plumbing.pipe",
+       "system": "MS-0001"
+      },
+      {
+       "id": "ME-0005",
+       "kind": "mep_segment",
+       "category": "plumbing.pipe",
+       "system": "MS-0001"
+      },
+      {
+       "id": "ME-0006",
+       "kind": "mep_segment",
+       "category": "plumbing.pipe",
+       "system": "MS-0001"
+      },
+      {
+       "id": "ME-0008",
+       "kind": "mep_segment",
+       "category": "plumbing.pipe",
+       "system": "MS-0001"
+      }
+     ],
+     "junctions": [
+      {
+       "id": "MJ-0001",
+       "kind": "tee",
+       "system": "MS-0001",
+       "members": [
+        {
+         "connector": "start",
+         "element": "ME-0001"
+        },
+        {
+         "connector": "start",
+         "element": "ME-0002"
+        },
+        {
+         "connector": "start",
+         "element": "ME-0003"
+        }
+       ]
+      },
+      {
+       "id": "MJ-0002",
+       "kind": "coupling",
+       "system": "MS-0001",
+       "members": [
+        {
+         "connector": "water_in",
+         "element": "CO-0002"
+        },
+        {
+         "connector": "end",
+         "element": "ME-0001"
+        }
+       ]
+      },
+      {
+       "id": "MJ-0003",
+       "kind": "coupling",
+       "system": "MS-0001",
+       "members": [
+        {
+         "connector": "end",
+         "element": "ME-0004"
+        },
+        {
+         "connector": "start",
+         "element": "ME-0005"
+        }
+       ]
+      },
+      {
+       "id": "MJ-0004",
+       "kind": "coupling",
+       "system": "MS-0001",
+       "members": [
+        {
+         "connector": "end",
+         "element": "ME-0005"
+        },
+        {
+         "connector": "start",
+         "element": "ME-0006"
+        }
+       ]
+      },
+      {
+       "id": "MJ-0005",
+       "kind": "coupling",
+       "system": "MS-0001",
+       "members": [
+        {
+         "connector": "start",
+         "element": "ME-0004"
+        },
+        {
+         "connector": "end",
+         "element": "ME-0006"
+        }
+       ]
+      },
+      {
+       "id": "MJ-0009",
+       "kind": "coupling",
+       "system": "MS-0001",
+       "members": [
+        {
+         "element": "ME-0003",
+         "connector": "end"
+        },
+        {
+         "element": "ME-0008",
+         "connector": "start"
+        }
+       ]
+      }
+     ],
+     "components": [
+      {
+       "id": "component-1",
+       "elements": [
+        "CO-0002",
+        "ME-0001",
+        "ME-0002",
+        "ME-0003",
+        "ME-0008"
+       ],
+       "junctions": [
+        "MJ-0001",
+        "MJ-0002",
+        "MJ-0009"
+       ]
+      },
+      {
+       "id": "component-2",
+       "elements": [
+        "ME-0004",
+        "ME-0005",
+        "ME-0006"
+       ],
+       "junctions": [
+        "MJ-0003",
+        "MJ-0004",
+        "MJ-0005"
+       ]
+      }
+     ],
+     "openConnectors": [
+      {
+       "element": "ME-0002",
+       "connector": "end",
+       "position": [
+        36.5,
+        -3,
+        0.5
+       ],
+       "domain": "piping"
+      },
+      {
+       "element": "ME-0008",
+       "connector": "end",
+       "position": [
+        32,
+        0,
+        3.6
+       ],
+       "domain": "piping"
+      }
+     ],
+     "adjacency": [
+      {
+       "junction": "MJ-0001",
+       "from": {
+        "connector": "start",
+        "element": "ME-0001"
+       },
+       "to": {
+        "connector": "start",
+        "element": "ME-0002"
+       }
+      },
+      {
+       "junction": "MJ-0001",
+       "from": {
+        "connector": "start",
+        "element": "ME-0001"
+       },
+       "to": {
+        "connector": "start",
+        "element": "ME-0003"
+       }
+      },
+      {
+       "junction": "MJ-0002",
+       "from": {
+        "connector": "water_in",
+        "element": "CO-0002"
+       },
+       "to": {
+        "connector": "end",
+        "element": "ME-0001"
+       }
+      },
+      {
+       "junction": "MJ-0003",
+       "from": {
+        "connector": "end",
+        "element": "ME-0004"
+       },
+       "to": {
+        "connector": "start",
+        "element": "ME-0005"
+       }
+      },
+      {
+       "junction": "MJ-0004",
+       "from": {
+        "connector": "end",
+        "element": "ME-0005"
+       },
+       "to": {
+        "connector": "start",
+        "element": "ME-0006"
+       }
+      },
+      {
+       "junction": "MJ-0005",
+       "from": {
+        "connector": "start",
+        "element": "ME-0004"
+       },
+       "to": {
+        "connector": "end",
+        "element": "ME-0006"
+       }
+      },
+      {
+       "junction": "MJ-0009",
+       "from": {
+        "element": "ME-0003",
+        "connector": "end"
+       },
+       "to": {
+        "element": "ME-0008",
+        "connector": "start"
+       }
+      }
+     ]
+    }
+   },
+   "SAN": {
+    "summary": {
+     "element_count": 1,
+     "total_route_length": 4.5,
+     "junction_count": 1,
+     "open_connector_count": 1,
+     "connected_component_count": 1
+    },
+    "network": {
+     "mode": "system",
+     "elements": [
+      {
+       "id": "CO-0002",
+       "kind": "component",
+       "category": null
+      },
+      {
+       "id": "ME-0007",
+       "kind": "mep_segment",
+       "category": "plumbing.pipe",
+       "system": "MS-0002"
+      }
+     ],
+     "junctions": [
+      {
+       "id": "MJ-0006",
+       "kind": "coupling",
+       "system": "MS-0002",
+       "members": [
+        {
+         "connector": "drain",
+         "element": "CO-0002"
+        },
+        {
+         "connector": "start",
+         "element": "ME-0007"
+        }
+       ]
+      }
+     ],
+     "components": [
+      {
+       "id": "component-1",
+       "elements": [
+        "CO-0002",
+        "ME-0007"
+       ],
+       "junctions": [
+        "MJ-0006"
+       ]
+      }
+     ],
+     "openConnectors": [
+      {
+       "element": "ME-0007",
+       "connector": "end",
+       "position": [
+        40,
+        5,
+        0.5
+       ],
+       "domain": "piping"
+      }
+     ],
+     "adjacency": [
+      {
+       "junction": "MJ-0006",
+       "from": {
+        "connector": "drain",
+        "element": "CO-0002"
+       },
+       "to": {
+        "connector": "start",
+        "element": "ME-0007"
+       }
+      }
+     ]
+    }
+   },
+   "SA": {
+    "summary": {
+     "element_count": 1,
+     "total_route_length": 6,
+     "junction_count": 0,
+     "open_connector_count": 2,
+     "connected_component_count": 1
+    },
+    "network": {
+     "mode": "system",
+     "elements": [
+      {
+       "id": "ME-0011",
+       "kind": "mep_segment",
+       "category": "mechanical.duct",
+       "system": "MS-0003"
+      }
+     ],
+     "junctions": [],
+     "components": [
+      {
+       "id": "component-1",
+       "elements": [
+        "ME-0011"
+       ],
+       "junctions": []
+      }
+     ],
+     "openConnectors": [
+      {
+       "element": "ME-0011",
+       "connector": "start",
+       "position": [
+        30,
+        8,
+        2.5
+       ],
+       "domain": "hvac"
+      },
+      {
+       "element": "ME-0011",
+       "connector": "end",
+       "position": [
+        36,
+        8,
+        2.5
+       ],
+       "domain": "hvac"
+      }
+     ],
+     "adjacency": []
+    }
+   },
+   "POWER": {
+    "summary": {
+     "element_count": 3,
+     "total_route_length": 15.5,
+     "junction_count": 2,
+     "open_connector_count": 3,
+     "connected_component_count": 2
+    },
+    "network": {
+     "mode": "system",
+     "elements": [
+      {
+       "id": "CO-0002",
+       "kind": "component",
+       "category": null
+      },
+      {
+       "id": "ME-0009",
+       "kind": "mep_segment",
+       "category": "electrical.conduit",
+       "system": "MS-0004"
+      },
+      {
+       "id": "ME-0010",
+       "kind": "mep_segment",
+       "category": "electrical.conduit",
+       "system": "MS-0004"
+      },
+      {
+       "id": "ME-0012",
+       "kind": "mep_segment",
+       "category": "electrical.cable_tray",
+       "system": "MS-0004"
+      }
+     ],
+     "junctions": [
+      {
+       "id": "MJ-0007",
+       "kind": "coupling",
+       "system": "MS-0004",
+       "members": [
+        {
+         "connector": "power_in",
+         "element": "CO-0002"
+        },
+        {
+         "connector": "end",
+         "element": "ME-0009"
+        }
+       ]
+      },
+      {
+       "id": "MJ-0008",
+       "kind": "coupling",
+       "system": "MS-0004",
+       "members": [
+        {
+         "element": "ME-0009",
+         "connector": "start"
+        },
+        {
+         "element": "ME-0010",
+         "connector": "start"
+        }
+       ]
+      }
+     ],
+     "components": [
+      {
+       "id": "component-1",
+       "elements": [
+        "CO-0002",
+        "ME-0009",
+        "ME-0010"
+       ],
+       "junctions": [
+        "MJ-0007",
+        "MJ-0008"
+       ]
+      },
+      {
+       "id": "component-2",
+       "elements": [
+        "ME-0012"
+       ],
+       "junctions": []
+      }
+     ],
+     "openConnectors": [
+      {
+       "element": "ME-0010",
+       "connector": "end",
+       "position": [
+        33,
+        -4,
+        0.5
+       ],
+       "domain": "electrical"
+      },
+      {
+       "element": "ME-0012",
+       "connector": "start",
+       "position": [
+        30,
+        10,
+        2.8
+       ],
+       "domain": "electrical"
+      },
+      {
+       "element": "ME-0012",
+       "connector": "end",
+       "position": [
+        35,
+        10,
+        2.8
+       ],
+       "domain": "electrical"
+      }
+     ],
+     "adjacency": [
+      {
+       "junction": "MJ-0007",
+       "from": {
+        "connector": "power_in",
+        "element": "CO-0002"
+       },
+       "to": {
+        "connector": "end",
+        "element": "ME-0009"
+       }
+      },
+      {
+       "junction": "MJ-0008",
+       "from": {
+        "element": "ME-0009",
+        "connector": "start"
+       },
+       "to": {
+        "element": "ME-0010",
+        "connector": "start"
+       }
+      }
+     ]
+    }
+   }
+  },
+  "equipment": {
+   "whole": {
+    "mode": "element",
+    "elements": [
+     {
+      "id": "CO-0002",
+      "kind": "component",
+      "category": null
+     },
+     {
+      "id": "ME-0001",
+      "kind": "mep_segment",
+      "category": "plumbing.pipe",
+      "system": "MS-0001"
+     },
+     {
+      "id": "ME-0002",
+      "kind": "mep_segment",
+      "category": "plumbing.pipe",
+      "system": "MS-0001"
+     },
+     {
+      "id": "ME-0003",
+      "kind": "mep_segment",
+      "category": "plumbing.pipe",
+      "system": "MS-0001"
+     },
+     {
+      "id": "ME-0007",
+      "kind": "mep_segment",
+      "category": "plumbing.pipe",
+      "system": "MS-0002"
+     },
+     {
+      "id": "ME-0008",
+      "kind": "mep_segment",
+      "category": "plumbing.pipe",
+      "system": "MS-0001"
+     },
+     {
+      "id": "ME-0009",
+      "kind": "mep_segment",
+      "category": "electrical.conduit",
+      "system": "MS-0004"
+     },
+     {
+      "id": "ME-0010",
+      "kind": "mep_segment",
+      "category": "electrical.conduit",
+      "system": "MS-0004"
+     }
+    ],
+    "junctions": [
+     {
+      "id": "MJ-0001",
+      "kind": "tee",
+      "system": "MS-0001",
+      "members": [
+       {
+        "connector": "start",
+        "element": "ME-0001"
+       },
+       {
+        "connector": "start",
+        "element": "ME-0002"
+       },
+       {
+        "connector": "start",
+        "element": "ME-0003"
+       }
+      ]
+     },
+     {
+      "id": "MJ-0002",
+      "kind": "coupling",
+      "system": "MS-0001",
+      "members": [
+       {
+        "connector": "water_in",
+        "element": "CO-0002"
+       },
+       {
+        "connector": "end",
+        "element": "ME-0001"
+       }
+      ]
+     },
+     {
+      "id": "MJ-0006",
+      "kind": "coupling",
+      "system": "MS-0002",
+      "members": [
+       {
+        "connector": "drain",
+        "element": "CO-0002"
+       },
+       {
+        "connector": "start",
+        "element": "ME-0007"
+       }
+      ]
+     },
+     {
+      "id": "MJ-0007",
+      "kind": "coupling",
+      "system": "MS-0004",
+      "members": [
+       {
+        "connector": "power_in",
+        "element": "CO-0002"
+       },
+       {
+        "connector": "end",
+        "element": "ME-0009"
+       }
+      ]
+     },
+     {
+      "id": "MJ-0008",
+      "kind": "coupling",
+      "system": "MS-0004",
+      "members": [
+       {
+        "element": "ME-0009",
+        "connector": "start"
+       },
+       {
+        "element": "ME-0010",
+        "connector": "start"
+       }
+      ]
+     },
+     {
+      "id": "MJ-0009",
+      "kind": "coupling",
+      "system": "MS-0001",
+      "members": [
+       {
+        "element": "ME-0003",
+        "connector": "end"
+       },
+       {
+        "element": "ME-0008",
+        "connector": "start"
+       }
+      ]
+     }
+    ],
+    "components": [
+     {
+      "id": "component-1",
+      "elements": [
+       "CO-0002"
+      ],
+      "junctions": []
+     },
+     {
+      "id": "component-2",
+      "elements": [
+       "CO-0002",
+       "ME-0001",
+       "ME-0002",
+       "ME-0003",
+       "ME-0008"
+      ],
+      "junctions": [
+       "MJ-0001",
+       "MJ-0002",
+       "MJ-0009"
+      ]
+     },
+     {
+      "id": "component-3",
+      "elements": [
+       "CO-0002",
+       "ME-0007"
+      ],
+      "junctions": [
+       "MJ-0006"
+      ]
+     },
+     {
+      "id": "component-4",
+      "elements": [
+       "CO-0002",
+       "ME-0009",
+       "ME-0010"
+      ],
+      "junctions": [
+       "MJ-0007",
+       "MJ-0008"
+      ]
+     }
+    ],
+    "openConnectors": [
+     {
+      "element": "CO-0002",
+      "connector": "spare",
+      "position": [
+       40,
+       -0.5,
+       0.5
+      ],
+      "domain": "piping"
+     },
+     {
+      "element": "ME-0002",
+      "connector": "end",
+      "position": [
+       36.5,
+       -3,
+       0.5
+      ],
+      "domain": "piping"
+     },
+     {
+      "element": "ME-0007",
+      "connector": "end",
+      "position": [
+       40,
+       5,
+       0.5
+      ],
+      "domain": "piping"
+     },
+     {
+      "element": "ME-0008",
+      "connector": "end",
+      "position": [
+       32,
+       0,
+       3.6
+      ],
+      "domain": "piping"
+     },
+     {
+      "element": "ME-0010",
+      "connector": "end",
+      "position": [
+       33,
+       -4,
+       0.5
+      ],
+      "domain": "electrical"
+     }
+    ],
+    "adjacency": [
+     {
+      "junction": "MJ-0001",
+      "from": {
+       "connector": "start",
+       "element": "ME-0001"
+      },
+      "to": {
+       "connector": "start",
+       "element": "ME-0002"
+      }
+     },
+     {
+      "junction": "MJ-0001",
+      "from": {
+       "connector": "start",
+       "element": "ME-0001"
+      },
+      "to": {
+       "connector": "start",
+       "element": "ME-0003"
+      }
+     },
+     {
+      "junction": "MJ-0002",
+      "from": {
+       "connector": "water_in",
+       "element": "CO-0002"
+      },
+      "to": {
+       "connector": "end",
+       "element": "ME-0001"
+      }
+     },
+     {
+      "junction": "MJ-0006",
+      "from": {
+       "connector": "drain",
+       "element": "CO-0002"
+      },
+      "to": {
+       "connector": "start",
+       "element": "ME-0007"
+      }
+     },
+     {
+      "junction": "MJ-0007",
+      "from": {
+       "connector": "power_in",
+       "element": "CO-0002"
+      },
+      "to": {
+       "connector": "end",
+       "element": "ME-0009"
+      }
+     },
+     {
+      "junction": "MJ-0008",
+      "from": {
+       "element": "ME-0009",
+       "connector": "start"
+      },
+      "to": {
+       "element": "ME-0010",
+       "connector": "start"
+      }
+     },
+     {
+      "junction": "MJ-0009",
+      "from": {
+       "element": "ME-0003",
+       "connector": "end"
+      },
+      "to": {
+       "element": "ME-0008",
+       "connector": "start"
+      }
+     }
+    ],
+    "traversal": [
+     "CO-0002",
+     "ME-0007",
+     "ME-0009",
+     "ME-0001",
+     "ME-0010",
+     "ME-0002",
+     "ME-0003",
+     "ME-0008"
+    ],
+    "connectorTraversal": [
+     "CO-0002#drain",
+     "CO-0002#power_in",
+     "CO-0002#spare",
+     "CO-0002#water_in",
+     "ME-0007#start",
+     "ME-0009#end",
+     "ME-0001#end",
+     "ME-0007#end",
+     "ME-0009#start",
+     "ME-0001#start",
+     "ME-0010#start",
+     "ME-0002#start",
+     "ME-0003#start",
+     "ME-0010#end",
+     "ME-0002#end",
+     "ME-0003#end",
+     "ME-0008#start",
+     "ME-0008#end"
+    ]
+   },
+   "water_in": {
+    "mode": "connector",
+    "elements": [
+     {
+      "id": "CO-0002",
+      "kind": "component",
+      "category": null
+     },
+     {
+      "id": "ME-0001",
+      "kind": "mep_segment",
+      "category": "plumbing.pipe",
+      "system": "MS-0001"
+     },
+     {
+      "id": "ME-0002",
+      "kind": "mep_segment",
+      "category": "plumbing.pipe",
+      "system": "MS-0001"
+     },
+     {
+      "id": "ME-0003",
+      "kind": "mep_segment",
+      "category": "plumbing.pipe",
+      "system": "MS-0001"
+     },
+     {
+      "id": "ME-0008",
+      "kind": "mep_segment",
+      "category": "plumbing.pipe",
+      "system": "MS-0001"
+     }
+    ],
+    "junctions": [
+     {
+      "id": "MJ-0001",
+      "kind": "tee",
+      "system": "MS-0001",
+      "members": [
+       {
+        "connector": "start",
+        "element": "ME-0001"
+       },
+       {
+        "connector": "start",
+        "element": "ME-0002"
+       },
+       {
+        "connector": "start",
+        "element": "ME-0003"
+       }
+      ]
+     },
+     {
+      "id": "MJ-0002",
+      "kind": "coupling",
+      "system": "MS-0001",
+      "members": [
+       {
+        "connector": "water_in",
+        "element": "CO-0002"
+       },
+       {
+        "connector": "end",
+        "element": "ME-0001"
+       }
+      ]
+     },
+     {
+      "id": "MJ-0009",
+      "kind": "coupling",
+      "system": "MS-0001",
+      "members": [
+       {
+        "element": "ME-0003",
+        "connector": "end"
+       },
+       {
+        "element": "ME-0008",
+        "connector": "start"
+       }
+      ]
+     }
+    ],
+    "components": [
+     {
+      "id": "component-1",
+      "elements": [
+       "CO-0002",
+       "ME-0001",
+       "ME-0002",
+       "ME-0003",
+       "ME-0008"
+      ],
+      "junctions": [
+       "MJ-0001",
+       "MJ-0002",
+       "MJ-0009"
+      ]
+     }
+    ],
+    "openConnectors": [
+     {
+      "element": "ME-0002",
+      "connector": "end",
+      "position": [
+       36.5,
+       -3,
+       0.5
+      ],
+      "domain": "piping"
+     },
+     {
+      "element": "ME-0008",
+      "connector": "end",
+      "position": [
+       32,
+       0,
+       3.6
+      ],
+      "domain": "piping"
+     }
+    ],
+    "adjacency": [
+     {
+      "junction": "MJ-0001",
+      "from": {
+       "connector": "start",
+       "element": "ME-0001"
+      },
+      "to": {
+       "connector": "start",
+       "element": "ME-0002"
+      }
+     },
+     {
+      "junction": "MJ-0001",
+      "from": {
+       "connector": "start",
+       "element": "ME-0001"
+      },
+      "to": {
+       "connector": "start",
+       "element": "ME-0003"
+      }
+     },
+     {
+      "junction": "MJ-0002",
+      "from": {
+       "connector": "water_in",
+       "element": "CO-0002"
+      },
+      "to": {
+       "connector": "end",
+       "element": "ME-0001"
+      }
+     },
+     {
+      "junction": "MJ-0009",
+      "from": {
+       "element": "ME-0003",
+       "connector": "end"
+      },
+      "to": {
+       "element": "ME-0008",
+       "connector": "start"
+      }
+     }
+    ],
+    "traversal": [
+     "CO-0002",
+     "ME-0001",
+     "ME-0002",
+     "ME-0003",
+     "ME-0008"
+    ],
+    "connectorTraversal": [
+     "CO-0002#water_in",
+     "ME-0001#end",
+     "ME-0001#start",
+     "ME-0002#start",
+     "ME-0003#start",
+     "ME-0002#end",
+     "ME-0003#end",
+     "ME-0008#start",
+     "ME-0008#end"
+    ]
+   },
+   "power_in": {
+    "mode": "connector",
+    "elements": [
+     {
+      "id": "CO-0002",
+      "kind": "component",
+      "category": null
+     },
+     {
+      "id": "ME-0009",
+      "kind": "mep_segment",
+      "category": "electrical.conduit",
+      "system": "MS-0004"
+     },
+     {
+      "id": "ME-0010",
+      "kind": "mep_segment",
+      "category": "electrical.conduit",
+      "system": "MS-0004"
+     }
+    ],
+    "junctions": [
+     {
+      "id": "MJ-0007",
+      "kind": "coupling",
+      "system": "MS-0004",
+      "members": [
+       {
+        "connector": "power_in",
+        "element": "CO-0002"
+       },
+       {
+        "connector": "end",
+        "element": "ME-0009"
+       }
+      ]
+     },
+     {
+      "id": "MJ-0008",
+      "kind": "coupling",
+      "system": "MS-0004",
+      "members": [
+       {
+        "element": "ME-0009",
+        "connector": "start"
+       },
+       {
+        "element": "ME-0010",
+        "connector": "start"
+       }
+      ]
+     }
+    ],
+    "components": [
+     {
+      "id": "component-1",
+      "elements": [
+       "CO-0002",
+       "ME-0009",
+       "ME-0010"
+      ],
+      "junctions": [
+       "MJ-0007",
+       "MJ-0008"
+      ]
+     }
+    ],
+    "openConnectors": [
+     {
+      "element": "ME-0010",
+      "connector": "end",
+      "position": [
+       33,
+       -4,
+       0.5
+      ],
+      "domain": "electrical"
+     }
+    ],
+    "adjacency": [
+     {
+      "junction": "MJ-0007",
+      "from": {
+       "connector": "power_in",
+       "element": "CO-0002"
+      },
+      "to": {
+       "connector": "end",
+       "element": "ME-0009"
+      }
+     },
+     {
+      "junction": "MJ-0008",
+      "from": {
+       "element": "ME-0009",
+       "connector": "start"
+      },
+      "to": {
+       "element": "ME-0010",
+       "connector": "start"
+      }
+     }
+    ],
+    "traversal": [
+     "CO-0002",
+     "ME-0009",
+     "ME-0010"
+    ],
+    "connectorTraversal": [
+     "CO-0002#power_in",
+     "ME-0009#end",
+     "ME-0009#start",
+     "ME-0010#start",
+     "ME-0010#end"
+    ]
+   }
+  },
+  "junctions": {
+   "MJ-0001": {
+    "id": "MJ-0001",
+    "members": [
+     {
+      "connector": "start",
+      "element": "ME-0001"
+     },
+     {
+      "connector": "start",
+      "element": "ME-0002"
+     },
+     {
+      "connector": "start",
+      "element": "ME-0003"
+     }
+    ]
+   },
+   "MJ-0002": {
+    "id": "MJ-0002",
+    "members": [
+     {
+      "connector": "water_in",
+      "element": "CO-0002"
+     },
+     {
+      "connector": "end",
+      "element": "ME-0001"
+     }
+    ]
+   },
+   "MJ-0003": {
+    "id": "MJ-0003",
+    "members": [
+     {
+      "connector": "end",
+      "element": "ME-0004"
+     },
+     {
+      "connector": "start",
+      "element": "ME-0005"
+     }
+    ]
+   },
+   "MJ-0004": {
+    "id": "MJ-0004",
+    "members": [
+     {
+      "connector": "end",
+      "element": "ME-0005"
+     },
+     {
+      "connector": "start",
+      "element": "ME-0006"
+     }
+    ]
+   },
+   "MJ-0005": {
+    "id": "MJ-0005",
+    "members": [
+     {
+      "connector": "start",
+      "element": "ME-0004"
+     },
+     {
+      "connector": "end",
+      "element": "ME-0006"
+     }
+    ]
+   },
+   "MJ-0006": {
+    "id": "MJ-0006",
+    "members": [
+     {
+      "connector": "drain",
+      "element": "CO-0002"
+     },
+     {
+      "connector": "start",
+      "element": "ME-0007"
+     }
+    ]
+   },
+   "MJ-0007": {
+    "id": "MJ-0007",
+    "members": [
+     {
+      "connector": "power_in",
+      "element": "CO-0002"
+     },
+     {
+      "connector": "end",
+      "element": "ME-0009"
+     }
+    ]
+   },
+   "MJ-0008": {
+    "id": "MJ-0008",
+    "members": [
+     {
+      "element": "ME-0009",
+      "connector": "start"
+     },
+     {
+      "element": "ME-0010",
+      "connector": "start"
+     }
+    ]
+   },
+   "MJ-0009": {
+    "id": "MJ-0009",
+    "members": [
+     {
+      "element": "ME-0003",
+      "connector": "end"
+     },
+     {
+      "element": "ME-0008",
+      "connector": "start"
+     }
+    ]
+   }
+  },
+  "connectors": {
+   "CO-0001": [],
+   "CO-0002": [
+    {
+     "ref": {
+      "element": "CO-0002",
+      "connector": "water_in"
+     },
+     "owner": "component",
+     "domain": "piping",
+     "position": [
+      40.5,
+      0,
+      0.5
+     ],
+     "direction": [
+      0.5,
+      0.001,
+      0
+     ],
+     "flow": "in",
+     "shape": "round",
+     "diameter": 0.025
+    },
+    {
+     "ref": {
+      "element": "CO-0002",
+      "connector": "power_in"
+     },
+     "owner": "component",
+     "domain": "electrical",
+     "position": [
+      39.5,
+      0,
+      0.5
+     ],
+     "direction": [
+      -0.5,
+      0.001,
+      0
+     ],
+     "flow": "in",
+     "shape": "round",
+     "diameter": 0.02
+    },
+    {
+     "ref": {
+      "element": "CO-0002",
+      "connector": "drain"
+     },
+     "owner": "component",
+     "domain": "piping",
+     "position": [
+      40,
+      0.5,
+      0.5
+     ],
+     "direction": [
+      0.001,
+      0.5,
+      0
+     ],
+     "flow": "out",
+     "shape": "round",
+     "diameter": 0.025
+    },
+    {
+     "ref": {
+      "element": "CO-0002",
+      "connector": "spare"
+     },
+     "owner": "component",
+     "domain": "piping",
+     "position": [
+      40,
+      -0.5,
+      0.5
+     ],
+     "direction": [
+      0.001,
+      -0.5,
+      0
+     ],
+     "flow": "bidirectional",
+     "shape": "round",
+     "diameter": 0.025
+    }
+   ],
+   "ME-0001": [
+    {
+     "owner": "route",
+     "domain": "piping",
+     "flow": "bidirectional",
+     "shape": "round",
+     "diameter": 0.025,
+     "system": "MS-0001",
+     "ref": {
+      "element": "ME-0001",
+      "connector": "start"
+     },
+     "position": [
+      36.5,
+      0,
+      0.5
+     ],
+     "direction": [
+      -1,
+      0,
+      0
+     ]
+    },
+    {
+     "owner": "route",
+     "domain": "piping",
+     "flow": "bidirectional",
+     "shape": "round",
+     "diameter": 0.025,
+     "system": "MS-0001",
+     "ref": {
+      "element": "ME-0001",
+      "connector": "end"
+     },
+     "position": [
+      40.5,
+      0,
+      0.5
+     ],
+     "direction": [
+      1,
+      0,
+      0
+     ]
+    }
+   ],
+   "ME-0002": [
+    {
+     "owner": "route",
+     "domain": "piping",
+     "flow": "bidirectional",
+     "shape": "round",
+     "diameter": 0.025,
+     "system": "MS-0001",
+     "ref": {
+      "element": "ME-0002",
+      "connector": "start"
+     },
+     "position": [
+      36.5,
+      0,
+      0.5
+     ],
+     "direction": [
+      0,
+      1,
+      0
+     ]
+    },
+    {
+     "owner": "route",
+     "domain": "piping",
+     "flow": "bidirectional",
+     "shape": "round",
+     "diameter": 0.025,
+     "system": "MS-0001",
+     "ref": {
+      "element": "ME-0002",
+      "connector": "end"
+     },
+     "position": [
+      36.5,
+      -3,
+      0.5
+     ],
+     "direction": [
+      0,
+      -1,
+      0
+     ]
+    }
+   ],
+   "ME-0003": [
+    {
+     "owner": "route",
+     "domain": "piping",
+     "flow": "bidirectional",
+     "shape": "round",
+     "diameter": 0.025,
+     "system": "MS-0001",
+     "ref": {
+      "element": "ME-0003",
+      "connector": "start"
+     },
+     "position": [
+      36.5,
+      0,
+      0.5
+     ],
+     "direction": [
+      1,
+      0,
+      0
+     ]
+    },
+    {
+     "owner": "route",
+     "domain": "piping",
+     "flow": "bidirectional",
+     "shape": "round",
+     "diameter": 0.025,
+     "system": "MS-0001",
+     "ref": {
+      "element": "ME-0003",
+      "connector": "end"
+     },
+     "position": [
+      32,
+      0,
+      0.5
+     ],
+     "direction": [
+      -1,
+      0,
+      0
+     ]
+    }
+   ],
+   "ME-0004": [
+    {
+     "owner": "route",
+     "domain": "piping",
+     "flow": "bidirectional",
+     "shape": "round",
+     "diameter": 0.025,
+     "system": "MS-0001",
+     "ref": {
+      "element": "ME-0004",
+      "connector": "start"
+     },
+     "position": [
+      50,
+      0,
+      0.5
+     ],
+     "direction": [
+      -1,
+      0,
+      0
+     ]
+    },
+    {
+     "owner": "route",
+     "domain": "piping",
+     "flow": "bidirectional",
+     "shape": "round",
+     "diameter": 0.025,
+     "system": "MS-0001",
+     "ref": {
+      "element": "ME-0004",
+      "connector": "end"
+     },
+     "position": [
+      54,
+      0,
+      0.5
+     ],
+     "direction": [
+      1,
+      0,
+      0
+     ]
+    }
+   ],
+   "ME-0005": [
+    {
+     "owner": "route",
+     "domain": "piping",
+     "flow": "bidirectional",
+     "shape": "round",
+     "diameter": 0.025,
+     "system": "MS-0001",
+     "ref": {
+      "element": "ME-0005",
+      "connector": "start"
+     },
+     "position": [
+      54,
+      0,
+      0.5
+     ],
+     "direction": [
+      0.554700196,
+      -0.832050294,
+      0
+     ]
+    },
+    {
+     "owner": "route",
+     "domain": "piping",
+     "flow": "bidirectional",
+     "shape": "round",
+     "diameter": 0.025,
+     "system": "MS-0001",
+     "ref": {
+      "element": "ME-0005",
+      "connector": "end"
+     },
+     "position": [
+      52,
+      3,
+      0.5
+     ],
+     "direction": [
+      -0.554700196,
+      0.832050294,
+      0
+     ]
+    }
+   ],
+   "ME-0006": [
+    {
+     "owner": "route",
+     "domain": "piping",
+     "flow": "bidirectional",
+     "shape": "round",
+     "diameter": 0.025,
+     "system": "MS-0001",
+     "ref": {
+      "element": "ME-0006",
+      "connector": "start"
+     },
+     "position": [
+      52,
+      3,
+      0.5
+     ],
+     "direction": [
+      0.554700196,
+      0.832050294,
+      0
+     ]
+    },
+    {
+     "owner": "route",
+     "domain": "piping",
+     "flow": "bidirectional",
+     "shape": "round",
+     "diameter": 0.025,
+     "system": "MS-0001",
+     "ref": {
+      "element": "ME-0006",
+      "connector": "end"
+     },
+     "position": [
+      50,
+      0,
+      0.5
+     ],
+     "direction": [
+      -0.554700196,
+      -0.832050294,
+      0
+     ]
+    }
+   ],
+   "ME-0007": [
+    {
+     "owner": "route",
+     "domain": "piping",
+     "flow": "bidirectional",
+     "shape": "round",
+     "diameter": 0.025,
+     "system": "MS-0002",
+     "ref": {
+      "element": "ME-0007",
+      "connector": "start"
+     },
+     "position": [
+      40,
+      0.5,
+      0.5
+     ],
+     "direction": [
+      0,
+      -1,
+      0
+     ]
+    },
+    {
+     "owner": "route",
+     "domain": "piping",
+     "flow": "bidirectional",
+     "shape": "round",
+     "diameter": 0.025,
+     "system": "MS-0002",
+     "ref": {
+      "element": "ME-0007",
+      "connector": "end"
+     },
+     "position": [
+      40,
+      5,
+      0.5
+     ],
+     "direction": [
+      0,
+      1,
+      0
+     ]
+    }
+   ],
+   "ME-0008": [
+    {
+     "owner": "route",
+     "domain": "piping",
+     "flow": "bidirectional",
+     "shape": "round",
+     "diameter": 0.025,
+     "system": "MS-0001",
+     "ref": {
+      "element": "ME-0008",
+      "connector": "start"
+     },
+     "position": [
+      32,
+      0,
+      0.5
+     ],
+     "direction": [
+      0,
+      0,
+      -1
+     ]
+    },
+    {
+     "owner": "route",
+     "domain": "piping",
+     "flow": "bidirectional",
+     "shape": "round",
+     "diameter": 0.025,
+     "system": "MS-0001",
+     "ref": {
+      "element": "ME-0008",
+      "connector": "end"
+     },
+     "position": [
+      32,
+      0,
+      3.6
+     ],
+     "direction": [
+      0,
+      0,
+      1
+     ]
+    }
+   ],
+   "ME-0009": [
+    {
+     "owner": "route",
+     "domain": "electrical",
+     "flow": "bidirectional",
+     "shape": "round",
+     "diameter": 0.02,
+     "system": "MS-0004",
+     "ref": {
+      "element": "ME-0009",
+      "connector": "start"
+     },
+     "position": [
+      33,
+      0,
+      0.5
+     ],
+     "direction": [
+      -1,
+      0,
+      0
+     ]
+    },
+    {
+     "owner": "route",
+     "domain": "electrical",
+     "flow": "bidirectional",
+     "shape": "round",
+     "diameter": 0.02,
+     "system": "MS-0004",
+     "ref": {
+      "element": "ME-0009",
+      "connector": "end"
+     },
+     "position": [
+      39.5,
+      0,
+      0.5
+     ],
+     "direction": [
+      1,
+      0,
+      0
+     ]
+    }
+   ],
+   "ME-0010": [
+    {
+     "owner": "route",
+     "domain": "electrical",
+     "flow": "bidirectional",
+     "shape": "round",
+     "diameter": 0.02,
+     "system": "MS-0004",
+     "ref": {
+      "element": "ME-0010",
+      "connector": "start"
+     },
+     "position": [
+      33,
+      0,
+      0.5
+     ],
+     "direction": [
+      0,
+      1,
+      0
+     ]
+    },
+    {
+     "owner": "route",
+     "domain": "electrical",
+     "flow": "bidirectional",
+     "shape": "round",
+     "diameter": 0.02,
+     "system": "MS-0004",
+     "ref": {
+      "element": "ME-0010",
+      "connector": "end"
+     },
+     "position": [
+      33,
+      -4,
+      0.5
+     ],
+     "direction": [
+      0,
+      -1,
+      0
+     ]
+    }
+   ],
+   "ME-0011": [
+    {
+     "owner": "route",
+     "domain": "hvac",
+     "flow": "bidirectional",
+     "shape": "rectangular",
+     "width": 0.4,
+     "height": 0.2,
+     "system": "MS-0003",
+     "ref": {
+      "element": "ME-0011",
+      "connector": "start"
+     },
+     "position": [
+      30,
+      8,
+      2.5
+     ],
+     "direction": [
+      -1,
+      0,
+      0
+     ]
+    },
+    {
+     "owner": "route",
+     "domain": "hvac",
+     "flow": "bidirectional",
+     "shape": "rectangular",
+     "width": 0.4,
+     "height": 0.2,
+     "system": "MS-0003",
+     "ref": {
+      "element": "ME-0011",
+      "connector": "end"
+     },
+     "position": [
+      36,
+      8,
+      2.5
+     ],
+     "direction": [
+      1,
+      0,
+      0
+     ]
+    }
+   ],
+   "ME-0012": [
+    {
+     "owner": "route",
+     "domain": "electrical",
+     "flow": "bidirectional",
+     "shape": "rectangular",
+     "width": 0.3,
+     "height": 0.1,
+     "system": "MS-0004",
+     "ref": {
+      "element": "ME-0012",
+      "connector": "start"
+     },
+     "position": [
+      30,
+      10,
+      2.8
+     ],
+     "direction": [
+      -1,
+      0,
+      0
+     ]
+    },
+    {
+     "owner": "route",
+     "domain": "electrical",
+     "flow": "bidirectional",
+     "shape": "rectangular",
+     "width": 0.3,
+     "height": 0.1,
+     "system": "MS-0004",
+     "ref": {
+      "element": "ME-0012",
+      "connector": "end"
+     },
+     "position": [
+      35,
+      10,
+      2.8
+     ],
+     "direction": [
+      1,
+      0,
+      0
+     ]
+    }
+   ]
+  }
+ }
+}

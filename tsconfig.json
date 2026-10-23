@@ -1,0 +1,26 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "packages/core"
+    },
+    {
+      "path": "packages/bim"
+    },
+    {
+      "path": "packages/agent"
+    },
+    {
+      "path": "packages/infra"
+    },
+    {
+      "path": "apps/manager-mcp"
+    },
+    {
+      "path": "apps/web-server"
+    },
+    {
+      "path": "packages/files"
+    }
+  ]
+}
