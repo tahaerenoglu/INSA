@@ -175,7 +175,7 @@ export interface RampElement extends ElementBase { kind: "ramp"; category: strin
  * assemblies ...). The children keep their own identity, category, type and lifecycle; the assembly adds the relation (and its own storey). A child has at most
  * ONE assembly parent, the graph is acyclic, and all members share the assembly's storey. No geometry of its own; nothing is inferred from proximity.
  */
-export interface Assembly extends ElementBase { kind: "assembly"; category: string; children: string[]; predefinedType?: string; primary?: string; }
+export interface Assembly extends ElementBase { kind: "assembly"; category: string; children: string[]; predefinedType?: string; primary?: string; assemblyBinding?:import('./assembly-types.js').AssemblyBinding; }
 
 // ================================================================ reinforcement (Phase 14)
 /** One bar layer: the path of the FIRST bar (storey-local [x, y, z]) and its copies: `count` bars `spacing` apart along `direction`. */
@@ -250,6 +250,8 @@ export interface BimState {
   types: Record<string, LayeredType | ProfileType | OpeningType | ComponentType | StairType | RailingType | MepType | RebarType | RampType | CurtainWallType>;
   /** component families (Phase 7); native types need no family */
   families: Record<string, Family>;
+  /** Optional additive field: old snapshots without recipes remain valid. */
+  assemblyTypes?:Record<string,import('./assembly-types.js').AssemblyType>;
   elements: Record<string, Element>;
   /** explicit wall topology (Phase 6) */
   joins: Record<string, WallJoin>;
@@ -288,6 +290,7 @@ export function nextId(s: BimState, key: keyof typeof PREFIX): string {
  * version here and add an upcaster for the previous version to BIM_UPCASTERS.
  */
 export const BIM_EVENT_VERSIONS: Record<string, number> = {
+  AssemblyTypeSet:1,
   ProjectUpdated: 1, StoreyCreated: 1, GridCreated: 1, MaterialCreated: 1, TypeCreated: 1,
   // v2 (Phase 5): walls, columns and beams carry `vertical`; ElementUpdated changes may carry `vertical` and `storey`
   // v3 (Phase 9): beams / columns -> profile_member, slabs -> boundary, doors / windows -> hosted_component (+ category);
@@ -353,6 +356,7 @@ export const BIM_STATE_VERSION = 7;
 export function apply(s: BimState, e: DomainEvent): BimState {
   const p = e.payload;
   switch (e.type) {
+    case 'AssemblyTypeSet': (s.assemblyTypes??={})[p.id]=p;break;
     case "ProjectUpdated": Object.assign(s.project, p); break;
     case "StoreyCreated": s.storeys[p.id] = p; break;
     case "GridCreated": s.grids[p.id] = p; break;

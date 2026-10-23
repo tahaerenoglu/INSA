@@ -4,6 +4,8 @@ import type { ModuleDef, QueryTool } from "@insa/core";
 import { BimState, initialState, apply, BIM_EVENT_VERSIONS, BIM_UPCASTERS, BIM_STATE_VERSION } from "./model.js";
 import { validateCommand } from "./invariants.js";
 import { commandTools, queryTools } from "./tools.js";
+import {assemblyTypeTools} from './assembly-types.js';
+export * from './assembly-types.js';
 import { attachWallsToRoof } from './wall-roof.js';
 export { wallRoof } from './wall-roof.js';
 export { coordinateModel } from './coordination.js';
@@ -13,6 +15,7 @@ export type { ConvexCell, Bounds3 } from './solid-geometry.js';
 export { rebarCoverProblem } from './engines/reinforcement.js';
 export {columnRebarGeometry} from './column-rebar-layout.js';
 export * from './semantic-model.js';
+export * from './family-resolution.js';
 import { toIfc } from "./ifc.js";
 import { ifcToFrag } from "./frag.js";
 import { planSvg, svgToPng } from "./plan.js";
@@ -90,7 +93,7 @@ export const bimModule: ModuleDef<BimState> = {
   eventVersions: BIM_EVENT_VERSIONS,
   upcasters: BIM_UPCASTERS,
   stateVersion: BIM_STATE_VERSION,
-  tools: [...commandTools, ...queryTools, attachWallsToRoof, renderPlan, exportIfc, exportFrag, materialSearch, materialImport],
+  tools: [...commandTools, ...assemblyTypeTools, ...queryTools, attachWallsToRoof, renderPlan, exportIfc, exportFrag, materialSearch, materialImport],
 };
 // Phase 9: universal engine architecture
 export * from "./engines/registry.js";

@@ -1,7 +1,7 @@
 /** Composes existing native engines; no independent element or family store. */
 import {z} from 'zod';
 import {DomainError} from '@insa/core';
-import {semanticRevision} from '@insa/bim';
+import {semanticRevision,AssemblyDefinition,materializeAssembly,assemblyManagedFields,type AssemblyType,type AssemblyBinding} from '@insa/bim';
 import type {Builder,registerModelingCapability} from './modeling.js';
 import {reinforcementLayout} from './modeling-rebar.js';
 const point=z.tuple([z.number().finite(),z.number().finite()]);
@@ -33,6 +33,27 @@ export function addReinforcementAssembly(b:Builder,r:z.infer<typeof reinforcemen
  }
 }
 export function registerAssemblyCapabilities(register:typeof registerModelingCapability){
+ register({id:'parametric-assembly-type',kind:'assembly-type',input:z.object({kind:z.literal('assembly-type'),type:z.string().optional(),definition:AssemblyDefinition.optional(),storey:z.string().optional(),placements:z.array(placement.extend({overrides:z.record(z.string(),z.number()).default({})})).max(200).default([])}).strict(),engines:['assembly','point_component','profile_member','reinforcement'],compile(b,r){
+  if(Boolean(r.type)===Boolean(r.definition))throw new DomainError('Provide an existing assembly type or explicit definition.','INVALID_INPUT');
+  let type:AssemblyType|undefined;
+  if(r.definition){const def=AssemblyDefinition.parse({...r.definition,parts:r.definition.parts.map((p:any)=>({...p,type:resolveType(b,p.type).id}))}),{name:_name,...shape}=def;
+   type=Object.values(b.bim.assemblyTypes??{}).find(t=>t.revision===semanticRevision({...shape,name:undefined}));
+   if(!type){const result=b.add('bim_define_assembly_type',def);type=b.bim.assemblyTypes![result.id];}
+  }else type=b.bim.assemblyTypes?.[r.type!]??Object.values(b.bim.assemblyTypes??{}).find(t=>t.name===r.type);
+  if(!type)throw new DomainError('Assembly type missing.','RESOURCE_NOT_FOUND');
+  if(r.placements.length&&!r.storey)throw new DomainError('Assembly placement storey required.','INVALID_INPUT');
+  for(const p of r.placements){
+   if(p.height!==undefined||Object.keys(p.parameters).length)throw new DomainError('Use explicit assembly parameter overrides.','INVALID_INPUT');
+   const recipe=materializeAssembly(type,p.overrides),a=p.rotation*Math.PI/180,c=Math.cos(a),sn=Math.sin(a),members:Record<string,string>={};
+   const storey=b.bim.storeys[r.storey!]?.id??Object.values(b.bim.storeys).find(s=>s.name===r.storey)?.id;if(!storey)throw new DomainError('Assembly storey missing.','RESOURCE_NOT_FOUND');
+   const fields=assemblyManagedFields(b.bim,type,{type:type.id,revision:type.revision,members:Object.fromEntries(recipe.parts.map(p=>[p.role,p.role])),storey,at:p.at,offset:p.offset,rotation:p.rotation,overrides:p.overrides,managed:{}});
+   for(const part of recipe.parts){if(part.route){const t=resolveType(b,part.type),categories:Record<string,string>={pipe:'plumbing.pipe',duct:'mechanical.duct',conduit:'electrical.conduit',cable_tray:'electrical.cable_tray'};members[part.role]=b.created(()=>b.add('bim_create_mep_segments',{segments:[{...fields[part.role],category:categories[t.kind],name:part.role}]}))[0];}else members[part.role]=place(b,part.type,r.storey!,{at:[p.at[0]+part.at[0]*c-part.at[1]*sn,p.at[1]+part.at[0]*sn+part.at[1]*c],height:part.height,offset:p.offset+part.offset,rotation:p.rotation+part.rotation,parameters:{}},part.role);}
+   for(const refs of type.connections)b.add('bim_connect_mep',{connectors:refs.map(ref=>({element:members[ref.role],connector:ref.connector}))});
+   const ids=Object.values(members),assembly=b.created(()=>b.add('bim_create_assemblies',{items:[{children:ids,primary:ids[0],name:type!.name}]}))[0];
+   if(recipe.reinforcement){const {hostRole,...parameters}=recipe.reinforcement;addReinforcementAssembly(b,{...parameters,hosts:[members[hostRole]]});}
+   b.add('bim_bind_assembly_type',{assembly,binding:{type:type.id,revision:type.revision,members,storey:b.bim.elements[assembly].storey,at:p.at,offset:p.offset,rotation:p.rotation,overrides:p.overrides}});
+  }
+ }});
  register({id:'shared-resource-definitions',kind:'definitions',input:z.object({kind:z.literal('definitions'),families:z.array(z.record(z.string(),z.unknown())).default([]),types:z.array(z.record(z.string(),z.unknown())).default([])}).strict(),engines:[],compile(b,r){
   if(!r.families.length&&!r.types.length)throw new DomainError('At least one family or type definition is required.','INVALID_INPUT');
   const aliases=new Map<string,string>();for(const f of r.families)aliases.set(String(f.name),b.family(f));

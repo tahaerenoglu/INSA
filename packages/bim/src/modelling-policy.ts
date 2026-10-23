@@ -74,13 +74,19 @@ export function modellingIssues(s:BimState):ModellingIssue[] {
     issues.push({code:'wall_overlap',ids:[a.id,b.id],volume:overlap*(Math.min(az+a.height,bz+b.height)-Math.max(az,bz)),message:'Wall solids overlap without an explicit junction.'});
   }
   // Generic components are exact oriented boxes, not their axis-aligned bounds.
-  const components=elements.filter(e=>e.kind==='component').filter(e=>{try{componentBox(s,e);return true;}catch{return false;}});
-  for(let i=0;i<components.length;i++)for(let j=i+1;j<components.length;j++){
-    const a=componentBox(s,components[i]),b=componentBox(s,components[j]);
+  const components=elements.filter(e=>e.kind==='component').flatMap(e=>{try{const box=componentBox(s,e);return [{id:e.id,box,minX:Math.min(...box.corners.map(p=>p[0])),maxX:Math.max(...box.corners.map(p=>p[0])),minY:Math.min(...box.corners.map(p=>p[1])),maxY:Math.max(...box.corners.map(p=>p[1]))}];}catch{return [];}}).sort((a,b)=>a.minX-b.minX||a.id.localeCompare(b.id));
+  const overlaps:ModellingIssue[]=[],active:typeof components=[];
+  for(const current of components){
+   for(let i=active.length-1;i>=0;i--)if(active[i].maxX<=current.minX)active.splice(i,1);
+   for(const other of active){if(other.maxY<=current.minY||current.maxY<=other.minY)continue;
+    const a=other.box,b=current.box;
     const height=Math.min(a.zTop,b.zTop)-Math.max(a.zBottom,b.zBottom);if(height<=E)continue;
     const area=Math.abs(polygonSignedArea(footprintIntersection(a.corners,b.corners)));if(area<=E*E)continue;
-    issues.push({code:'component_overlap',ids:[components[i].id,components[j].id],volume:area*height,message:'Component solids interpenetrate.'});
+    overlaps.push({code:'component_overlap',ids:[other.id,current.id].sort((a,b)=>a.localeCompare(b)),volume:area*height,message:'Component solids interpenetrate.'});
+   }
+   active.push(current);
   }
+  issues.push(...overlaps.sort((a,b)=>a.ids[0].localeCompare(b.ids[0])||a.ids[1].localeCompare(b.ids[1])));
   return issues;
 }
 /** Legacy defects may be repaired incrementally; no command can add or enlarge a defective pair. */

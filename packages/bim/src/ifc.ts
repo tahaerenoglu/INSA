@@ -235,6 +235,16 @@ export function toIfc(s: BimState, opts: IfcOptions): string {
       typeRef[t.id] = st.add(t.kind === "column" ? "IFCCOLUMNTYPE" : "IFCBEAMTYPE",
         `${gid(t.id)},$,${S(t.name)},$,$,$,$,$,$,.${t.kind.toUpperCase()}.`);
       if (pt.material) st.add("IFCRELASSOCIATESMATERIAL", `${gid("mat:" + t.id)},$,$,$,(${typeRef[t.id]}),${matRef[pt.material]}`);
+    } else if(t.kind==='door'||t.kind==='window'){
+      typeRef[t.id]=st.add(t.kind==='door'?'IFCDOORTYPE':'IFCWINDOWTYPE',`${gid(t.id)},$,${S(t.name)},$,$,$,$,${S(t.id)},$,.${t.kind.toUpperCase()}.,.NOTDEFINED.,.F.,$`);
+    } else if(['pipe','duct','conduit','cable_tray','cable'].includes(t.kind)){
+      const classes:Record<string,string>={pipe:'IfcPipeSegment',duct:'IfcDuctSegment',conduit:'IfcCableCarrierSegment',cable_tray:'IfcCableCarrierSegment',cable:'IfcCableSegment'};
+      const entity=IFC_CLASS_DATA[classes[t.kind]]?.type_entity;if(entity)typeRef[t.id]=st.add(entity.toUpperCase(),`${gid(t.id)},$,${S(t.name)},$,$,$,$,${S(t.id)},$,.NOTDEFINED.`);
+    } else if(t.kind==='component'){
+      const family=s.families[t.family],category=findCategory(family.category),data=category?.ifcClass?IFC_CLASS_DATA[category.ifcClass]:undefined;
+      const entity=data?.type_entity??'IfcBuildingElementProxyType',furniture=entity==='IfcFurnitureType';
+      typeRef[t.id]=st.add(entity.toUpperCase(),`${gid(t.id)},$,${S(t.name)},$,$,$,$,${S(t.id)},$,${furniture?'.NOTDEFINED.,':''}.${t.predefinedType??'NOTDEFINED'}.`);
+      if(t.material)st.add('IFCRELASSOCIATESMATERIAL',`${gid('mat:'+t.id)},$,$,$,(${typeRef[t.id]}),${matRef[t.material]}`);
     }
   }
 
@@ -513,6 +523,7 @@ export function toIfc(s: BimState, opts: IfcOptions): string {
       : st.add("IFCWINDOW", `${gid(ins.id)},$,${S(ins.name ?? t.name)},$,${S(t.name)},${pl},${rep},${S(ins.id)},${real(t.height)},${real(t.width)},.WINDOW.,${t.windowFrame?.sashCount===2?".DOUBLE_PANEL_VERTICAL.":".SINGLE_PANEL."},$`);
     elRef[ins.id] = ref;
     contain(ins, ref);
+    typed(ins,ref);
     st.add("IFCRELFILLSELEMENT", `${gid("fill:" + ins.id)},$,$,$,${elRef[op.id]},${ref}`);
   }
 
@@ -537,6 +548,7 @@ export function toIfc(s: BimState, opts: IfcOptions): string {
       `${gid(el.id)},$,${S(el.name ?? t.name)},$,${S(`${f.name}:${t.name}`)},${pl},${rep},${S(el.id)},${furniture ? ".NOTDEFINED." : ".ELEMENT."}`);
     elRef[el.id] = ref;
     contain(el, ref);
+    typed(el,ref);
     componentPsets[el.id] = {
       INSA_Component: { Category: f.category, Discipline: c?.discipline ?? "", Family: f.name, FamilyId: f.id, Type: t.name, TypeId: t.id,
                         ...(c?.ifcClass && !furniture && !native ? { IfcClassHint: c.ifcClass } : {}) },
@@ -557,6 +569,7 @@ export function toIfc(s: BimState, opts: IfcOptions): string {
     const ref = st.add(cls.entity, `${gid(el.id)},$,${S(el.name ?? el.id)},$,$,${placement(storeyRef[el.storey].pl, identity)},${product([shape(body, "Body", "SweptSolid", solids)])},${S(el.id)},${cls.predefined}`);
     elRef[el.id] = ref;
     contain(el, ref);
+    typed(el,ref);
   }
   // Engine-owned writers (Phase 14): every engine that DECLARES `ifc.mode === "writer"` writes its own products through this context. Product writers run
   // first; relationship-phase writers (assemblies) after, because they aggregate products that must already exist.
@@ -655,6 +668,12 @@ export function toIfc(s: BimState, opts: IfcOptions): string {
     if (el.kind !== "hosted_component" || !elRef[el.id]) continue;
     const t = s.types[el.type] as OpeningType;
     if (t.material && matRef[t.material]) st.add("IFCRELASSOCIATESMATERIAL", `${gid("mat:" + el.id)},$,$,$,(${elRef[el.id]}),${matRef[t.material]}`);
+  }
+  // Persisted recipe types use the IFC assembly type; member products and
+  // their existing native type relations remain independent.
+  for(const type of Object.values(s.assemblyTypes??{})){
+    const members=elements.filter(e=>e.kind==='assembly'&&e.assemblyBinding?.type===type.id).map(e=>elRef[e.id]).filter(Boolean);
+    if(members.length){typeRef[type.id]=st.add('IFCELEMENTASSEMBLYTYPE',`${gid(type.id)},$,${S(type.name)},$,$,$,$,${S(type.id)},$,.NOTDEFINED.`);typeMembers[type.id]=members;}
   }
   for (const [tid, refs] of Object.entries(typeMembers))
     st.add("IFCRELDEFINESBYTYPE", `${gid("type:" + tid)},$,$,$,${list(refs)},${typeRef[tid]}`);

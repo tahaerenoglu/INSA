@@ -61,6 +61,11 @@ function oracle(s: BimState, scope: { system?: string; element?: string; connect
 }
 const view = async (t: T, input: Record<string, unknown>) => { const r = (await t.ex("bim_query_mep_network", input)).result; return { elements: r.elements.map((e: any) => e.id).sort(), junctions: r.junctions.map((j: any) => j.id).sort(), open: r.openConnectors.map((c: any) => `${c.element}#${c.connector}`).sort(), raw: r }; };
 
+test('Phase 4 semantic projection preserves separate systems at shared equipment ports',async()=>{
+ const t=await build(),s=await t.S(),{bimSemanticGraph}=await import('../src/semantic-model.js'),graph=bimSemanticGraph(s);
+ for(const e of Object.values(s.elements))if(e.kind==='mep_segment')assert.deepEqual(graph.edges.filter(edge=>edge.source==='bim:'+e.id&&edge.relation==='PartOfSystem').map(edge=>edge.target),['bim:system:'+e.system]);
+ assert.equal(graph.edges.filter(edge=>edge.source==='bim:CO-0001'&&edge.relation==='PartOfSystem').length,3);
+});
 test("A2: one equipment, two domains, three systems: a system query never leaks into another system through the shared equipment; the oracle agrees in every mode", async () => {
   const t = await build();
   const s = await t.S();

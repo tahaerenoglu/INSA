@@ -4,9 +4,9 @@ import {canonicalJson} from '@insa/core';
 import type {BimState,Element} from './model.js';
 import {engineOfKind,TYPE_FAMILY_OF_KIND} from './engines/registry.js';
 import {handlersOf} from './engines/handlers.js';
-import {connectorsOf} from './mep.js';
+import {connectorsOf,junctionSystem} from './mep.js';
 export const semanticRevision=(v:unknown)=>createHash('sha256').update(canonicalJson(v)).digest('hex').slice(0,16);
-export type RelationKind='HostedBy'|'ConnectedTo'|'SupportedBy'|'PartOf'|'PartOfSystem'|'MemberOfAssembly'|'InstanceOfType'|'AlignedWith'|'DependsOn'|'Intersects'|'Penetrates'|'FollowsAlignment'|'ClippedBy';
+export type RelationKind='HostedBy'|'ConnectedTo'|'SupportedBy'|'PartOf'|'LocatedOn'|'PartOfSystem'|'MemberOfAssembly'|'InstanceOfType'|'AlignedWith'|'DependsOn'|'Intersects'|'Penetrates'|'FollowsAlignment'|'ClippedBy';
 export interface SemanticNode {id:string;localId:string;domain:string;kind:string;name:string;revision?:string;}
 export interface SemanticEdge {id:string;source:string;target:string;relation:RelationKind;basis:'explicit'|'derived';evidence?:string;}
 export function semanticEdge(source:string,target:string,relation:RelationKind,basis:SemanticEdge['basis']='explicit',evidence?:string):SemanticEdge{
@@ -19,7 +19,7 @@ export function bimFamilyCatalog(s:BimState){
  const families=new Map<string,{id:string;name:string;origin:'stored'|'native-engine';revision:string;definition:unknown;types:string[];instances:string[]}>();
  for(const f of Object.values(s.families))families.set(f.id,{id:f.id,name:f.name,origin:'stored',revision:semanticRevision(f),definition:f,types:[],instances:[]});
  for(const t of types){let f=families.get(t.family);if(!f){f={id:t.family,name:`${t.kind} · ${'profile'in t.definition?t.definition.profile.shape:TYPE_FAMILY_OF_KIND[t.kind]??t.kind}`,origin:'native-engine',revision:semanticRevision([t.family,1]),definition:{kind:t.kind,parameterSource:'existing native type schema; edit through bim_update_types'},types:[],instances:[]};families.set(f.id,f);}f.types.push(t.id);f.instances.push(...t.instances);}
- return {families:[...families.values()],types,scope:'project',versioning:'content revision + existing governed event history',globalLibrary:false};
+ return {families:[...families.values()],types,assemblies:Object.values(s.assemblyTypes??{}).map(t=>({...t,instances:Object.values(s.elements).filter(e=>e.kind==='assembly'&&e.assemblyBinding?.type===t.id).map(e=>e.id)})),materials:Object.values(s.materials),profiles:types.filter(t=>'profile'in t.definition).map(t=>({type:t.id,profile:(t.definition as any).profile})),scope:'project',versioning:'content revision + existing governed event history',globalLibrary:false};
 }
 export function bimSemanticGraph(s:BimState){
  const catalog=bimFamilyCatalog(s),nodes:SemanticNode[]=[],edges:SemanticEdge[]=[];
@@ -27,23 +27,27 @@ export function bimSemanticGraph(s:BimState){
  const edge=(a:string,b:string,r:RelationKind,basis:SemanticEdge['basis']='explicit',evidence?:string)=>edges.push(semanticEdge('bim:'+a,'bim:'+b,r,basis,evidence));
  for(const f of catalog.families)node('family:'+f.id,'family',f.name,f.revision);
  for(const t of catalog.types){node('type:'+t.id,'type',t.name,t.revision);edge('type:'+t.id,'family:'+t.family,'PartOf','derived','existing type/family registry');}
+ for(const t of catalog.assemblies)node('assembly-type:'+t.id,'assembly_type',t.name,t.revision);
  for(const st of Object.values(s.storeys))node('storey:'+st.id,'storey',st.name,semanticRevision(st));
  for(const system of Object.values(s.mepSystems))node('system:'+system.id,'system',system.name,semanticRevision(system));
  for(const e of Object.values(s.elements)){
   node(e.id,e.kind,e.name??e.id,semanticRevision(e));
   edge(e.id,'storey:'+e.storey,'PartOf');
+  edge(e.id,'storey:'+e.storey,'LocatedOn');
   if('type'in e)edge(e.id,'type:'+e.type,'InstanceOfType');
   if('host'in e&&typeof e.host==='string')edge(e.id,e.host,'HostedBy');
   for(const dep of handlersOf(e).dependsOn?.(s,e)??[])edge(e.id,dep,'DependsOn','derived','engine dependency declaration');
   if(e.kind==='wall'&&e.topRoof)edge(e.id,e.topRoof,'ClippedBy');
   if(e.kind==='assembly')for(const child of e.children)edge(child,e.id,'MemberOfAssembly');
+  if(e.kind==='assembly'&&e.assemblyBinding)edge(e.id,'assembly-type:'+e.assemblyBinding.type,'InstanceOfType');
   if('system'in e&&typeof e.system==='string')edge(e.id,'system:'+e.system,'PartOfSystem');
  }
  for(const j of Object.values(s.joins)){const ids=j.kind==='endpoint_endpoint'?j.members.map(m=>m.wall):[j.endpoint.wall,j.host];for(let i=0;i<ids.length;i++)for(let k=i+1;k<ids.length;k++)edge(ids[i],ids[k],'ConnectedTo','explicit',j.id);}
  const connectorSystems=new Map<string,Set<string>>();
  for(const e of Object.values(s.elements))for(const c of connectorsOf(s,e))if(c.system){const systems=connectorSystems.get(e.id)??new Set<string>();systems.add(c.system);connectorSystems.set(e.id,systems);}
- // Equipment inherits system membership only across explicit junctions, never from proximity.
- let grew=true;while(grew){grew=false;for(const j of Object.values(s.mepJunctions)){const systems=new Set(j.members.flatMap(m=>[...(connectorSystems.get(m.element)??[])]));for(const m of j.members){const prior=connectorSystems.get(m.element)??new Set<string>();for(const id of systems)if(!prior.has(id)){prior.add(id);grew=true;}connectorSystems.set(m.element,prior);}}}
+ // A shared piece of equipment may terminate multiple systems. Never bridge
+ // its separate ports or contaminate a route's explicit system membership.
+ for(const j of Object.values(s.mepJunctions)){const system=junctionSystem(s,j);if(!system)continue;for(const m of j.members){const prior=connectorSystems.get(m.element)??new Set<string>();prior.add(system);connectorSystems.set(m.element,prior);}}
  for(const [id,systems]of connectorSystems)for(const system of systems)edge(id,'system:'+system,'PartOfSystem','derived','explicit connector graph');
  for(const j of Object.values(s.mepJunctions))for(let i=0;i<j.members.length;i++)for(let k=i+1;k<j.members.length;k++)edge(j.members[i].element,j.members[k].element,'ConnectedTo','explicit',j.id);
  // Hosted parts belong transitively to the host's assemblies, but retain independent IDs.

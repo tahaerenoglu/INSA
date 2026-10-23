@@ -53,6 +53,9 @@ export class Viewer {
     this.world.renderer = new OBF.RendererWith2D(this.components, container);
     const overlay=(this.world.renderer as OBF.RendererWith2D).three2D.domElement;overlay.style.pointerEvents='none';container.appendChild(overlay);
     this.world.camera = new OBC.OrthoPerspectiveCamera(this.components);
+    // ThatOpen defaults to a 1 m near plane. Fitting a small valve puts the
+    // camera closer than that and clips most faces; retain millimetre-scale views.
+    for(const camera of [this.world.camera.threePersp,this.world.camera.threeOrtho]){camera.near=.01;camera.updateProjectionMatrix();}
     await this.world.camera.controls.setLookAt(22, 18, 22, 6, 0, 4);
     this.components.init();
     this.civilNavigation=new CivilNavigationView(this.components,this.world);

@@ -2,13 +2,16 @@
 import { createHash } from 'node:crypto';
 import { z } from 'zod';
 import { DomainError, canonicalJson, can, type ModuleDef, type ToolContext, type CommandTool, type QueryTool } from '@insa/core';
-import { bimModule, modelIssues, listEngines, engineOfKind, coordinateModel,handlersOf, type BimState } from '@insa/bim';
+import { bimModule, modelIssues, listEngines, engineOfKind, coordinateModel,handlersOf,normalizeTypeUnits,normalizeFamilyUnits,assertDefinitionKeys,definitionSignature,typeEquivalenceSignature, type BimState } from '@insa/bim';
 import { infraModule, type InfraState } from '@insa/infra';
 import { filesModule } from '@insa/files';
 import { reinforcementLayout, reinforcementGeometryIssues } from './modeling-rebar.js';
 import { orthogonalRoute } from './modeling-routing.js';
 import {registerAssemblyCapabilities,addReinforcementAssembly} from './modeling-assemblies.js';
 import {projectSemantics,PROJECT_ARCHETYPES} from './modeling-semantics.js';
+import {workflowInput,orderedOperations,resolveIntent,planningDetails,archetypeKnowledge} from './modeling-planner.js';
+import {registerDocumentCapabilities,documentUnderstanding,DocumentRequest} from './modeling-documents.js';
+import {registerEngineCapabilities} from './modeling-engine-capabilities.js';
 
 const point = z.tuple([z.number().finite(), z.number().finite()]);
 const source = z.object({ file: z.string(), version: z.number().int().positive(), reference: z.string(),
@@ -29,7 +32,7 @@ const arrayLayout = z.object({ kind: z.literal('array'), type: z.string(), store
   rows: z.number().int().min(1).max(100), columns: z.number().int().min(1).max(100),
   spacing: z.tuple([z.number().positive(), z.number().positive()]), offset: z.number().default(0), rotation: z.number().default(0) }).strict();
 export const ModelingInput = z.object({ intent: z.string().min(1).max(4000), requestId: z.string().min(1).max(80),
-  requirements: z.object({ kind: z.string().min(1) }).catchall(z.unknown()).describe('Read project_analyze capability schemas; the selected engine validates its complete requirements object'),
+  requirements: z.object({ kind: z.string().min(1) }).catchall(z.unknown()).default({kind:'request'}).describe('Explicit capability or workflow operations; omit for bounded intent planning with missing-input reporting'),
   sources: z.array(source).max(100).default([]), planId: z.string().optional(),
   mode: z.literal('conceptual').default('conceptual') }).strict();
 type Input = z.infer<typeof ModelingInput>;
@@ -53,14 +56,15 @@ export function registerModelingCapability(capability: Capability) {
 const hash = (v: unknown) => createHash('sha256').update(canonicalJson(v)).digest('hex').slice(0, 24);
 const allModules = [bimModule, infraModule, filesModule];
 export class Builder {
+  extraPermissions=new Set<string>();sourceEvidence:unknown[]=[];
   steps: Step[] = [];
   states: Map<string, any>;
   constructor(readonly ctx: ToolContext<any>) { this.states = new Map(structuredClone(ctx.states!)); }
   get bim(): BimState { return this.states.get('bim'); }
   family(def:any):string {
-    const parsed=(this.ctx.platform.tool('bim_create_families').input.parse({families:[def]}) as any).families[0];
+    const normalized=normalizeFamilyUnits(def),parsed=(this.ctx.platform.tool('bim_create_families').input.parse({families:[normalized]}) as any).families[0];assertDefinitionKeys(normalized,parsed);
     const {name:_name,...shape}=parsed;
-    const match=Object.values(this.bim.families).find(f=>{const {id:_id,name:_n,...value}=f;return canonicalJson(value)===canonicalJson(shape);});
+    const match=Object.values(this.bim.families).find(f=>{const {id:_id,name:_n,...value}=f;return definitionSignature(value)===definitionSignature(shape);});
     if(match)return match.id;
     if(Object.values(this.bim.families).some(f=>f.name===parsed.name))throw new DomainError('Family name has a conflicting definition.','CONFLICTING_TYPE');
     const before=new Set(Object.keys(this.bim.families));this.add('bim_create_families',{families:[parsed]});return Object.keys(this.bim.families).find(id=>!before.has(id))!;
@@ -78,24 +82,17 @@ export class Builder {
     return decision.summary as any;
   }
   type(def: any): string {
-    // Reuse exact semantic definitions, never mutate an unrelated type merely because its name matches.
-    const expected: Record<string, unknown> = {};
-    for (const [key, value] of Object.entries(def)) {
-      if (key === 'name') continue;
-      expected[key === 'steel_grade' ? 'steelGrade' : key] = key === 'layers' ? (value as any[]).map(l => ({
-        material: this.bim.materials[l.material]?.id ?? Object.values(this.bim.materials).find(m => m.name === l.material)?.id ?? l.material,
-        thickness: l.thickness, function: l.function ?? 'structure' })) : value;
-    }
-    const semantic = (t: any) => { const { id: _id, name: _name, ...value } = t; return value; };
-    const match = Object.values(this.bim.types).find(t => canonicalJson(semantic(t)) === canonicalJson(expected));
-    if (match) return match.id;
-    const existing = Object.values(this.bim.types).find(t => t.kind === def.kind && t.name === def.name);
-    if (existing) {
-      throw new DomainError(`Type name ${def.name} has a different definition`, 'CONFLICTING_TYPE');
-    }
-    const before = new Set(Object.keys(this.bim.types));
-    this.add('bim_create_types', { types: [def] });
-    return Object.keys(this.bim.types).find(id => !before.has(id))!;
+    const normalized=normalizeTypeUnits(this.bim,def),tool=this.ctx.platform.tool('bim_create_types');
+    const input:any=tool.input.parse({types:[normalized]});assertDefinitionKeys(normalized,input.types[0]);
+    if(tool.kind!=='command'||tool.expand)throw new Error('Native type command required');
+    const decision=tool.decide(structuredClone(this.bim),input,{...this.ctx,state:structuredClone(this.bim),states:this.states});
+    const candidate:any=decision.events.find(e=>e.type==='TypeCreated')?.payload;
+    if(!candidate)throw new Error('Type normalization produced no type');
+    const match=Object.values(this.bim.types).find(t=>typeEquivalenceSignature(this.bim,t)===typeEquivalenceSignature(this.bim,candidate));
+    if(match)return match.id;
+    if(Object.values(this.bim.types).some(t=>t.kind===candidate.kind&&t.name===candidate.name))throw new DomainError('Type name has a conflicting semantic definition.','CONFLICTING_TYPE');
+    const before=new Set(Object.keys(this.bim.types));this.add('bim_create_types',input);
+    return Object.keys(this.bim.types).find(id=>!before.has(id))!;
   }
   created(action: () => void): string[] {
     const before = new Set(Object.keys(this.bim.elements)); action();
@@ -176,7 +173,16 @@ registerModelingCapability({ id: 'shared-component-array', kind: 'array', input:
 } });
 
 registerAssemblyCapabilities(registerModelingCapability);
-function compile(ctx: ToolContext<any>, input: Input) {
+registerDocumentCapabilities(registerModelingCapability);
+registerEngineCapabilities(registerModelingCapability);
+registerModelingCapability({id:'universal-project-workflow',kind:'workflow',input:workflowInput,engines:[],compile(b,r){
+ archetypeKnowledge(r.archetype,r.systems);
+ for(const operation of orderedOperations(r)){const cap=capabilities.get(operation.requirements.kind);if(!cap)throw new DomainError('Unsupported operation capability: '+operation.requirements.kind,'UNSUPPORTED_CAPABILITY');const parsed=cap.input.safeParse(operation.requirements);if(!parsed.success)throw new DomainError(`Operation ${operation.id}: ${parsed.error.message}`,'INVALID_INPUT');cap.compile(b,parsed.data);}
+}});
+function compile(ctx: ToolContext<any>, request: Input) {
+  const resolved=resolveIntent(request.intent,request.requirements);
+  if(resolved.missing.length)throw new DomainError('Planning requires explicit missing inputs.','PLAN_REQUIRES_INPUT',{missing:JSON.stringify(resolved.missing)});
+  const input={...request,requirements:resolved.requirements};
   const before = ctx.states!, files = before.get('files')?.files ?? {};
   for (const s of input.sources) {
     if (['Missing', 'Conflicting', 'RequiresApproval'].includes(s.status)) throw new DomainError('Unresolved source information', 'SOURCE_REQUIRES_REVIEW');
@@ -219,8 +225,8 @@ function compile(ctx: ToolContext<any>, input: Input) {
   const packs = [...rules.values()].filter(r => r.status === 'implemented' && r.applies(cap.kind));
   const validation = packs.flatMap(r => r.evaluate(b.bim));
   if (validation.length) throw new DomainError('Generated model failed validation.', 'MODEL_VALIDATION_FAILED', { issues: JSON.stringify(validation) });
-  return { steps: b.steps, permissions: ['bim.read', ...(input.sources.length ? ['files.read'] : []), ...(input.requirements.kind === 'corridor' ? ['infra.read'] : [])], summary: { planId, requestId: input.requestId, sources: input.sources, engines: cap.engines,
-    created,coordination,semantics:semanticSummary(b.bim,b.states.get('infra')),constraints:constraintReport(b.bim,coordination,cap.kind),repair:{maxIterations:2,iterations:repairIterations,attemptedIssues:[...attempted]},
+  return { steps: b.steps, permissions: ['bim.read',...b.extraPermissions, ...(input.sources.length ? ['files.read'] : []), ...(input.requirements.kind === 'corridor' ? ['infra.read'] : [])], summary: { planId, requestId: input.requestId, sources: input.sources,documentEvidence:b.sourceEvidence, engines: cap.engines,
+    ...planningDetails(ctx,input,before,b.states,b.steps),created,coordination,semantics:semanticSummary(b.bim,b.states.get('infra')),constraints:constraintReport(b.bim,coordination,cap.kind),repair:{maxIterations:2,iterations:repairIterations,attemptedIssues:[...attempted]},
     infrastructure: Object.keys(b.states.get('infra')?.roads ?? {}).filter(id => !before.get('infra')?.roads?.[id]),
     assumptions: input.requirements.kind === 'building' ? ['Conceptual rectangular footprint; totalArea is summed gross floor area.', 'Example concrete sections and thicknesses; no structural adequacy calculation.', 'Reserved conceptual service shaft at one-quarter footprint in every slab.', `Roof form ${(parsed.data as z.infer<typeof building>).roofForm}; no sloping facade engine.`] : [],
     warnings: ['Conceptual model; no structural, hydraulic, electrical or code adequacy calculation.'], validation, rulePacks: packs.map(p => p.id),
@@ -269,10 +275,10 @@ function constraintReport(s:BimState,coordination:ReturnType<typeof coordinateMo
  results.push(...coordination.issues.filter(i=>i.severity!=='info').map(i=>({rule:'universal-indexed-coordination',elements:i.elements,reason:i.kind,severity:i.severity,message:i.message})));
  const graph=projectSemantics(s),nodes=new Set(graph.nodes.map(n=>n.id));
  for(const edge of graph.edges)if(!nodes.has(edge.source)||!nodes.has(edge.target))results.push({rule:'universal-relationship-integrity',elements:[edge.source,edge.target],reason:'INVALID_REFERENCE',severity:'error',message:`Dangling ${edge.relation} relationship.`});
- return {results,expectedInterfaces:coordination.issues.filter(i=>i.severity==='info').length,checkedRules:[...rules.keys(),'universal-indexed-coordination','universal-relationship-integrity'],engineeringAdequacy:false};
+ return {results,expectedInterfaces:coordination.issues.filter(i=>i.severity==='info').length,checkedRules:[...[...rules.values()].filter(r=>r.status==='implemented'&&(!kind||r.applies(kind))).map(r=>r.id),'universal-indexed-coordination','universal-relationship-integrity'],coverage:{universal:{geometry:'IMPLEMENTED',identity:'IMPLEMENTED',host:'IMPLEMENTED',dependencies:'IMPLEMENTED',connections:'IMPLEMENTED',units:'Explicit SI schemas; requested type units normalized; no guessed units',coordinates:'Existing domain/storey/georeference invariants',clearance:'Only when explicit clearance threshold requested'},disciplines:{structural:'Geometric/domain invariants; no capacity calculation',reinforcement:'Explicit paths and rectangular-column cover/parametric layout',MEP:'Explicit connector geometry and system consistency; no sizing',steel:'Native profiles and generic assemblies; no connection design',infrastructure:'Existing domain validators; BIM coordination does not prove infrastructure interference',energy:'Generic components/assemblies only; no electrical design',industrial:'Generic equipment/assemblies only; no process engineering'},standards:{status:'NOT IMPLEMENTED',reason:'No verified standard profile selected'}},engineeringAdequacy:false};
 }
 const revise: CommandTool<any> = { name: 'model_revise', title: 'model.revise', module: 'modeling', kind: 'command', effect: 'write', permission: 'bim.read',
-  input: z.object({ changes: z.array(z.object({ tool: z.enum(['bim_update_elements', 'bim_update_storeys', 'bim_update_types','bim_update_families','bim_create_types','bim_set_properties', 'infra_update_alignment', 'infra_update_road_corridor', 'infra_update_component_type']), input: z.record(z.string(), z.unknown()) }).strict()).min(1).max(50) }).strict(),
+  input: z.object({ changes: z.array(z.object({ tool: z.enum(['bim_update_elements', 'bim_update_storeys', 'bim_update_types','bim_update_families','bim_create_types','bim_set_properties','bim_update_assembly_type', 'infra_update_alignment', 'infra_update_road_corridor', 'infra_update_component_type']), input: z.record(z.string(), z.unknown()) }).strict()).min(1).max(50) }).strict(),
   description: 'Controlled atomic revision through registered domain editors; dependent validation and authorization remain enforced.',
   decide() { throw new Error('Composite command'); }, expand(ctx, i) { return revision(ctx, i.changes); } };
 const repair: CommandTool<any> = { ...revise, name: 'model_repair', title: 'model.repair', input: z.object({ roof: z.string().optional(), walls: z.array(z.string()).min(1).optional(),
@@ -304,12 +310,13 @@ export const modelingModule: ModuleDef = { id: 'modeling', title: 'Universal Mod
       documents: Object.values(c.states?.get('files')?.files ?? {}), capabilities: [...capabilities.values()].map(({ compile: _compile, input, ...c }) => ({ ...c, requirementsSchema: z.toJSONSchema(input, { target: 'draft-7', unrepresentable: 'any' }) })),
       rulePacks: [...rules.values()].map(({ applies: _applies, evaluate: _evaluate, ...p }) => p),
       engines: listEngines(),semantics:semanticSummary(c.states!.get('bim'),c.states!.get('infra')),archetypes:PROJECT_ARCHETYPES,
-      semanticQueries:[{tool:'semantic.library',input:{}},{tool:'semantic.graph',input:{ids:'optional qualified node ID array'}}],standardProfile: { status: 'Missing', engineeringAdequacy: false },
+      semanticQueries:[{tool:'semantic.library',input:{}},{tool:'semantic.graph',input:{ids:'optional qualified node ID array'}},{tool:'documents.understand',input:{file:'registered source ID',version:'explicit integer revision',sheet:'optional worksheet'}}],planningKnowledge:archetypeKnowledge(),standardProfile: { status: 'Missing', engineeringAdequacy: false },
       queries: ctx.platform.listTools().filter(t => t.kind === 'query' && ['bim', 'infra', 'files'].includes(t.module) && !/export|upload|render/.test(t.name) && can(ctx.actor, t.permission, ctx.platform.roles))
         .map(t => ({ name: t.name, description: t.description, input: z.toJSONSchema(t.input, { target: 'draft-7', unrepresentable: 'any' }) })),
       knowledgeStates: ['Verified', 'Derived', 'Assumed', 'Missing', 'Conflicting', 'RequiresApproval'] };
   }),
   query('project_query', 'bim.read', z.object({ tool: z.string(), input: z.record(z.string(), z.unknown()).default({}) }).strict(), async (ctx, i) => {
+    if(i.tool==='documents.understand')return documentUnderstanding(await context(ctx),DocumentRequest.parse(i.input));
     if(i.tool==='semantic.library'||i.tool==='semantic.graph'){
       const input=z.object({ids:z.array(z.string()).max(1000).optional(),includeGeometry:z.boolean().default(false)}).strict().parse(i.input),c=await context(ctx),bim=c.states!.get('bim') as BimState,graph=projectSemantics(bim,c.states!.get('infra'),input.includeGeometry?coordinateModel(bim):undefined);
       if(i.tool==='semantic.library')return graph.library;
@@ -320,7 +327,7 @@ export const modelingModule: ModuleDef = { id: 'modeling', title: 'Universal Mod
     if (t.kind !== 'query' || !['bim', 'infra', 'files'].includes(t.module) || /export|upload|render/.test(t.name)) throw new DomainError('Only evidence/model queries are allowed.', 'INVALID_QUERY');
     return ctx.platform.execute(ctx.actor, ctx.project, t.name, i.input);
   }),
-  query('model_plan', 'bim.read', ModelingInput, async (ctx, i) => compile(await context(ctx), i)), generate, revise,
+  query('model_plan', 'bim.read', ModelingInput, async (ctx, i) => {const c=await context(ctx),resolved=resolveIntent(i.intent,i.requirements);if(resolved.missing.length)return {steps:[],summary:{planId:'PLAN-'+hash({project:ctx.project,input:i,state:[...c.states!]}),projectId:ctx.project,userIntent:i.intent,status:'REQUIRES_INPUT',projectType:resolved.archetype??'unspecified',knowledge:archetypeKnowledge(resolved.archetype),missing:resolved.missing,basis:resolved.basis,approvalRequirements:{required:false,reason:'No executable plan'},validationSteps:[]}};return compile(c,i);}), generate, revise,
   query('model_validate', 'bim.read', z.object({ids:z.array(z.string()).min(1).optional(),tolerance:z.number().positive().max(.01).default(.0001),clearance:z.number().min(0).max(10).default(0)}).strict(), async (ctx,input) => {
     const s = await ctx.platform.state<BimState>(ctx.project, 'bim');
     const issues = [...modelIssues(s), ...reinforcementGeometryIssues(s)];

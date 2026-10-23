@@ -11,7 +11,7 @@ export function projectSemantics(bim:BimState,infra?:InfraState,coordination?:Re
   for(const type of Object.values(infra.componentTypes??{})){node('type:'+type.id,'component_type',type);infraFamilies.push({id:'infra:type:'+type.id,name:type.name,origin:'stored',definition:type,revision:semanticRevision(type),types:[type.id],instances:[] as string[]});}
   for(const section of Object.values(infra.sections))node('type:'+section.id,'section',section);
   for(const road of Object.values(infra.roads??{})){
-   node(road.id,'corridor',road);edge(road.id,road.alignment,'FollowsAlignment');
+   node(road.id,'corridor',road);edge(road.id,road.alignment,'FollowsAlignment');edge(road.id,road.alignment,'AlignedWith');
    for(const layer of road.layers){const id=`${road.id}:layer:${layer.id}`;node(id,'component_placement',{name:layer.name});edge(id,road.id,'PartOf');if(layer.componentType){edge(id,'type:'+layer.componentType,'InstanceOfType');infraFamilies.find(f=>f.id==='infra:type:'+layer.componentType)?.instances.push(id);} }
   }
   for(const tunnel of Object.values(infra.tunnels)){node(tunnel.id,'tunnel',tunnel);edge(tunnel.id,tunnel.alignment,'FollowsAlignment');for(const range of tunnel.ranges)edge(tunnel.id,'type:'+range.section,'DependsOn');}
