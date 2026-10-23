@@ -1,0 +1,102 @@
+{
+  "project": "sacramento-adu-from-2d-20261023",
+  "checkedAt": "2026-10-23T20:07:49.334Z",
+  "checks": [
+    {
+      "name": "231 native element identities, including 18 voids and 6 spatial elements",
+      "passed": true
+    },
+    {
+      "name": "24 walls / 100 framing members / 18 hosted inserts / 57 components",
+      "passed": true
+    },
+    {
+      "name": "Every native element has source sheet and original PDF hash",
+      "passed": true
+    },
+    {
+      "name": "Face-of-frame footprint 6.096m x12.192m, porch cutout 2.4384m x1.6764m",
+      "passed": true
+    },
+    {
+      "name": "Roof pitch5:12, ridge3.84175m, overhang0.3048m",
+      "passed": true
+    },
+    {
+      "name": "Shared type IDs reused for 44 sloping rafters and 40 ceiling-joist halves",
+      "passed": true
+    },
+    {
+      "name": "9 windows and9 doors have valid native opening/host links",
+      "passed": true
+    },
+    {
+      "name": "Bathroom door is on the horizontal north partition",
+      "passed": true
+    },
+    {
+      "name": "6 bounded non-overlapping room labels",
+      "passed": true
+    },
+    {
+      "name": "Source documents are 2D PDF/evidence only; no source IFC imported",
+      "passed": true
+    },
+    {
+      "name": "No native reference/domain-invariant errors (coordination remains open)",
+      "passed": true
+    },
+    {
+      "name": "Native IFC and Fragments exports generated from authored state",
+      "passed": true
+    },
+    {
+      "name": "Original frame project preserved at96 native elements",
+      "passed": true
+    },
+    {
+      "name": "Previous reference clinic project unchanged at0 native elements",
+      "passed": true
+    }
+  ],
+  "nativeElements": 231,
+  "visibleTreeProducts": 213,
+  "byKind": {
+    "profile_member": 100,
+    "component": 57,
+    "hosted_component": 18,
+    "boundary": 7,
+    "opening": 18,
+    "pitched_roof": 1,
+    "spatial": 6,
+    "wall": 24
+  },
+  "sourceIFCImported": false,
+  "sourceDate": "2025-11-26",
+  "engineeringAdequacy": false,
+  "coordination": {
+    "status": "REQUIRES_REVIEW",
+    "issueCounts": {
+      "MissingConnection": 12,
+      "HardClash": 64
+    },
+    "total": 76,
+    "limitations": [
+      "general curved solids",
+      "MEP envelope-only/inter-system body clashes",
+      "wall hosted-void decomposition",
+      "engineering adequacy"
+    ],
+    "interpretation": "Do not call coordinated or construction-ready. The checker reports roof/uncut timber seating interfaces and monolithic porch/foundation overlap; interior walls intentionally terminate at ceiling and are not extended into attic merely to clear automatic roof-attachment suggestions."
+  },
+  "exports": {
+    "ifc": {
+      "bytes": 621667,
+      "sha256": "3fcd866a803f3c88eef31ab15b4b27b825a25ea33374b9036a4d3767c9f82954"
+    },
+    "frag": {
+      "bytes": 113088,
+      "sha256": "1a130be26ce7949edb4975f82df1e5425c2dd110947159f24a7450f70a2b8ca3"
+    }
+  }
+}

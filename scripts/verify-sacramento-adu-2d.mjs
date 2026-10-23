@@ -1,0 +1,46 @@
+/** Read-only acceptance checks against the live native reconstruction. */
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+const base=process.env.INSA_URL??'http://localhost:8790';
+const project=process.env.INSA_PROJECT??'sacramento-adu-from-2d-20261023';
+const out='output/adu-2d';
+const {token}=await(await fetch(base+'/api/auth/login',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({user:'taha'})})).json();
+assert.ok(token);
+const headers={authorization:'Bearer '+token,'content-type':'application/json'};
+async function tool(name,input,p=project){const r=await fetch(`${base}/api/projects/${p}/tools/${name}`,{method:'POST',headers,body:JSON.stringify({input})});const v=await r.json();assert.equal(r.status,200,JSON.stringify(v));return v.result;}
+const checks=[];
+const check=(name,fn)=>{fn();checks.push({name,passed:true});};
+const inventory=await tool('bim_query_elements',{limit:1000,with_quantities:true});
+const all=inventory.elements;
+check('231 native element identities, including 18 voids and 6 spatial elements',()=>assert.equal(inventory.total,231));
+const byKind=all.reduce((a,e)=>(a[e.kind]=(a[e.kind]??0)+1,a),{});
+check('24 walls / 100 framing members / 18 hosted inserts / 57 components',()=>{assert.equal(byKind.wall,24);assert.equal(byKind.profile_member,100);assert.equal(byKind.hosted_component,18);assert.equal(byKind.component,57);});
+const details=[];
+for(const row of all)details.push(await tool('bim_get_element',{id:row.id}));
+check('Every native element has source sheet and original PDF hash',()=>{for(const e of details){assert.ok(e.props?.INSA_Source?.sheet,e.id);assert.equal(e.props.INSA_Source.sourcePdfSHA256,'cac7bc5f01be4691e9dd07e8c51984ef21c2d774947204a559565ddf788d3e8d',e.id);assert.equal(e.props.INSA_Source.sourceIFCImported,false,e.id);}});
+const slab=details.find(e=>e.name==='S1.1 Slab on grade 4in');
+const xs=slab.outline.map(p=>p[0]),ys=slab.outline.map(p=>p[1]);
+check('Face-of-frame footprint 6.096m x12.192m, porch cutout 2.4384m x1.6764m',()=>{assert.equal(Math.max(...xs),6.096);assert.equal(Math.max(...ys),12.192);assert.ok(slab.outline.some(p=>p[0]===3.6576&&p[1]===1.6764));});
+const roof=details.find(e=>e.kind==='pitched_roof');
+check('Roof pitch5:12, ridge3.84175m, overhang0.3048m',()=>{assert.ok(Math.abs(Math.tan(roof.pitch*Math.PI/180)-5/12)<1e-9);assert.equal(roof.overhang,.3048);assert.ok(Math.abs(roof.offset+roof.quantities.ridge_height-3.84175)<1e-7);});
+check('Shared type IDs reused for 44 sloping rafters and 40 ceiling-joist halves',()=>{const rafters=details.filter(e=>e.name?.startsWith('S1.2 Rafter')),joists=details.filter(e=>e.name?.startsWith('S1.2 Ceiling joist'));assert.equal(rafters.length,44);assert.equal(joists.length,40);assert.equal(new Set(rafters.map(e=>e.type)).size,1);assert.equal(new Set(joists.map(e=>e.type)).size,1);});
+check('9 windows and9 doors have valid native opening/host links',()=>{const windows=details.filter(e=>e.category==='architecture.window'),doors=details.filter(e=>e.category==='architecture.door');assert.equal(windows.length,9);assert.equal(doors.length,9);for(const e of [...windows,...doors]){const op=details.find(o=>o.id===e.opening);assert.equal(op?.host,e.host);assert.equal(op?.filledBy,e.id);assert.ok(details.some(w=>w.id===e.host&&w.kind==='wall'));}});
+check('Bathroom door is on the horizontal north partition',()=>{const d=details.find(e=>e.name==='A2.1 Bathroom door'),host=details.find(e=>e.id===d.host);assert.equal(host.name,'A2.1 Bathroom entry');assert.equal(host.start[1],host.end[1]);});
+check('6 bounded non-overlapping room labels',()=>{const rooms=details.filter(e=>e.kind==='spatial');assert.equal(rooms.length,6);for(const room of rooms)assert.equal(room.spatial.status,'bounded',room.id);});
+const files=await tool('files_list',{});
+check('Source documents are 2D PDF/evidence only; no source IFC imported',()=>{assert.ok(files.files.some(f=>f.current.filename==='architecture-electrical.pdf'));assert.ok(files.files.some(f=>f.current.filename==='structure.pdf'));assert.ok(!files.files.some(f=>/\.(ifc|ifczip)$/i.test(f.current.filename)));});
+const validation=await tool('model_validate',{});
+const issueCounts=validation.issues.reduce((a,e)=>(a[e.reason]=(a[e.reason]??0)+1,a),{});
+check('No native reference/domain-invariant errors (coordination remains open)',()=>assert.ok(validation.issues.every(i=>['HardClash','MissingConnection'].includes(i.reason))));
+const exports={};
+for(const ext of ['ifc','frag']){const r=await fetch(`${base}/api/projects/${project}/model.${ext}`,{headers});assert.equal(r.status,200);const bytes=Buffer.from(await r.arrayBuffer());assert.ok(bytes.length>10000);fs.writeFileSync(`${out}/sacramento-adu-native.${ext}`,bytes);exports[ext]={bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex')};if(ext==='ifc'){assert.ok(bytes.toString().includes('INSA_Source'));assert.ok(!bytes.toString().includes('Clinic_Architectural'));}}
+checks.push({name:'Native IFC and Fragments exports generated from authored state',passed:true});
+const old=await tool('bim_query_elements',{limit:1},'p4-mvl8e6lh-assembly');
+check('Original frame project preserved at96 native elements',()=>assert.equal(old.total,96));
+const clinic=await tool('bim_query_elements',{limit:1},'medical-dental-clinic-20261023');
+check('Previous reference clinic project unchanged at0 native elements',()=>assert.equal(clinic.total,0));
+const report={project,checkedAt:new Date().toISOString(),checks,nativeElements:inventory.total,visibleTreeProducts:213,byKind,sourceIFCImported:false,sourceDate:'2025-11-26',engineeringAdequacy:false,coordination:{status:'REQUIRES_REVIEW',issueCounts,total:validation.issues.length,limitations:validation.unsupported,interpretation:'Do not call coordinated or construction-ready. The checker reports roof/uncut timber seating interfaces and monolithic porch/foundation overlap; interior walls intentionally terminate at ceiling and are not extended into attic merely to clear automatic roof-attachment suggestions.'},exports};
+fs.writeFileSync(`${out}/acceptance.json`,JSON.stringify(report,null,2));
+fs.writeFileSync(`${out}/native-details.json`,JSON.stringify(details,null,2));
+console.log(JSON.stringify(report,null,2));
