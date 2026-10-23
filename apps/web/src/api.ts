@@ -1,6 +1,6 @@
 /** Typed client for the INSA web API (same tools and governance as the manager MCP). */
 export interface User { id: string; name: string; roles: string[]; }
-export interface TreeItem { id: string; label: string; global_id: string; category: string; categoryLabel: string; discipline: string; }
+export interface TreeItem { id: string; label: string; global_id: string;global_ids?:string[];parentId?:string;assemblyId?:string;typeId?:string;typeName?:string;familyId?:string;systemIds?:string[];systemNames?:string[]; category: string; categoryLabel: string; discipline: string; }
 export interface TreeNode { id: string; name: string; elevation: number; groups: Record<string, TreeItem[]>; }
 export interface Proposal { id: string; tool: string; actor: string; createdAt: string; status: string; input: unknown; preview: any; decidedBy?: string; reason?: string; }
 export interface HistoryRow { commandId: string; tool: string; actor: string; at: string; summary: unknown; reverted: boolean; proposalId?: string; events: number; }
@@ -58,6 +58,7 @@ export const api = {
   run: (p: string, tool: string, input: unknown, dry_run = false) => req<any>("POST", `/api/projects/${p}/tools/${tool}`, { input, dry_run }),
   summary: (p: string) => req<any>("GET", `/api/projects/${p}/summary`),
   tree: (p: string) => req<TreeNode[]>("GET", `/api/projects/${p}/tree`),
+  semantics:(p:string)=>req<any>('GET',`/api/projects/${p}/semantics`),
   element: (p: string, id: string) => req<any>("GET", `/api/projects/${p}/elements/${encodeURIComponent(id)}`),
   proposals: (p: string) => req<Proposal[]>("GET", `/api/projects/${p}/proposals`),
   approve: (p: string, id: string) => req<any>("POST", `/api/projects/${p}/proposals/${id}/approve`, {}),

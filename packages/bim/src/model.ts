@@ -175,7 +175,7 @@ export interface RampElement extends ElementBase { kind: "ramp"; category: strin
  * assemblies ...). The children keep their own identity, category, type and lifecycle; the assembly adds the relation (and its own storey). A child has at most
  * ONE assembly parent, the graph is acyclic, and all members share the assembly's storey. No geometry of its own; nothing is inferred from proximity.
  */
-export interface Assembly extends ElementBase { kind: "assembly"; category: string; children: string[]; predefinedType?: string; }
+export interface Assembly extends ElementBase { kind: "assembly"; category: string; children: string[]; predefinedType?: string; primary?: string; }
 
 // ================================================================ reinforcement (Phase 14)
 /** One bar layer: the path of the FIRST bar (storey-local [x, y, z]) and its copies: `count` bars `spacing` apart along `direction`. */
@@ -186,7 +186,8 @@ export interface RebarType { id: string; name: string; kind: "rebar"; diameter: 
  * Bar sets (IfcReinforcingBar), meshes (two crossing layers), tendons and tendon conduits bound to a HOST by explicit reference; the storey is the host's.
  * Every bar and its length are derived; the bars move with their host.
  */
-export interface Reinforcement extends ElementBase { kind: "reinforcement"; category: string; type: string; host: string; layers: BarLayer[]; bendRadius?: number; cover: number; geometryValidation?: 'rectangular_column'; }
+export interface ColumnRebarLayout { kind: 'rectangular_column'; role: 'longitudinal' | 'stirrups'; mainType: string; tieType: string; spacing: number; }
+export interface Reinforcement extends ElementBase { kind: "reinforcement"; category: string; type: string; host: string; layers: BarLayer[]; bendRadius?: number; cover: number; geometryValidation?: 'rectangular_column'; layout?: ColumnRebarLayout; }
 
 // ================================================================ MEP fittings (Phase 14)
 export type FittingSection = { shape: "round"; diameter: number } | { shape: "rectangular"; width: number; height: number };

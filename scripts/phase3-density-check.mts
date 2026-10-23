@@ -1,0 +1,23 @@
+/** Reproducible core density probe, not a GPU/DOM or structural-design benchmark. */
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import {Platform,MemoryStores} from '@insa/core';
+import {bimModule,toIfc,coordinateModel,type BimState} from '@insa/bim';
+import {infraModule} from '@insa/infra';
+import {filesModule} from '@insa/files';
+import {modelingModule} from '../apps/manager-mcp/src/modeling.js';
+const count=Number(process.argv[2]??5000);assert.ok(Number.isInteger(count)&&count>0&&count<=10000);
+const actor={id:'density',name:'Density QA',kind:'human' as const,roles:['bim_manager']};
+const p=new Platform({modules:[bimModule,infraModule,filesModule,modelingModule],stores:new MemoryStores(),approvalMode:'auto',snapshotPolicy:false});
+const run=(tool:string,input:unknown)=>p.execute(actor,'density',tool,input) as Promise<any>;
+await run('bim_create_storeys',{storeys:[{name:'L0',elevation:0}]});
+const start=performance.now();
+for(let offset=0;offset<count;offset+=1000)await run('model_generate',{intent:'Explicit separated QA grid',requestId:'batch-'+offset,requirements:{kind:'instances',storey:'L0',definition:{kind:'column',name:'QA 40x60',profile:{shape:'rect',b:.4,h:.6}},placements:Array.from({length:Math.min(1000,count-offset)},(_,i)=>({at:[((offset+i)%100)*3,Math.floor((offset+i)/100)*3],height:3}))}});
+const generationMs=performance.now()-start,s=await p.state<BimState>('density','bim');
+let tick=performance.now();const graph=(await run('project_query',{tool:'semantic.graph'})).result,graphMs=performance.now()-tick;
+tick=performance.now();const coordination=coordinateModel(s),coordinationMs=performance.now()-tick;
+tick=performance.now();const ifc=toIfc(s,{projectKey:'density'}),ifcMs=performance.now()-tick;
+const columns=(ifc.match(/=IFCCOLUMN\(/g)??[]).length,profiles=(ifc.match(/=IFCRECTANGLEPROFILEDEF\(/g)??[]).length;
+assert.equal(Object.keys(s.types).length,1);assert.equal(columns,count);assert.equal(profiles,1);assert.equal(coordination.issues.length,0);
+const result={count,sharedTypes:1,independentIfcProducts:columns,sharedIfcProfiles:profiles,generationMs,graphMs,coordinationMs,ifcMs,ifcBytes:Buffer.byteLength(ifc),graphNodes:graph.nodes.length,coordination:coordination.statistics,scope:'Core memory-store and IFC probe only; no GPU instancing, Fragments import or UI density claim.'};
+fs.mkdirSync('output/phase3-live-qa-2026-10-23',{recursive:true});fs.writeFileSync('output/phase3-live-qa-2026-10-23/density.json',JSON.stringify(result,null,2));console.log(JSON.stringify(result,null,2));

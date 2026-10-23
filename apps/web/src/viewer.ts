@@ -150,13 +150,14 @@ export class Viewer {
   }
 
   /** Highlights (and optionally zooms to) an element by its IFC GlobalId. */
-  async select(globalId: string, zoom = true) {
+  async select(globalIds: string|string[], zoom = true) {
     this.infrastructure.select(null);
     const model = this.modelId ? this.fragments.list.get(this.modelId) : undefined;
     if (!model) return;
-    const [localId] = await model.getLocalIdsByGuids([globalId]);
-    if (localId === null || localId === undefined) return;
-    const map: OBC.ModelIdMap = { [model.modelId]: new Set([localId]) };
+    const guids=typeof globalIds==='string'?[globalIds]:globalIds,globalId=guids[0];
+    const localIds=(await model.getLocalIdsByGuids(guids)).filter((id):id is number=>id!==null&&id!==undefined);
+    if (!localIds.length) return;
+    const map: OBC.ModelIdMap = { [model.modelId]: new Set(localIds) };
     if(this.appearances?.has(globalId)){
       await this.highlighter.clear("select");this.appearances.highlight(globalId);this.onSelect(globalId);
     }else{

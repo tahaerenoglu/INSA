@@ -219,7 +219,8 @@ test('safe refusal: obstructed service route and host shrink never leave partial
   await t.ex('model_generate', { intent: 'Rebar', requestId: 'verified-rebar', requirements: { kind: 'reinforcement', hosts: ['C-0001'], cover: .03, diameter: .016, stirrupDiameter: .008, spacing: .15, steelGrade: 'B500B' } });
   before = await t.p.seq('universal');
   const s = await t.state(), host: any = s.elements['C-0001'];
-  await assert.rejects(t.ex('bim_update_types', { items: [{ type: host.type, kind: 'column', set: { profile: { shape: 'rect', b: .2, h: .2 } } }] }), (e: any) => e.reason === 'DEPENDENT_ELEMENT_INVALID');
+  // Explicit parametric sets now regenerate for fitting revisions; an impossible section must still roll back.
+  await assert.rejects(t.ex('bim_update_types', { items: [{ type: host.type, kind: 'column', set: { profile: { shape: 'rect', b: .08, h: .08 } } }] }), (e: any) => e.reason === 'INVALID_GEOMETRY');
   assert.equal(await t.p.seq('universal'), before);
 });
 test('extension capability requires no public tool change; BIM+infra commit/replay/undo together and roll back on failure', async () => {

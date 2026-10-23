@@ -2,11 +2,13 @@
 import { createHash } from 'node:crypto';
 import { z } from 'zod';
 import { DomainError, canonicalJson, can, type ModuleDef, type ToolContext, type CommandTool, type QueryTool } from '@insa/core';
-import { bimModule, modelIssues, listEngines, engineOfKind, coordinateModel, type BimState } from '@insa/bim';
+import { bimModule, modelIssues, listEngines, engineOfKind, coordinateModel,handlersOf, type BimState } from '@insa/bim';
 import { infraModule, type InfraState } from '@insa/infra';
 import { filesModule } from '@insa/files';
 import { reinforcementLayout, reinforcementGeometryIssues } from './modeling-rebar.js';
 import { orthogonalRoute } from './modeling-routing.js';
+import {registerAssemblyCapabilities,addReinforcementAssembly} from './modeling-assemblies.js';
+import {projectSemantics,PROJECT_ARCHETYPES} from './modeling-semantics.js';
 
 const point = z.tuple([z.number().finite(), z.number().finite()]);
 const source = z.object({ file: z.string(), version: z.number().int().positive(), reference: z.string(),
@@ -50,11 +52,19 @@ export function registerModelingCapability(capability: Capability) {
 }
 const hash = (v: unknown) => createHash('sha256').update(canonicalJson(v)).digest('hex').slice(0, 24);
 const allModules = [bimModule, infraModule, filesModule];
-class Builder {
+export class Builder {
   steps: Step[] = [];
   states: Map<string, any>;
   constructor(readonly ctx: ToolContext<any>) { this.states = new Map(structuredClone(ctx.states!)); }
   get bim(): BimState { return this.states.get('bim'); }
+  family(def:any):string {
+    const parsed=(this.ctx.platform.tool('bim_create_families').input.parse({families:[def]}) as any).families[0];
+    const {name:_name,...shape}=parsed;
+    const match=Object.values(this.bim.families).find(f=>{const {id:_id,name:_n,...value}=f;return canonicalJson(value)===canonicalJson(shape);});
+    if(match)return match.id;
+    if(Object.values(this.bim.families).some(f=>f.name===parsed.name))throw new DomainError('Family name has a conflicting definition.','CONFLICTING_TYPE');
+    const before=new Set(Object.keys(this.bim.families));this.add('bim_create_families',{families:[parsed]});return Object.keys(this.bim.families).find(id=>!before.has(id))!;
+  }
   add(name: string, input: unknown) {
     const tool = this.ctx.platform.tool(name);
     if (tool.kind !== 'command' || tool.expand) throw new DomainError('Invalid engine command', 'INVALID_COMPOSITION');
@@ -121,9 +131,7 @@ registerModelingCapability({ id: 'conceptual-frame', kind: 'building', input: bu
   b.add('bim_attach_walls_to_roof', { roof, walls: Object.values(b.bim.elements).filter(e => e.kind === 'wall' && e.storey === top.id).map(e => e.id) });
 } });
 registerModelingCapability({ id: 'hosted-rebar', kind: 'reinforcement', input: reinforcement, engines: ['reinforcement'], compile(b, r) {
-  const main = b.type({ kind: 'rebar', name: `UMB-${r.steelGrade}-${r.diameter}`, diameter: r.diameter, steel_grade: r.steelGrade });
-  const tie = b.type({ kind: 'rebar', name: `UMB-${r.steelGrade}-${r.stirrupDiameter}`, diameter: r.stirrupDiameter, steel_grade: r.steelGrade });
-  for (const host of r.hosts) b.add('bim_create_reinforcement', { items: reinforcementLayout(b.bim, host, r, main, tie).map(item => ({ ...item, geometry_validation: 'rectangular_column' })) });
+  addReinforcementAssembly(b,r);
 } });
 registerModelingCapability({ id: 'service-network', kind: 'network', input: network, engines: ['mep_network'], compile(b, r) {
   if (Object.values(b.bim.mepSystems).some(s => s.name === r.name)) throw new DomainError('System already exists; revise it explicitly.', 'SYSTEM_ALREADY_EXISTS');
@@ -167,6 +175,7 @@ registerModelingCapability({ id: 'shared-component-array', kind: 'array', input:
     y: r.origin[1] + Math.floor(i / r.columns) * r.spacing[1], offset: r.offset, rotation: r.rotation })) });
 } });
 
+registerAssemblyCapabilities(registerModelingCapability);
 function compile(ctx: ToolContext<any>, input: Input) {
   const before = ctx.states!, files = before.get('files')?.files ?? {};
   for (const s of input.sources) {
@@ -211,7 +220,7 @@ function compile(ctx: ToolContext<any>, input: Input) {
   const validation = packs.flatMap(r => r.evaluate(b.bim));
   if (validation.length) throw new DomainError('Generated model failed validation.', 'MODEL_VALIDATION_FAILED', { issues: JSON.stringify(validation) });
   return { steps: b.steps, permissions: ['bim.read', ...(input.sources.length ? ['files.read'] : []), ...(input.requirements.kind === 'corridor' ? ['infra.read'] : [])], summary: { planId, requestId: input.requestId, sources: input.sources, engines: cap.engines,
-    created,coordination,repair:{maxIterations:2,iterations:repairIterations,attemptedIssues:[...attempted]},
+    created,coordination,semantics:semanticSummary(b.bim,b.states.get('infra')),constraints:constraintReport(b.bim,coordination,cap.kind),repair:{maxIterations:2,iterations:repairIterations,attemptedIssues:[...attempted]},
     infrastructure: Object.keys(b.states.get('infra')?.roads ?? {}).filter(id => !before.get('infra')?.roads?.[id]),
     assumptions: input.requirements.kind === 'building' ? ['Conceptual rectangular footprint; totalArea is summed gross floor area.', 'Example concrete sections and thicknesses; no structural adequacy calculation.', 'Reserved conceptual service shaft at one-quarter footprint in every slab.', `Roof form ${(parsed.data as z.infer<typeof building>).roofForm}; no sloping facade engine.`] : [],
     warnings: ['Conceptual model; no structural, hydraulic, electrical or code adequacy calculation.'], validation, rulePacks: packs.map(p => p.id),
@@ -239,14 +248,31 @@ function revision(ctx: ToolContext<any>, steps: Step[]) {
   const validation = [...rules.values()].filter(p => p.status === 'implemented').flatMap(p => p.evaluate(b.bim));
   if (validation.length) throw new DomainError('Revision failed model validation.', 'MODEL_VALIDATION_FAILED', { issues: JSON.stringify(validation) });
   const old = ctx.states!.get('bim') as BimState;
-  const changed = Object.keys(b.bim.elements).filter(id => canonicalJson(b.bim.elements[id]) !== canonicalJson(old.elements[id]));
+  const mutated=Object.keys(b.bim.elements).filter(id=>canonicalJson(b.bim.elements[id])!==canonicalJson(old.elements[id])),affected=new Set(mutated);
+  const changedTypes=new Set(Object.keys(b.bim.types).filter(id=>canonicalJson(b.bim.types[id])!==canonicalJson(old.types[id]))),changedFamilies=new Set(Object.keys(b.bim.families).filter(id=>canonicalJson(b.bim.families[id])!==canonicalJson(old.families[id]))),changedStoreys=new Set(Object.keys(b.bim.storeys).filter(id=>canonicalJson(b.bim.storeys[id])!==canonicalJson(old.storeys[id])));
+  for(const e of Object.values(b.bim.elements))if(changedStoreys.has(e.storey)||handlersOf(e).storeysOf?.(e).some(id=>changedStoreys.has(id))||'type'in e&&(changedTypes.has(e.type)||e.kind==='component'&&changedFamilies.has((b.bim.types[e.type] as any).family)))affected.add(e.id);
+  let grew=true;while(grew){const n=affected.size;for(const e of Object.values(b.bim.elements))if(handlersOf(e).dependsOn?.(b.bim,e).some(id=>affected.has(id)))affected.add(e.id);grew=n!==affected.size;}
+  const changed=[...affected];
+  const coordination=coordinateModel(b.bim,{ids:changed}),priorErrors=new Set(coordinateModel(old,{ids:changed}).issues.filter(i=>i.severity==='error').map(i=>i.id));
+  const newErrors=coordination.issues.filter(i=>i.severity==='error'&&!priorErrors.has(i.id));
+  if(newErrors.length)throw new DomainError('Revision introduces coordination errors; nothing was committed.','MODEL_VALIDATION_FAILED',{issues:JSON.stringify(newErrors)});
   const engines = new Set(changed.map(id => engineOfKind(b.bim.elements[id].kind)?.id).filter((id): id is NonNullable<typeof id> => !!id));
   const infraEngines = b.steps.filter(s => ctx.platform.tool(s.tool).module === 'infra').map(s => s.tool.includes('alignment') ? 'alignment' : s.tool.includes('component') ? 'shared_component' : 'corridor');
   return { steps: b.steps, summary: { planId: 'PLAN-' + hash({ project: ctx.project, steps: b.steps, before: [...ctx.states!] }),
-    engines: [...new Set([...engines, ...infraEngines])], sources: [], assumptions: [], warnings: [], validation, changed } };
+    engines: [...new Set([...engines, ...infraEngines])], sources: [], assumptions: [], warnings: [], validation, changed,coordination,
+    typeImpact:Object.keys(b.bim.types).filter(id=>canonicalJson(b.bim.types[id])!==canonicalJson(old.types[id])).map(id=>({type:id,instances:Object.values(b.bim.elements).filter(e=>'type'in e&&e.type===id).map(e=>e.id)})),
+    regenerated:mutated.filter(id=>b.bim.elements[id].kind==='reinforcement'),semantics:semanticSummary(b.bim,b.states.get('infra')),constraints:constraintReport(b.bim,coordination) } };
+}
+function semanticSummary(bim:BimState,infra?:InfraState){const graph=projectSemantics(bim,infra);return {families:graph.library.families.map(f=>({id:f.id,name:f.name,origin:f.origin,typeIds:f.types,instanceCount:f.instances.length})),types:graph.library.types.map(t=>({id:t.id,family:t.family,revision:t.revision,instanceCount:t.instances.length})),relationships:graph.edges.length,assemblies:Object.values(bim.elements).filter(e=>e.kind==='assembly').map(e=>({id:e.id,children:e.children,primary:e.primary})),archetypesAreAdvisory:true};}
+function constraintReport(s:BimState,coordination:ReturnType<typeof coordinateModel>,kind?:string){
+ const results=[...rules.values()].filter(r=>r.status==='implemented'&&(!kind||r.applies(kind))).flatMap(r=>r.evaluate(s).map(i=>({rule:r.id,elements:[i.id],reason:i.reason,severity:'error',message:i.message})));
+ results.push(...coordination.issues.filter(i=>i.severity!=='info').map(i=>({rule:'universal-indexed-coordination',elements:i.elements,reason:i.kind,severity:i.severity,message:i.message})));
+ const graph=projectSemantics(s),nodes=new Set(graph.nodes.map(n=>n.id));
+ for(const edge of graph.edges)if(!nodes.has(edge.source)||!nodes.has(edge.target))results.push({rule:'universal-relationship-integrity',elements:[edge.source,edge.target],reason:'INVALID_REFERENCE',severity:'error',message:`Dangling ${edge.relation} relationship.`});
+ return {results,expectedInterfaces:coordination.issues.filter(i=>i.severity==='info').length,checkedRules:[...rules.keys(),'universal-indexed-coordination','universal-relationship-integrity'],engineeringAdequacy:false};
 }
 const revise: CommandTool<any> = { name: 'model_revise', title: 'model.revise', module: 'modeling', kind: 'command', effect: 'write', permission: 'bim.read',
-  input: z.object({ changes: z.array(z.object({ tool: z.enum(['bim_update_elements', 'bim_update_storeys', 'bim_update_types', 'infra_update_alignment', 'infra_update_road_corridor', 'infra_update_component_type']), input: z.record(z.string(), z.unknown()) }).strict()).min(1).max(50) }).strict(),
+  input: z.object({ changes: z.array(z.object({ tool: z.enum(['bim_update_elements', 'bim_update_storeys', 'bim_update_types','bim_update_families','bim_create_types','bim_set_properties', 'infra_update_alignment', 'infra_update_road_corridor', 'infra_update_component_type']), input: z.record(z.string(), z.unknown()) }).strict()).min(1).max(50) }).strict(),
   description: 'Controlled atomic revision through registered domain editors; dependent validation and authorization remain enforced.',
   decide() { throw new Error('Composite command'); }, expand(ctx, i) { return revision(ctx, i.changes); } };
 const repair: CommandTool<any> = { ...revise, name: 'model_repair', title: 'model.repair', input: z.object({ roof: z.string().optional(), walls: z.array(z.string()).min(1).optional(),
@@ -277,12 +303,19 @@ export const modelingModule: ModuleDef = { id: 'modeling', title: 'Universal Mod
     return { project: ctx.project, model: c.states?.get('bim')?.project, storeys: Object.values(c.states?.get('bim')?.storeys ?? {}),
       documents: Object.values(c.states?.get('files')?.files ?? {}), capabilities: [...capabilities.values()].map(({ compile: _compile, input, ...c }) => ({ ...c, requirementsSchema: z.toJSONSchema(input, { target: 'draft-7', unrepresentable: 'any' }) })),
       rulePacks: [...rules.values()].map(({ applies: _applies, evaluate: _evaluate, ...p }) => p),
-      engines: listEngines(), standardProfile: { status: 'Missing', engineeringAdequacy: false },
+      engines: listEngines(),semantics:semanticSummary(c.states!.get('bim'),c.states!.get('infra')),archetypes:PROJECT_ARCHETYPES,
+      semanticQueries:[{tool:'semantic.library',input:{}},{tool:'semantic.graph',input:{ids:'optional qualified node ID array'}}],standardProfile: { status: 'Missing', engineeringAdequacy: false },
       queries: ctx.platform.listTools().filter(t => t.kind === 'query' && ['bim', 'infra', 'files'].includes(t.module) && !/export|upload|render/.test(t.name) && can(ctx.actor, t.permission, ctx.platform.roles))
         .map(t => ({ name: t.name, description: t.description, input: z.toJSONSchema(t.input, { target: 'draft-7', unrepresentable: 'any' }) })),
       knowledgeStates: ['Verified', 'Derived', 'Assumed', 'Missing', 'Conflicting', 'RequiresApproval'] };
   }),
   query('project_query', 'bim.read', z.object({ tool: z.string(), input: z.record(z.string(), z.unknown()).default({}) }).strict(), async (ctx, i) => {
+    if(i.tool==='semantic.library'||i.tool==='semantic.graph'){
+      const input=z.object({ids:z.array(z.string()).max(1000).optional(),includeGeometry:z.boolean().default(false)}).strict().parse(i.input),c=await context(ctx),bim=c.states!.get('bim') as BimState,graph=projectSemantics(bim,c.states!.get('infra'),input.includeGeometry?coordinateModel(bim):undefined);
+      if(i.tool==='semantic.library')return graph.library;
+      const selected=input.ids?new Set(input.ids):undefined,edges=selected?graph.edges.filter(e=>selected.has(e.source)||selected.has(e.target)):graph.edges,ids=new Set(edges.flatMap(e=>[e.source,e.target]));
+      return {nodes:selected?graph.nodes.filter(n=>ids.has(n.id)||selected.has(n.id)):graph.nodes,edges,revision:graph.revision};
+    }
     const t = ctx.platform.tool(i.tool);
     if (t.kind !== 'query' || !['bim', 'infra', 'files'].includes(t.module) || /export|upload|render/.test(t.name)) throw new DomainError('Only evidence/model queries are allowed.', 'INVALID_QUERY');
     return ctx.platform.execute(ctx.actor, ctx.project, t.name, i.input);
@@ -299,7 +332,7 @@ export const modelingModule: ModuleDef = { id: 'modeling', title: 'Universal Mod
     }
     const coordination=coordinateModel(s,input);
     issues.push(...coordination.issues.filter(i=>i.severity!=='info').map(i=>({...i,reason:i.kind})));
-    return { issues, checkedModules,coordination,expectedStructuralConnections:coordination.issues.filter(i=>i.kind==='ExpectedStructuralIntersection'),
+    return { issues, checkedModules,coordination,constraints:constraintReport(s,coordination),expectedStructuralConnections:coordination.issues.filter(i=>i.kind==='ExpectedStructuralIntersection'),
       checks: ['domain-invariants', 'host-relations', 'MEP-junction-consistency', 'piecewise-wall-roof','indexed-polyhedral-coordination'],
       unsupported:coordination.coverage.unsupported };
   }), repair,

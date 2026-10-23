@@ -1,6 +1,7 @@
 /** BIM module tools (registered in the manager MCP through the platform). */
 import { z } from "zod";
 import { AppearanceSchema } from "./appearance.js";
+import {regenerateColumnRebar} from './column-rebar-layout.js';
 import { healWallCorners, modellingIssues, reconcileRedundantWalls } from './modelling-policy.js';
 import { isLayeredType } from "./model.js";
 import  { ErrorDetails, DomainError } from "@insa/core";
@@ -240,6 +241,7 @@ const cmd = <I>(t: Omit<CommandTool<BimState, I>, "kind" | "module" | "effect"> 
       }
       if (connections.candidates.length) result.events.push(counters(candidate));
     }
+    for(const change of regenerateColumnRebar(candidate,beforePolicy))result.events.push({type:'ElementUpdated',payload:change});
     return result;
   } });
 const qry = <I>(t: Omit<QueryTool<BimState, I>, "kind" | "module" | "effect">): QueryTool<BimState, I> =>
@@ -1730,6 +1732,7 @@ const createMepFittingsTool = cmd({
   decide: (s, i) => createMepFittings(s, i.fittings),
 });
 const RebarIn = z.object({ category: z.string().default("structure.rebar_set").describe("structure.rebar_set (bars) | structure.rebar_mesh (exactly two crossing layers) | structure.tendon | structure.tendon_conduit (one path, count 1)"),
+  layout:z.object({kind:z.literal('rectangular_column'),role:z.enum(['longitudinal','stirrups']),mainType:z.string(),tieType:z.string(),spacing:z.number().positive()}).strict().optional(),
   geometry_validation: z.literal('rectangular_column').optional().describe('Enforce bar-surface cover containment in an upright rectangular column on creation and every dependent edit'),
   type: Ref.describe("a reinforcement type (bim_create_types kind rebar)"), host: z.string().describe("the HOST element id: a column, beam, shear wall, structural slab, footing or foundation slab (explicit: never inferred); the storey is the host's"),
   layers: z.array(BarLayerIn).min(1), bend_radius: z.number().positive().optional().describe("rounds every interior corner of the path with this radius, m"), cover: z.number().min(0).default(0.025).describe("concrete cover, m (a recorded intent: not checked against the host)"), name: z.string().optional() });
@@ -1743,6 +1746,7 @@ const createReinforcementTool = cmd({
       const c = engineCategory(it.category, "reinforcement"), type = typeForCategory(s, c, it.type), host = s.elements[it.host];
       if (!host) throw new DomainError(`Host ${it.host} not found.`, "ELEMENT_NOT_FOUND", { elementId: it.host });
       const el = { id: nextId(s, idKeyOf(c)), kind: "reinforcement" as const, category: c.id, storey: host.storey, type: type.id, host: host.id, layers: it.layers, ...(it.bend_radius ? { bendRadius: it.bend_radius } : {}), cover: it.cover, ...(it.geometry_validation ? { geometryValidation: it.geometry_validation } : {}), ...(it.name ? { name: it.name } : {}) };
+      if(it.layout)Object.assign(el,{layout:it.layout});
       events.push({ type: "ElementCreated", payload: el }); s.elements[el.id] = el as any;
     }
     events.push(counters(s));
@@ -1752,13 +1756,13 @@ const createReinforcementTool = cmd({
 const createAssembliesTool = cmd({
   name: "bim_create_assemblies", title: "Create assemblies", permission: "bim.write",
   description: "Aggregate EXISTING elements into an assembly (IfcElementAssembly: truss, frame, prefabricated / precast unit, facade module, reinforcement cage ...). The members keep their own identity, category, type and lifecycle; the assembly adds only the relation. Rules: >= 1 member, all on one storey (the assembly's), at most ONE parent per member, acyclic, no openings / hosted components / spaces as members. An assembly moves its members; deleting a member is refused while it is in an assembly (ELEMENT_IN_USE); deleting the assembly releases them. predefined_type is checked against the IFC enumeration (bim_get_category_capabilities).",
-  input: z.object({ items: z.array(z.object({ category: z.string().default("generic.element_assembly"), children: z.array(z.string()).min(1), name: z.string().optional(), predefined_type: z.string().optional() })).min(1) }),
+  input: z.object({ items: z.array(z.object({ category: z.string().default("generic.element_assembly"), children: z.array(z.string()).min(1), primary:z.string().optional(), name: z.string().optional(), predefined_type: z.string().optional() })).min(1) }),
   decide: (s, i) => {
     const events: Decision["events"] = [];
     for (const it of i.items) {
       const c = engineCategory(it.category, "assembly"), first = s.elements[it.children[0]];
       if (!first) throw new DomainError(`Member ${it.children[0]} not found.`, "ELEMENT_NOT_FOUND", { elementId: it.children[0] });
-      const el = { id: nextId(s, idKeyOf(c)), kind: "assembly" as const, category: c.id, storey: first.storey, children: it.children, ...(it.name ? { name: it.name } : {}), ...(it.predefined_type ? { predefinedType: it.predefined_type } : {}) };
+      const el = { id: nextId(s, idKeyOf(c)), kind: "assembly" as const, category: c.id, storey: first.storey, children: it.children, ...(it.primary?{primary:it.primary}:{}), ...(it.name ? { name: it.name } : {}), ...(it.predefined_type ? { predefinedType: it.predefined_type } : {}) };
       events.push({ type: "ElementCreated", payload: el }); s.elements[el.id] = el as any;
     }
     events.push(counters(s));

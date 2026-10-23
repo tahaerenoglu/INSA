@@ -78,6 +78,7 @@ export function validateAssembly(s: BimState, el: Assembly, d: ErrorDetails) {
   const cat = findCategory(el.category), bad = (m: string, field = "children"): never => fail("INVALID_ASSEMBLY_RELATION", `${el.id}: ${m}`, { ...d, field });
   if (!Array.isArray(el.children) || !el.children.length) bad("an assembly needs at least one member.");
   if (new Set(el.children).size !== el.children.length) bad("a member is listed twice.");
+  if(el.primary!==undefined&&!el.children.includes(el.primary))bad('primary must reference a direct assembly member.','primary');
   for (const c of el.children) {
     const m = s.elements[c];
     if (!m) fail("INVALID_REFERENCE", `${el.id}: member ${c} does not exist.`, { ...d, field: "children", elementId: c });

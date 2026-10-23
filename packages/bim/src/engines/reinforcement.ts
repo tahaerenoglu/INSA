@@ -9,6 +9,8 @@ import type { BimState, Reinforcement, RebarType, BarLayer, ProfileType } from "
 import { findCategory, categoryIdOfElement } from "../taxonomy.js";
 import type { IfcWriteContext } from "../ifc.js";
 import { fail } from "./kit.js";
+import {columnRebarGeometry} from '../column-rebar-layout.js';
+import {canonicalJson} from '@insa/core';
 
 export type V3 = [number, number, number];
 const fin = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
@@ -88,6 +90,10 @@ export function validateReinforcement(s: BimState, el: Reinforcement, d: ErrorDe
     if (L.count > 1 && L.spacing < t!.diameter) bad(`spacing ${L.spacing} is smaller than the bar diameter ${t!.diameter}: bars would overlap.`);
     if (el.bendRadius && filletPolyline(L.path, el.bendRadius) === null) bad("the bend radius does not fit: the segments around a corner are too short.");
   });
+  if(el.layout){
+    const expected=columnRebarGeometry(s,el.host,el.cover,el.layout);
+    if(el.type!==(el.layout.role==='longitudinal'?el.layout.mainType:el.layout.tieType)||canonicalJson(expected.layers)!==canonicalJson(el.layers))fail('INVALID_HOST_RELATION',`${el.id}: parametric layout is stale.`,d);
+  }
   if (el.geometryValidation) {
     const problem = rebarCoverProblem(s, el);
     if (problem) fail('INVALID_HOST_RELATION', `${el.id}: ${problem}`, { ...d, hostId: el.host, field: 'cover' });

@@ -18,6 +18,8 @@ import { BimState, toIfc, ifcToFrag, ifcGuid, quantities, elementLabel, elementG
 import { runAgent, ModelClient, AnthropicClient, DEFAULT_MODEL, Message } from "@insa/agent";
 import {loadTerrain,parseLandXml,type InfraState} from '@insa/infra';
 import {infrastructureScene,infrastructureKey,infrastructureMaterials} from './infrastructure.js';
+import {bimSemanticHierarchy,bimSemanticGraph,nativeFamilyId,handlersOf} from '@insa/bim';
+import {projectSemantics} from '../../manager-mcp/src/modeling-semantics.js';
 
 export interface WebUser extends Actor { password?: string; }
 
@@ -182,17 +184,29 @@ export function buildApp(opts: AppOptions): FastifyInstance {
     auth(req);
     const project = projectOf(req);
     const s = await platform.state<BimState>(project, "bim");
+    const hierarchy=bimSemanticHierarchy(s),graph=bimSemanticGraph(s),systems=new Map<string,string[]>();
+    for(const edge of graph.edges)if(edge.relation==='PartOfSystem'){const id=edge.source.slice(4),sid=edge.target.replace('bim:system:','');systems.set(id,[...new Set([...(systems.get(id)??[]),sid])]);}
     return Object.values(s.storeys).sort((a, b) => a.elevation - b.elevation).map((st) => {
-      const els = Object.values(s.elements).filter((e) => e.storey === st.id && e.kind !== "opening");
-      const groups: Record<string, { id: string; label: string; global_id: string; category: string; categoryLabel: string; discipline: string }[]> = {};
+      const els = Object.values(s.elements).filter((e) => e.storey === st.id && e.kind !== "opening"&&!hierarchy.suppressed.has(e.id));
+      const groups: Record<string, any[]> = {};
       for (const e of els) {
+        const ifc=handlersOf(e).ifc,products='productKeys'in ifc?ifc.productKeys?.(s,e)??[]:[];
         const category = categoryIdOfElement(s, e) ?? elementGroup(s, e);
         const discipline = findCategory(category)?.discipline ?? "generic";
         (groups[elementGroup(s, e)] ??= []).push({ id: e.id, label: e.name ?? ("type" in e ? s.types[e.type]?.name ?? e.id : e.id),
-          global_id: ifcGuid(`${project}:${e.id}`), category, categoryLabel: findCategory(category)?.name ?? category, discipline });
+          global_id: ifcGuid(`${project}:${e.id}`),global_ids:[...new Set([e.id,...products])].map(id=>ifcGuid(`${project}:${id}`)),
+          parentId:hierarchy.parent.get(e.id),assemblyId:hierarchy.assembly.get(e.id),typeId:'type'in e?e.type:undefined,
+          typeName:'type'in e?s.types[e.type]?.name:undefined,familyId:'type'in e&&s.types[e.type]?nativeFamilyId(s.types[e.type]):undefined,
+          systemIds:systems.get(e.id)??[],systemNames:(systems.get(e.id)??[]).map(id=>s.mepSystems[id]?.name??id),category, categoryLabel: findCategory(category)?.name ?? category, discipline });
       }
       return { id: st.id, name: st.name, elevation: st.elevation, groups };
     });
+  });
+  app.get('/api/projects/:project/semantics',async req=>{
+    const user=auth(req);if(!can(user,'bim.read'))throw new HttpError(403,'Not allowed.','UNAUTHORIZED');
+    const project=projectOf(req),bim=await platform.state<BimState>(project,'bim');
+    const infra=can(user,'infra.read')?await platform.state<InfraState>(project,'infra').catch(()=>undefined):undefined;
+    return projectSemantics(bim,infra);
   });
   app.get("/api/projects/:project/elements/:id", async (req) => {
     const project = projectOf(req);

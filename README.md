@@ -1,5 +1,7 @@
 # INSA Platform: 3. aşama (uygulama içi yapay zekâ asistanı)
 
+Phase 3 modelleme çekirdeği: ortak aile/tip kataloğu, kimliği korunan tekrarlar, kolon donatısı yenileme, assembly tarifleri ve semantik model ağacı eklendi. Gerçek HTTP/UI kabul sonuçları ve açık kalan kapsam: [Phase 3 raporu](docs/PHASE3_MODELING_BRAIN_2026-10-23_TR.md).
+
 23 Ekim 2026: ortak `project_analyze`, `project_query`, `model_plan`, `model_generate`, `model_revise`, `model_validate`, `model_repair`, `model_export` araçları mevcut Registry/Platform/MCP/HTTP üzerinden çalışır. Kapsam, gerçek test sonuçları ve henüz desteklenmeyenler: [Universal Modeling Brain uygulama raporu](docs/UNIVERSAL_MODELING_BRAIN_2026-10-23_TR.md). İzole örnekleri `node --import tsx scripts/universal-modeling-demo.mts` ile çalıştırın. `npm test` artık Windows'ta test dosyalarını açıkça keşfeder; mevcut pakette belgelenmiş başarısız testler vardır.
 
 Yapay zekâ ile entegre BIM modelleme, veri yönetimi ve ileride inşaata özel proje ERP'si için temel.

@@ -11,6 +11,8 @@ export type { CoordinationIssue, CoordinationKind, CoordinationOptions, SafeRepa
 export { elementSolid, bounds3, convexContact, convexDistance, pointInCell, segmentCellInterval, segmentDistance3, triangulatePlan } from './solid-geometry.js';
 export type { ConvexCell, Bounds3 } from './solid-geometry.js';
 export { rebarCoverProblem } from './engines/reinforcement.js';
+export {columnRebarGeometry} from './column-rebar-layout.js';
+export * from './semantic-model.js';
 import { toIfc } from "./ifc.js";
 import { ifcToFrag } from "./frag.js";
 import { planSvg, svgToPng } from "./plan.js";

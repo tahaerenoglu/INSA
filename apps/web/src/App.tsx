@@ -253,7 +253,7 @@ export function App() {
 
       for (const st of treeRef.current) for (const items of Object.values(st.groups)) {
 
-        const hit = items.find((i) => i.global_id === gid);
+        const hit = items.find((i) => i.global_id === gid||i.global_ids?.includes(gid));
 
         if (hit) { setSelected(hit.id); setTab("props"); return; }
 
@@ -377,7 +377,8 @@ export function App() {
 
     setSelected(id); setTab("props"); setCenter("3d");
 
-    void viewerRef.current?.select(gid);
+    const item=treeRef.current.flatMap(st=>Object.values(st.groups).flat()).find(i=>i.id===id);
+    void viewerRef.current?.select(item?.global_ids??gid);
 
   };
 
@@ -411,7 +412,7 @@ export function App() {
       <aside className="left" aria-label="Proje gezgini">
         <div className="explorer-heading"><div><span className="eyebrow">PROJE GEZGİNİ</span><h2>Model ağacı</h2></div><button className="icon-button" aria-label="Proje gezginini kapat" onClick={()=>setSidebarOpen(false)}><PanelLeftClose size={17}/></button></div>
         {isolatedInfraIds.length>0&&<div className="isolation-notice">Filtreli görünüm<button className="text-button" onClick={clearInfraIsolation}>Tümünü göster</button></div>}
-        <ProjectExplorer key={project} project={project} resources={infra?.resources??[]} tree={tree} selected={selected} query={modelQuery} onQuery={setModelQuery} kindLabels={KIND_TR} onSelect={id=>{setSelected(id);openPanel('props');setCenter('3d');void viewerRef.current?.selectInfrastructure(id);}} onBimSelect={pickFromTree} onVisibility={(id,v)=>viewerRef.current?.setInfrastructureVisible(id,v)} onBimVisibility={(items,v)=>void viewerRef.current?.setBimVisible(items.map(i=>i.global_id),v)} onBimIsolate={keep=>void viewerRef.current?.isolateBim(tree.flatMap(st=>Object.values(st.groups).flat().map(i=>i.global_id)),keep.map(i=>i.global_id))} onBimShowAll={()=>void viewerRef.current?.setBimVisible(tree.flatMap(st=>Object.values(st.groups).flat().map(i=>i.global_id)),true)}/>
+        <ProjectExplorer key={project} project={project} resources={infra?.resources??[]} tree={tree} selected={selected} query={modelQuery} onQuery={setModelQuery} kindLabels={KIND_TR} onSelect={id=>{setSelected(id);openPanel('props');setCenter('3d');void viewerRef.current?.selectInfrastructure(id);}} onBimSelect={pickFromTree} onVisibility={(id,v)=>viewerRef.current?.setInfrastructureVisible(id,v)} onBimVisibility={(items,v)=>void viewerRef.current?.setBimVisible(items.flatMap(i=>i.global_ids??[i.global_id]),v)} onBimIsolate={keep=>void viewerRef.current?.isolateBim(tree.flatMap(st=>Object.values(st.groups).flat().flatMap(i=>i.global_ids??[i.global_id])),keep.flatMap(i=>i.global_ids??[i.global_id]))} onBimShowAll={()=>void viewerRef.current?.setBimVisible(tree.flatMap(st=>Object.values(st.groups).flat().flatMap(i=>i.global_ids??[i.global_id])),true)}/>
         {infra?.diagnostic&&<p role="status" className="muted">{infra.diagnostic}</p>}
       </aside>
 

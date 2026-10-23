@@ -159,6 +159,7 @@ export function toIfc(s: BimState, opts: IfcOptions): string {
   const product = (reps: Ref[]) => st.add("IFCPRODUCTDEFINITIONSHAPE", `$,$,${list(reps)}`);
   const extrude = (profile: Ref, pos: Ref, depth: number, dir: Ref = zAxis) =>
     st.add("IFCEXTRUDEDAREASOLID", `${profile},${pos},${dir},${real(depth)}`);
+  const profileCache=new Map<string,Ref>();
 
   const P = s.project;
   const project = st.add("IFCPROJECT", `${gid("project")},$,${S(P.name)},${P.description ? S(P.description) : $},$,${P.number ? S(P.number) : $},$,(${ctx}),${units}`);
@@ -431,6 +432,10 @@ export function toIfc(s: BimState, opts: IfcOptions): string {
   }
 
   function profileDef(pr: ProfileType["profile"], center: [number, number] = [0, 0]) {
+    const key=JSON.stringify([pr,center]),hit=profileCache.get(key);if(hit)return hit;
+    const ref=writeProfileDef(pr,center);profileCache.set(key,ref);return ref;
+  }
+  function writeProfileDef(pr: ProfileType["profile"], center: [number, number]) {
     const pos = st.add("IFCAXIS2PLACEMENT2D", `${pt2(center[0], center[1])},$`);
     switch (pr.shape) {                                                      // hollow sections stay HOLLOW; the I-section is a true I profile
       case "rect": return st.add("IFCRECTANGLEPROFILEDEF", `.AREA.,$,${pos},${real(pr.b)},${real(pr.h)}`);
@@ -519,7 +524,7 @@ export function toIfc(s: BimState, opts: IfcOptions): string {
     const box = componentBox(s, el);
     const a = (el.placement.rotation * Math.PI) / 180;
     const pl = placement(storeyRef[el.storey].pl, axis3(pt3(el.placement.x, el.placement.y, el.placement.offset), zAxis, dir3(Math.cos(a), Math.sin(a), 0)));
-    const prof = st.add("IFCRECTANGLEPROFILEDEF", `.AREA.,$,${st.add("IFCAXIS2PLACEMENT2D", `${pt2(0, 0)},$`)},${real(box.width)},${real(box.depth)}`);
+    const prof = profileDef({shape:'rect',b:box.width,h:box.depth});
     const solid = extrude(prof, identity, box.height);
     const rep = product([shape(body, "Body", "SweptSolid", [solid])]);
     const furniture = c?.ifcClass === "IfcFurniture";

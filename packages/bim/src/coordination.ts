@@ -36,6 +36,11 @@ function expectedJoint(s:BimState,a:Record3,b:Record3,tol:number):boolean {
   }
   const sx=findCategory(categoryIdOfElement(s,x)??'')?.discipline==='structure',sy=findCategory(categoryIdOfElement(s,y)??'')?.discipline==='structure';
   if(!sx||!sy)return false;
+  if(x.kind==='profile_member'&&y.kind==='profile_member'){
+    const a=memberWorldEnds(s,x),b=memberWorldEnds(s,y),u=a.end.map((v,i)=>v-a.start[i]),v=b.end.map((p,i)=>p-b.start[i]),dot=u.reduce((sum,p,i)=>sum+p*v[i],0)/(Math.hypot(...u)*Math.hypot(...v));
+    // Parallel overlapping members are not automatically a support joint (e.g. enlarged neighboring columns).
+    if(Math.abs(dot)>1-1e-8)return false;
+  }
   for(const [member,target]of [[a,b],[b,a]])if(member.element.kind==='profile_member'){
     const ends=memberWorldEnds(s,member.element);
     if([ends.start,ends.end].some(p=>target.cells.some(c=>pointInCell(p,c,tol))))return true;
