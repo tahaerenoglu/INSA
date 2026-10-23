@@ -9,6 +9,8 @@ const SHARED_BIM_TOOLS = new Set([
   "bim_model_summary", "bim_set_project", "bim_set_georeference", "bim_clear_georeference",
   "bim_get_coordinate_system", "bim_convert_coordinates", "bim_validate",
   "bim_export_ifc", "bim_export_frag",
+  // Infrastructure layers reference the same material registry as building elements.
+  "bim_query_materials", "bim_create_materials", "bim_update_materials", "bim_delete_materials",
 ]);
 
 export function projectTypeFromState(state: { project?: { projectType?: ProjectType } }, hasInfrastructure = false): ProjectType {

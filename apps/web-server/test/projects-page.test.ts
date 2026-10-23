@@ -23,3 +23,22 @@ test('project creation uses Core permissions, refuses duplicate IDs and isolates
  assert.equal((await app.inject({method:'POST',url:'/api/projects/b/tools/bim_create_walls',headers,payload:{input:{walls:[]}}})).statusCode,400);
  assert.equal((await app.inject({method:'POST',url:'/api/projects',payload:{id:'x',name:'X'}})).statusCode,401);
 });
+test('infrastructure projects can manage shared BIM materials and use them in universal corridor generation',async t=>{
+ const platform=createPlatform(new MemoryStores()),app=buildApp({platform,model:null});t.after(()=>app.close());
+ const login=await app.inject({method:'POST',url:'/api/auth/login',payload:{user:'taha'}}),headers={authorization:`Bearer ${login.json().token}`};
+ assert.equal((await app.inject({method:'POST',url:'/api/projects',headers,payload:{id:'shared-material',name:'Infrastructure',projectType:'infrastructure'}})).statusCode,200);
+ const call=async(tool:string,input:unknown)=>{const r=await app.inject({method:'POST',url:`/api/projects/shared-material/tools/${tool}`,headers,payload:{input}});assert.equal(r.statusCode,200,r.body);return r.json();};
+ const catalogue=(await app.inject({method:'GET',url:'/api/tools?project=shared-material',headers})).json();
+ assert.ok(catalogue.some((t:any)=>t.name==='bim_create_materials'));
+ await call('bim_query_materials',{});
+ await call('bim_create_materials',{materials:[{name:'Formation'}]});
+ await call('infra_create_alignment',{name:'A',start_station:1000,horizontal:[{x:0,y:0},{x:2000,y:0}],vertical:[{station:1000,z:10},{station:3000,z:20}]});
+ await call('infra_create_component_types',{types:[{name:'Formation .30',layer:{name:'Formation',role:'subbase',thickness:.3,leftExtent:3,rightExtent:3,materialId:'M-0001'}}]});
+ const section=(station:number)=>({station,leftWidth:3,rightWidth:3,leftShoulder:0,rightShoulder:0,leftCrossfall:0,rightCrossfall:0});
+ await call('model_generate',{intent:'Shared material corridor',requestId:'corridor',requirements:{kind:'corridor',definition:{name:'Formation',alignment:'AL-001',from:1000,to:3000,sections:[section(1000),section(3000)],layers:[{componentType:'CT-001'}]}}});
+ assert.deepEqual((await call('model_validate',{})).result.issues,[]);
+ assert.equal(Object.keys((await platform.state<any>('shared-material','infra')).roads).length,1);
+ const viewerLogin=await app.inject({method:'POST',url:'/api/auth/login',payload:{user:'viewer'}});
+ const denied=await app.inject({method:'POST',url:'/api/projects/shared-material/tools/bim_create_materials',headers:{authorization:`Bearer ${viewerLogin.json().token}`},payload:{input:{materials:[{name:'Forbidden'}]}}});
+ assert.equal(denied.statusCode,403);
+});
